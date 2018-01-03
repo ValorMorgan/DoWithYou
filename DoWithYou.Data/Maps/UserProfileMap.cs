@@ -9,7 +9,7 @@ namespace DoWithYou.Data.Maps
         public static void Map(EntityTypeBuilder<UserProfile> builder)
         {
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "EntityTypeBuilder cannot be NULL.");
+                throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
             MapKeys(builder);
             MapProperties(builder);
@@ -19,7 +19,7 @@ namespace DoWithYou.Data.Maps
         public static void MapKeys(EntityTypeBuilder<UserProfile> builder)
         {
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "EntityTypeBuilder cannot be NULL.");
+                throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
             builder.HasKey(e => e.ID);
         }
@@ -27,7 +27,7 @@ namespace DoWithYou.Data.Maps
         public static void MapProperties(EntityTypeBuilder<UserProfile> builder)
         {
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "EntityTypeBuilder cannot be NULL.");
+                throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
             builder.Property(e => e.FirstName).IsRequired();
             builder.Property(e => e.LastName).IsRequired();
@@ -40,7 +40,7 @@ namespace DoWithYou.Data.Maps
         public static void MapRelationships(EntityTypeBuilder<UserProfile> builder)
         {
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "EntityTypeBuilder cannot be NULL.");
+                throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
             builder.HasOne(e => e.User)
                 .WithOne(e => e.UserProfile)

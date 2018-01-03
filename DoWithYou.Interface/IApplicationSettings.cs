@@ -4,10 +4,6 @@ namespace DoWithYou.Interface
 {
     public interface IApplicationSettings
     {
-        string this[string key] { get; }
-
-        string this[params string[] path] { get; }
-
         T As<T>();
 
         T As<T>(string key);
@@ -19,5 +15,9 @@ namespace DoWithYou.Interface
         dynamic As(Type type, string key);
 
         dynamic As(Type type, params string[] path);
+
+        string this[string key] { get; }
+
+        string this[params string[] path] { get; }
     }
 }

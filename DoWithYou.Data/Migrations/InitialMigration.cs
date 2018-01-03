@@ -13,12 +13,12 @@ namespace DoWithYou.Data.Migrations
                 nameof(User),
                 table => new
                 {
-                    ID = table.Column<long>("int"),
-                    CreationDate = table.Column<DateTime>("datetime"),
-                    ModifiedDate = table.Column<DateTime>("datetime"),
-                    Username = table.Column<string>("varchar(max)"),
-                    Password = table.Column<string>("varchar(32)"),
-                    Email = table.Column<string>("varchar(max)")
+                    ID = table.Column<long>(SqlDbType.Int.ToString()),
+                    CreationDate = table.Column<DateTime>(SqlDbType.DateTime2.ToString()),
+                    ModifiedDate = table.Column<DateTime>(SqlDbType.DateTime2.ToString()),
+                    Username = table.Column<string>($"{SqlDbType.VarChar.ToString()}(max)"),
+                    Password = table.Column<string>($"{SqlDbType.VarChar.ToString()}(32)"),
+                    Email = table.Column<string>($"{SqlDbType.VarChar.ToString()}(max)")
                 },
                 null,
                 table =>

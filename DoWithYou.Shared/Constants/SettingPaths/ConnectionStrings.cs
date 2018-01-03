@@ -4,6 +4,6 @@
     {
         public static string Root => "ConnectionStrings";
 
-        public static string DefaultConnection => $"{Root}:DefaultConnection";
+        public static string DoWithYouDB => $"{Root}:DoWithYouDB";
     }
 }

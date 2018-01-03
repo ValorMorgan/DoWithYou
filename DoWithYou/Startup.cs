@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DoWithYou.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,18 +8,17 @@ namespace DoWithYou
 {
     public class Startup
     {
+        #region PROPERTIES
+        public IConfiguration Configuration { get; }
+        #endregion
+
+        #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Resolver.InitializeContainerWithConfiguration(Configuration);
         }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
-        }
+        #endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -33,9 +29,7 @@ namespace DoWithYou
                 app.UseBrowserLink();
             }
             else
-            {
                 app.UseExceptionHandler("/Error");
-            }
 
             app.UseStaticFiles();
 
@@ -45,6 +39,12 @@ namespace DoWithYou
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
         }
     }
 }

@@ -18,19 +18,24 @@ namespace DoWithYou.Data.Contexts
         {
             base.OnConfiguring(builder);
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "Cannot configure Context with a NULL DbContextOptionsBuilder.");
+                throw new ArgumentNullException(nameof(builder), $"Cannot configure Context with a NULL {nameof(DbContextOptionsBuilder)}.");
 
             if (builder.IsConfigured)
                 return;
-            
-            builder.UseSqlServer(Resolver.Resolve<ApplicationSettings>()[Shared.Constants.SettingPaths.ConnectionStrings.DefaultConnection]);
+
+            string connectionStringSettingPath = Shared.Constants.SettingPaths.ConnectionStrings.DoWithYouDB;
+            string connectionString = Resolver.Resolve<ApplicationSettings>()[connectionStringSettingPath];
+            if (connectionString == default)
+                throw new NullReferenceException($"Failed to connect to database. No connection string was provided at \"{connectionStringSettingPath}\".");
+
+            builder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             if (builder == null)
-                throw new ArgumentNullException(nameof(builder), "Cannot create Context Model with a NULL ModelBuilder.");
+                throw new ArgumentNullException(nameof(builder), $"Cannot create Context Model with a NULL {nameof(ModelBuilder)}.");
 
             UserMap.Map(builder.Entity<User>());
             UserProfileMap.Map(builder.Entity<UserProfile>());

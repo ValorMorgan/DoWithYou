@@ -26,8 +26,8 @@ namespace DoWithYou.Data
 
         public void Delete(T entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity), "Cannot delete a NULL entity.");
+            if (entity == default(T))
+                return;
 
             _entities.Remove(entity);
             SaveChanges();
@@ -39,8 +39,8 @@ namespace DoWithYou.Data
 
         public void Insert(T entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity), "Cannot insert a NULL entity.");
+            if (entity == default(T))
+                return;
 
             _entities.Add(entity);
             SaveChanges();
@@ -53,8 +53,8 @@ namespace DoWithYou.Data
 
         public void Update(T entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity), "Cannot update a NULL entity.");
+            if (entity == default(T))
+                return;
 
             _entities.Update(entity);
             SaveChanges();
