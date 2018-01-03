@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1AD86A2F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoWithYou.Shared", "DoWithYou.Shared\DoWithYou.Shared.csproj", "{0A10CCEE-AE9B-42EB-AAE7-DB13D1230FD5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoWithYou.Interface", "DoWithYou.Interface\DoWithYou.Interface.csproj", "{EAE66B86-12BC-4D01-8B6D-C25468AF6548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoWithYou.UnitTest", "Tests\DoWithYou.UnitTest\DoWithYou.UnitTest.csproj", "{CDEE140A-DF65-441B-A468-7BABA7CB8B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,9 +54,20 @@ Global
 		{0A10CCEE-AE9B-42EB-AAE7-DB13D1230FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A10CCEE-AE9B-42EB-AAE7-DB13D1230FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A10CCEE-AE9B-42EB-AAE7-DB13D1230FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE66B86-12BC-4D01-8B6D-C25468AF6548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE66B86-12BC-4D01-8B6D-C25468AF6548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE66B86-12BC-4D01-8B6D-C25468AF6548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE66B86-12BC-4D01-8B6D-C25468AF6548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDEE140A-DF65-441B-A468-7BABA7CB8B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDEE140A-DF65-441B-A468-7BABA7CB8B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDEE140A-DF65-441B-A468-7BABA7CB8B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDEE140A-DF65-441B-A468-7BABA7CB8B86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CDEE140A-DF65-441B-A468-7BABA7CB8B86} = {1AD86A2F-4CAE-4023-A46C-8EFE7A4A6662}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A502F976-FFE4-4F1A-94D7-FB426FBE94B8}

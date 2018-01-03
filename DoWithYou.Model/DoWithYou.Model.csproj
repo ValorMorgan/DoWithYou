@@ -8,4 +8,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DoWithYou.Data\DoWithYou.Data.csproj" />
+    <ProjectReference Include="..\DoWithYou.Interface\DoWithYou.Interface.csproj" />
+    <ProjectReference Include="..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

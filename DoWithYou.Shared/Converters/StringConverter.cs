@@ -22,10 +22,13 @@ namespace DoWithYou.Shared.Converters
         #endregion
 
         public T To<T>() =>
-            To(typeof(T));
+            To(typeof(T)) ?? default(T);
 
         public dynamic To(Type type)
         {
+            if (_toConvert == default)
+                return default;
+
             dynamic converted;
 
             switch (type)

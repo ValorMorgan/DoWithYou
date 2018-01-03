@@ -6,11 +6,11 @@ namespace DoWithYou.Shared
     public class Resolver : IDisposable
     {
         #region VARIABLES
-        private IContainer _container;
+        private static IContainer _container;
         #endregion
 
         #region PROPERTIES
-        public IContainer Container => _container ?? (_container = GetContainer());
+        public static IContainer Container => _container ?? (_container = GetContainer());
         #endregion
 
         public void Dispose()
@@ -19,13 +19,13 @@ namespace DoWithYou.Shared
             _container = null;
         }
 
-        public bool IsRegistered<T>() => Container.IsRegistered<T>();
+        public static bool IsRegistered<T>() => Container.IsRegistered<T>();
 
         // NOTE: Resolve will return default(T) when the desired T is NOT registered (instead of throwing an exception)
-        public T Resolve<T>() => IsRegistered<T>() ? Container.Resolve<T>() : default;
+        public static T Resolve<T>() => IsRegistered<T>() ? Container.Resolve<T>() : default;
 
         #region PRIVATE
-        private ContainerBuilder GetBuilder()
+        private static ContainerBuilder GetBuilder()
         {
             var builder = new ContainerBuilder();
 
@@ -34,7 +34,7 @@ namespace DoWithYou.Shared
             return builder;
         }
 
-        private ContainerBuilder GetBuilderWithInstances()
+        private static ContainerBuilder GetBuilderWithInstances()
         {
             // NOTE: We call GetBuilder early to resolve from our typical setup
             var tempContainer = GetBuilder().Build();
@@ -49,7 +49,7 @@ namespace DoWithYou.Shared
             return builder;
         }
 
-        private IContainer GetContainer() => GetBuilder().Build();
+        private static IContainer GetContainer() => GetBuilder().Build();
         #endregion
     }
 }
