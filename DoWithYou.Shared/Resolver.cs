@@ -1,55 +1,55 @@
 ﻿using System;
 using Autofac;
+using Microsoft.Extensions.Configuration;
 
 namespace DoWithYou.Shared
 {
     public class Resolver : IDisposable
     {
         #region VARIABLES
-        private static IContainer _container;
+        private static IContainer CONTAINER;
         #endregion
 
         #region PROPERTIES
-        public static IContainer Container => _container ?? (_container = GetContainer());
+        public static IContainer Container => CONTAINER ?? (CONTAINER = GetContainer());
         #endregion
 
-        public void Dispose()
+        public static void InitializeContainerWithConfiguration(IConfiguration configuration)
         {
-            _container?.Dispose();
-            _container = null;
+            var builder = GetBuilder();
+
+            builder.RegisterInstance(configuration);
+
+            CONTAINER = builder.Build();
         }
 
         public static bool IsRegistered<T>() => Container.IsRegistered<T>();
-
+        
         // NOTE: Resolve will return default(T) when the desired T is NOT registered (instead of throwing an exception)
         public static T Resolve<T>() => IsRegistered<T>() ? Container.Resolve<T>() : default;
 
+        public void Dispose()
+        {
+            CONTAINER?.Dispose();
+            CONTAINER = null;
+        }
+
         #region PRIVATE
+        private static IContainer GetContainer() => GetBuilder().Build();
+
         private static ContainerBuilder GetBuilder()
         {
+            // NOTE: We call Build early to expose any factories for instance setup
+            var tempBuilder = new ContainerBuilder();
+            ResolverRegistry.RegisterTypesForBuilder(ref tempBuilder);
+            var tempContainer = tempBuilder.Build();
+
             var builder = new ContainerBuilder();
-
-            // TODO: [Resolver] setup base registrations
-
-            return builder;
-        }
-
-        private static ContainerBuilder GetBuilderWithInstances()
-        {
-            // NOTE: We call GetBuilder early to resolve from our typical setup
-            var tempContainer = GetBuilder().Build();
-
-            // TODO: [Resolver] Setup factories
-
-            // NOTE: Called again to produce the new final builder (can be a performance impact)
-            var builder = GetBuilder();
-
-            // TODO: [Resolver] Register factory creations
+            ResolverRegistry.RegisterTypesForBuilder(ref builder);
+            ResolverRegistry.RegisterInstancesForBuilder(tempContainer, ref builder);
 
             return builder;
         }
-
-        private static IContainer GetContainer() => GetBuilder().Build();
         #endregion
     }
 }

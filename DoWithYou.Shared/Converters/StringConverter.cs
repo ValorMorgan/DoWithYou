@@ -15,7 +15,7 @@ namespace DoWithYou.Shared.Converters
             _toConvert = default;
         }
 
-        public StringConverter(string value)
+        internal StringConverter(string value)
         {
             _toConvert = value;
         }
