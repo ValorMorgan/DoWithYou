@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DoWithYou.Interface
+namespace DoWithYou.Interface.Data
 {
     public interface IRepository<T> : IDisposable
     {

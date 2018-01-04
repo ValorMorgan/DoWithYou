@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using DoWithYou.Interface;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants.SettingPaths;
 using DoWithYou.Shared.Repositories;

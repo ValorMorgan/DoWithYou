@@ -1,4 +1,6 @@
-﻿namespace DoWithYou.Interface
+﻿using System;
+
+namespace DoWithYou.Interface.Data.Entity
 {
     public interface IUser : IBaseEntity
     {

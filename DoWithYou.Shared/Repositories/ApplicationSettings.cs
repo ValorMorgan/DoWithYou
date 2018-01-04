@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using Microsoft.Extensions.Configuration;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
-using DoWithYou.Interface;
+using DoWithYou.Interface.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoWithYou.Data

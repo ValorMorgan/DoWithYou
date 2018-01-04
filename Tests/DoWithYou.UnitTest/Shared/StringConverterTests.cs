@@ -1,5 +1,5 @@
 ﻿using System;
-using DoWithYou.Interface;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using NUnit.Framework;
 

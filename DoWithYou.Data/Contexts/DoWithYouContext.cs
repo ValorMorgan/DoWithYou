@@ -1,7 +1,7 @@
 ﻿using System;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
-using DoWithYou.Interface;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants.SettingPaths;
 using Microsoft.EntityFrameworkCore;

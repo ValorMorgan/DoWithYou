@@ -2,7 +2,8 @@
 using DoWithYou.Data;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
-using DoWithYou.Interface;
+using DoWithYou.Interface.Data;
+using DoWithYou.Interface.Data.Entity;
 
 namespace DoWithYou.Model.Repository
 {

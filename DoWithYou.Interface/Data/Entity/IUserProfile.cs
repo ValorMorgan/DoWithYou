@@ -1,4 +1,4 @@
-﻿namespace DoWithYou.Interface
+﻿namespace DoWithYou.Interface.Data.Entity
 {
     public interface IUserProfile : IBaseEntity
     {

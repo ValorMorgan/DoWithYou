@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DoWithYou.Interface
+namespace DoWithYou.Interface.Shared
 {
     public interface IStringConverter
     {
