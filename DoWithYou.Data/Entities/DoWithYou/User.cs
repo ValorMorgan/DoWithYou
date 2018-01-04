@@ -1,17 +1,16 @@
 ﻿using DoWithYou.Data.Entities.DoWithYou.Base;
+using DoWithYou.Interface;
 
 namespace DoWithYou.Data.Entities.DoWithYou
 {
-    public class User : BaseEntity
+    public class User : BaseEntity, IUser
     {
-        #region PROPERTIES
         public string Email { get; set; }
 
         public string Password { get; set; }
 
         public string Username { get; set; }
-        
-        public virtual UserProfile UserProfile { get; set; }
-        #endregion
+
+        public virtual IUserProfile UserProfile { get; set; }
     }
 }

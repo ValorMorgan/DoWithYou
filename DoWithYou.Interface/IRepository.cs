@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DoWithYou.Interface
 {
-    public interface IRepository<T>
+    public interface IRepository<T> : IDisposable
     {
         void Delete(T entity);
 

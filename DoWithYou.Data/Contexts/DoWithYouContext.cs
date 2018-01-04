@@ -1,8 +1,9 @@
 ﻿using System;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
+using DoWithYou.Interface;
 using DoWithYou.Shared;
-using DoWithYou.Shared.Repositories;
+using DoWithYou.Shared.Constants.SettingPaths;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoWithYou.Data.Contexts
@@ -10,6 +11,8 @@ namespace DoWithYou.Data.Contexts
     public class DoWithYouContext : DbContext
     {
         #region CONSTRUCTORS
+        public DoWithYouContext() { }
+
         public DoWithYouContext(DbContextOptions<DoWithYouContext> options)
             : base(options) { }
         #endregion
@@ -23,8 +26,8 @@ namespace DoWithYou.Data.Contexts
             if (builder.IsConfigured)
                 return;
 
-            string connectionStringSettingPath = Shared.Constants.SettingPaths.ConnectionStrings.DoWithYouDB;
-            string connectionString = Resolver.Resolve<ApplicationSettings>()[connectionStringSettingPath];
+            string connectionStringSettingPath = ConnectionStrings.DoWithYouDB;
+            string connectionString = Resolver.Resolve<IApplicationSettings>()[connectionStringSettingPath];
             if (connectionString == default)
                 throw new NullReferenceException($"Failed to connect to database. No connection string was provided at \"{connectionStringSettingPath}\".");
 

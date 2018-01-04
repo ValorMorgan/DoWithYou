@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
@@ -12,8 +11,8 @@ namespace DoWithYou.Data
         where T : BaseEntity
     {
         #region VARIABLES
-        private readonly DoWithYouContext _context;
-        private readonly DbSet<T> _entities;
+        private DoWithYouContext _context;
+        private DbSet<T> _entities;
         #endregion
 
         #region CONSTRUCTORS
@@ -31,6 +30,14 @@ namespace DoWithYou.Data
 
             _entities.Remove(entity);
             SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _entities = null;
+
+            _context?.Dispose();
+            _context = null;
         }
 
         public T Get(long id) => _entities.SingleOrDefault(e => e.ID == id);
