@@ -44,13 +44,14 @@ namespace DoWithYou.Shared.Repositories
 
         public dynamic As(Type type, string key)
         {
-            if (key != default)
-                selectedKey = key;
+            if (key == default)
+            {
+                if (selectedKey == default)
+                    return default;
+                key = selectedKey;
+            }
 
-            if (selectedKey == default)
-                return default;
-
-            string setting = Configuration[selectedKey];
+            string setting = Configuration[key];
             if (setting == default)
                 return default;
 

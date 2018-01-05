@@ -19,6 +19,11 @@ namespace DoWithYou.Model.Repository
         {
             _repository = new Repository<User>(_context);
         }
+
+        internal UserRepository(IRepository<User> repository)
+        {
+            _repository = repository;
+        }
         #endregion
 
         public void Delete(IUser entity) => _repository.Update((User)entity);

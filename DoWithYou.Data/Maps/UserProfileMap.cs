@@ -43,7 +43,7 @@ namespace DoWithYou.Data.Maps
                 throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
             builder.HasOne(e => e.User)
-                .WithOne(e => e.UserProfile)
+                .WithOne(e => e.UserProfile as UserProfile)
                 .HasForeignKey<User>(e => e.ID);
         }
     }

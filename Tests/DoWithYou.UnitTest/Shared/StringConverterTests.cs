@@ -1,5 +1,4 @@
-﻿using System;
-using DoWithYou.Interface.Shared;
+﻿using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using NUnit.Framework;
 
@@ -15,7 +14,7 @@ namespace DoWithYou.UnitTest.Shared
         {
             Assert.That(_converter.Convert("Not Empty"), Is.Not.Null.And.InstanceOf<IStringConverter>());
             Assert.That(_converter.Convert(string.Empty), Is.Not.Null.And.InstanceOf<IStringConverter>());
-            Assert.That(_converter.Convert(default(string)), Is.Not.Null.And.InstanceOf<IStringConverter>());
+            Assert.That(_converter.Convert(default), Is.Not.Null.And.InstanceOf<IStringConverter>());
             Assert.That(_converter.Convert(null), Is.Not.Null.And.InstanceOf<IStringConverter>());
         }
 
@@ -68,10 +67,18 @@ namespace DoWithYou.UnitTest.Shared
         }
 
         [Test]
-        public void Convert_To_Should_Throw_InvalidCastException()
+        public void Convert_To_When_Called_Several_Ways_Returns_Expected_Results()
         {
-            Assert.That(() => _converter.Convert("test").To<StringConverter>(), Throws.TypeOf<InvalidCastException>());
-            Assert.That(() => _converter.Convert("test").To<IStringConverter>(), Throws.TypeOf<InvalidCastException>());
+            string testString = "123";
+            int testResult = 123;
+
+            // Happy Path (_converter.Convert.To)
+            Assert.That(_converter.Convert(testString).To<int>(), Is.TypeOf<int>().And.EqualTo(testResult));
+
+            // Sad Path (stored converter no long just returns default when not provided a string; string is stored internally)
+            IStringConverter newConverter = _converter.Convert(testString);
+            Assert.That(_converter.To<int>(), Is.TypeOf<int>().And.EqualTo(default(int)));
+            Assert.That(newConverter.To<int>(), Is.TypeOf<int>().And.EqualTo(testResult));
         }
     }
 }

@@ -29,58 +29,78 @@ namespace DoWithYou.Shared.Converters
             if (_toConvert == default)
                 return default;
 
-            dynamic converted;
+            // Try and let System.ComponentModel.StringConverter do the conversion
+            var converter = new System.ComponentModel.StringConverter();
 
+            return converter.CanConvertTo(type) ?
+                converter.ConvertTo(_toConvert, type) :
+                GetStringConvertedToType(type);
+        }
+
+        #region PRIVATE
+        private dynamic GetStringConvertedToType(Type type)
+        {
             switch (type)
             {
                 case Type _ when type == typeof(string):
-                    converted = _toConvert;
-                    break;
+                    return _toConvert;
+
                 case Type _ when type == typeof(char):
-                    converted = char.Parse(_toConvert);
-                    break;
+                    return char.TryParse(_toConvert, out char convertedToChar) ?
+                        convertedToChar : default;
+
                 case Type _ when type == typeof(bool):
-                    converted = bool.Parse(_toConvert);
-                    break;
+                    return bool.TryParse(_toConvert, out bool convertedToBool) ?
+                        convertedToBool : default;
+
                 case Type _ when type == typeof(byte):
-                    converted = byte.Parse(_toConvert);
-                    break;
+                    return byte.TryParse(_toConvert, out byte convertedToByte) ?
+                        convertedToByte : default;
+
                 case Type _ when type == typeof(sbyte):
-                    converted = sbyte.Parse(_toConvert);
-                    break;
+                    return sbyte.TryParse(_toConvert, out sbyte convertedToSByte) ?
+                        convertedToSByte : default;
+
                 case Type _ when type == typeof(decimal):
-                    converted = decimal.Parse(_toConvert);
-                    break;
+                    return decimal.TryParse(_toConvert, out decimal convertedToDecimal) ?
+                        convertedToDecimal : default;
+
                 case Type _ when type == typeof(double):
-                    converted = double.Parse(_toConvert);
-                    break;
+                    return double.TryParse(_toConvert, out double convertedToDouble) ?
+                        convertedToDouble : default;
+
                 case Type _ when type == typeof(float):
-                    converted = float.Parse(_toConvert);
-                    break;
+                    return float.TryParse(_toConvert, out float convertedToFloat) ?
+                        convertedToFloat : default;
+
                 case Type _ when type == typeof(int):
-                    converted = int.Parse(_toConvert);
-                    break;
+                    return int.TryParse(_toConvert, out int convertedToInt) ?
+                        convertedToInt : default;
+
                 case Type _ when type == typeof(uint):
-                    converted = uint.Parse(_toConvert);
-                    break;
+                    return uint.TryParse(_toConvert, out uint convertedToUInt) ?
+                        convertedToUInt : default;
+
                 case Type _ when type == typeof(long):
-                    converted = long.Parse(_toConvert);
-                    break;
+                    return long.TryParse(_toConvert, out long convertedToLong) ?
+                        convertedToLong : default;
+
                 case Type _ when type == typeof(ulong):
-                    converted = ulong.Parse(_toConvert);
-                    break;
+                    return ulong.TryParse(_toConvert, out ulong convertedToULong) ?
+                        convertedToULong : default;
+
                 case Type _ when type == typeof(short):
-                    converted = short.Parse(_toConvert);
-                    break;
+                    return short.TryParse(_toConvert, out short convertedToShort) ?
+                        convertedToShort : default;
+
                 case Type _ when type == typeof(ushort):
-                    converted = ushort.Parse(_toConvert);
-                    break;
-                default:
-                    throw new InvalidCastException($"Cannot convert provided string to type \"{type.Name}\".");
+                    return ushort.TryParse(_toConvert, out ushort convertedToUShort) ?
+                        convertedToUShort : default;
             }
 
-            return converted;
+            return default;
         }
+        #endregion
     }
 
     public static class StringConverterBuilder

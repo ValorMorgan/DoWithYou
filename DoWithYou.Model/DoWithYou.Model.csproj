@@ -14,4 +14,9 @@
     <ProjectReference Include="..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
