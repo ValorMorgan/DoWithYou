@@ -22,26 +22,12 @@ namespace DoWithYou.UnitTest.Shared
                 if (_settings != null)
                     return _settings;
 
-                // Validate file exists (needed for tests to work)
-                if (!DoesAppSettingsFileExist())
-                    Assert.Inconclusive();
-
-                IConfigurationBuilder builder = new ConfigurationBuilder();
-                builder.SetBasePath(Directory.GetCurrentDirectory());
-
-                IConfiguration configuration = builder
-                    .AddJsonFile("appsettings.json")
-                    ?.Build();
-
-                Resolver.InitializeContainerWithConfiguration(configuration);
+                ResolverFactory.SetupResolverForTesting();
                 _settings = new ApplicationSettings(Resolver.Resolve<IConfiguration>());
 
                 return _settings;
             }
         }
-
-        private bool DoesAppSettingsFileExist() =>
-            File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"));
         #endregion
 
         #region Setting Paths

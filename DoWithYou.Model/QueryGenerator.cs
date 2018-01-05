@@ -61,14 +61,14 @@ namespace DoWithYou.Model
         }
 
         #region PRIVATE
-        private IRepository<T> GetRepository()
+        internal IRepository<T> GetRepository()
         {
             switch (typeof(T))
             {
-                case IUser _:
+                case Type _ when typeof(T) == typeof(IUser):
                     return new UserRepository() as IRepository<T>;
 
-                case IUserProfile _:
+                case Type _ when typeof(T) == typeof(IUserProfile):
                     return new UserProfileRepository() as IRepository<T>;
             }
 
