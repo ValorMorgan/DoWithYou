@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Model;
 using DoWithYou.Model.Repository;
 
 namespace DoWithYou.Model
 {
-    public class QueryGenerator<T> : IDisposable
+    public class QueryGenerator<T> : IQueryGenerator<T>
         where T : IBaseEntity
     {
         #region VARIABLES
