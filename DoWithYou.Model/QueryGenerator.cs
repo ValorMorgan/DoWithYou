@@ -5,6 +5,8 @@ using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Repository;
+using DoWithYou.Shared;
+using Serilog;
 
 namespace DoWithYou.Model
 {
@@ -23,6 +25,18 @@ namespace DoWithYou.Model
 
         internal QueryGenerator(IRepository<T> repository)
         {
+            Resolver.Resolve<Serilog.ILogger>().Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            // or
+            Log.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            // or
+            var logger = Resolver.Resolve<ILogger>();
+            logger.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            // or
+            // ... use ILogger from constructor, DI ...
+            // public QueryGenerator(ILogger logger, ...)
+            // public QueryGenerator(ILogger logger, IApplicationSettings settings, ...)
+            // At UI, do "Resolver.Resolve(<Service Layer Class>)" would chain down to Data Layer doing DI
+
             _repository = repository;
         }
         #endregion

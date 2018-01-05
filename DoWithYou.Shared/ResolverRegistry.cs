@@ -1,9 +1,10 @@
 ﻿using System;
+using System.IO;
 using Autofac;
-using DoWithYou.Interface;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using DoWithYou.Shared.Repositories;
+using Serilog;
 
 namespace DoWithYou.Shared
 {
@@ -24,8 +25,15 @@ namespace DoWithYou.Shared
                 throw new ArgumentNullException(nameof(builder));
 
             // TODO: [Resolver] Setup factories
-
-            // TODO: [Resolver] Register factory creations
+            
+            builder.RegisterInstance<ILogger>(new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.Debug()
+                .WriteTo.File(
+                    path: Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"{DateTime.Now.ToShortDateString()}.log"),
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
+                .CreateLogger());
         }
     }
 }

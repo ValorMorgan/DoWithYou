@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using DoWithYou.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +19,7 @@ namespace DoWithYou
         {
             Configuration = configuration;
             Resolver.InitializeContainerWithConfiguration(Configuration);
+            
         }
         #endregion
 
@@ -45,6 +48,13 @@ namespace DoWithYou
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            //services.AddAutofac();
+
+            //var builder = new ContainerBuilder();
+            //builder.Populate(services);
+
+            //this.ApplicationContainer = builder.Build();
+            //return new AutofacServiceProvider(this.ApplicationContainer);
         }
     }
 }
