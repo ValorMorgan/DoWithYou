@@ -4,6 +4,9 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
+using Serilog;
 
 namespace DoWithYou.Model.Repository
 {
@@ -17,12 +20,16 @@ namespace DoWithYou.Model.Repository
         #region CONSTRUCTORS
         public UserProfileRepository(IDoWithYouContext context)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
+
             _context = context;
             _repository = new Repository<UserProfile>(_context);
         }
 
         internal UserProfileRepository(IDoWithYouContext context, IRepository<UserProfile> repository)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
+
             _context = context;
             _repository = repository;
         }
@@ -42,6 +49,8 @@ namespace DoWithYou.Model.Repository
         
         public void Dispose()
         {
+            Log.Logger.LogEventInformation(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(UserProfileRepository));
+
             _repository?.Dispose();
             _repository = null;
 

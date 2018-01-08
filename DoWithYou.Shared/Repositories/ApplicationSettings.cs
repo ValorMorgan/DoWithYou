@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface.Shared;
+using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace DoWithYou.Shared.Repositories
 {
@@ -15,9 +17,16 @@ namespace DoWithYou.Shared.Repositories
         #endregion
 
         #region PROPERTIES
-        public string this[string key] => Configuration[key ?? SelectedKey];
+        public string this[string key]
+        {
+            get
+            {
+                Log.Logger.LogEventVerbose(LoggerEvents.LIBRARY, "Getting setting \"{Key}\"", key);
+                return Configuration[key ?? SelectedKey];
+            }
+        }
 
-        public string this[params string[] path] => Configuration[JoinPathToKey(path) ?? SelectedKey];
+        public string this[params string[] path] => this[JoinPathToKey(path) ?? SelectedKey];
 
         internal IConfiguration Configuration => _configuration ?? throw new NullReferenceException($"Cannot retrieve settings from a null {nameof(IConfiguration)} object.");
 
@@ -33,6 +42,8 @@ namespace DoWithYou.Shared.Repositories
         #region CONSTRUCTORS
         public ApplicationSettings(IConfiguration configuration, IStringConverter converter)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(ApplicationSettings));
+
             _configuration = configuration;
             Converter = converter;
         }
@@ -52,6 +63,8 @@ namespace DoWithYou.Shared.Repositories
 
         public dynamic As(Type type, string key)
         {
+            Log.Logger.LogEventVerbose(LoggerEvents.LIBRARY, "Getting setting \"{Key}\" as type {Type}", key, type?.FullName ?? "null");
+
             if (key == default)
             {
                 if (_selectedKey == default)
@@ -82,7 +95,7 @@ namespace DoWithYou.Shared.Repositories
             GetApplicationSettings(applicationSettings, key);
 
         public static IApplicationSettings Get(this IApplicationSettings applicationSettings, params string[] path) =>
-            GetApplicationSettings(applicationSettings, string.Join(":", path?.Where(p => p != default).Select(p => p.Trim())));
+            Get(applicationSettings, string.Join(":", path?.Where(p => p != default).Select(p => p.Trim())));
 
         #region PRIVATE
         private static ApplicationSettings GetApplicationSettings(IApplicationSettings settings, string key)

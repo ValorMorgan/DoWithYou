@@ -1,5 +1,7 @@
 ﻿using System;
 using DoWithYou.Interface.Shared;
+using DoWithYou.Shared.Constants;
+using Serilog;
 
 namespace DoWithYou.Shared.Converters
 {
@@ -12,11 +14,15 @@ namespace DoWithYou.Shared.Converters
         #region CONSTRUCTORS
         public StringConverter()
         {
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(StringConverter));
+
             _toConvert = default;
         }
 
         internal StringConverter(string value)
         {
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(StringConverter));
+
             _toConvert = value;
         }
         #endregion
@@ -26,8 +32,10 @@ namespace DoWithYou.Shared.Converters
 
         public dynamic To(Type type)
         {
-            if (_toConvert == default)
+            if (_toConvert == default || type == default)
                 return default;
+
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, "Converting {Value} to type {Type}", _toConvert, type.FullName);
 
             // Try and let System.ComponentModel.StringConverter do the conversion
             var converter = new System.ComponentModel.StringConverter();
@@ -40,6 +48,8 @@ namespace DoWithYou.Shared.Converters
         #region PRIVATE
         private dynamic GetStringConvertedToType(Type type)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, "Attempting manual conversion of {Value} to type {Type}", _toConvert, type.FullName);
+
             switch (type)
             {
                 case Type _ when type == typeof(string):
@@ -98,6 +108,7 @@ namespace DoWithYou.Shared.Converters
                         convertedToUShort : default;
             }
 
+            Log.Logger.LogEventWarning(LoggerEvents.LIBRARY, "Manual conversion of {Value} to type {Type} failed. Returning default(string).", _toConvert, type.FullName);
             return default;
         }
         #endregion

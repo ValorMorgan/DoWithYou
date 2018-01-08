@@ -19,11 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Constants\" />
     <Folder Include="Converters\" />
     <Folder Include="Formatters\" />
     <Folder Include="Mappers\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

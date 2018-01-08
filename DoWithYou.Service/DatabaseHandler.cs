@@ -4,6 +4,9 @@ using System.Linq;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Service;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
+using Serilog;
 
 namespace DoWithYou.Service
 {
@@ -17,44 +20,54 @@ namespace DoWithYou.Service
         #region CONSTRUCTORS
         public DatabaseHandler(IRepository<T> repository)
         {
-            //Resolver.Resolve<Serilog.ILogger>().Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
-            // or
-            //Log.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
-            // or
-            //var logger = Resolver.Resolve<ILogger>();
-            //logger.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
-            // or
-            // ... use ILogger from constructor, DI ...
-            // public QueryGenerator(ILogger logger, ...)
-            // public QueryGenerator(ILogger logger, IApplicationSettings settings, ...)
-            // At UI, do "Resolver.Resolve(<Service Layer Class>)" would chain down to Data Layer doing DI
+            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(DatabaseHandler<T>));
 
             _repository = repository;
         }
         #endregion
 
-        public void Delete(T entity) =>
+        public void Delete(T entity)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Delete {Type}[{EntityId}]", typeof(T).Name, entity?.ID ?? -1);
             _repository.Delete(entity);
+        }
 
-        public T Get(long id) =>
-            _repository.Get(id);
+        public T Get(long id)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Get {Type}[{EntityId}]", typeof(T).Name, id);
+            return _repository.Get(id);
+        }
 
-        public T Get(Func<IEnumerable<T>, T> operation) =>
-            operation == default ?
+        public T Get(Func<IEnumerable<T>, T> operation)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Get {Type} via dynamic request", typeof(T).Name);
+            return operation == default ?
                 default :
                 operation(_repository.GetAll()?.Select(e => e));
+        }
 
-        public void Insert(T entity) =>
+        public void Insert(T entity)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Insert {Type}[{EntityId}]", typeof(T).Name, entity?.ID ?? -1);
             _repository.Insert(entity);
+        }
 
-        public void SaveChanges() =>
+        public void SaveChanges()
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to SaveChanges for {Type}", typeof(T).Name);
             _repository.SaveChanges();
+        }
 
-        public void Update(T entity) =>
+        public void Update(T entity)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Update {Type}[{EntityId}]", typeof(T).Name, entity?.ID ?? -1);
             _repository.Update(entity);
+        }
 
         public void Update(Func<IEnumerable<T>, T> operation)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, "Requested to Insert {Type} via dynamic request", typeof(T).Name);
+
             if (operation == default)
                 return;
 
@@ -63,6 +76,8 @@ namespace DoWithYou.Service
 
         public void Dispose()
         {
+            Log.Logger.LogEventVerbose(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(DatabaseHandler<T>));
+
             _repository?.Dispose();
             _repository = null;
         }
