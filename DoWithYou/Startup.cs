@@ -1,8 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Service.Utilities;
 using DoWithYou.Shared.Factories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,13 +41,14 @@ namespace DoWithYou
             services.AddMvc();
             services.AddAutofac();
 
-            var builder = new ContainerBuilderFactory().GetBuilder();
+            IContainerBuilderFactory builderFactory = new ContainerBuilderFactory();
+            var builder = builderFactory.GetBuilder();
+
+            IContainerBuilderLayerFactory builderRegistry = new ContainerBuilderLayerFactory();
+            builderRegistry.RegisterBuilderTypes(ref builder);
 
             // Register UI originated resources
             builder.RegisterInstance(Configuration);
-            builder.RegisterType<Data.Contexts.DoWithYouContext>().As<Data.Contexts.IDoWithYouContext>();
-            builder.RegisterType<Model.Repository.UserProfileRepository>().As<IRepository<IUserProfile>>();
-            builder.RegisterType<Model.Repository.UserRepository>().As<IRepository<IUser>>();
 
             builder.Populate(services);
             ApplicationContainer = builder.Build();
