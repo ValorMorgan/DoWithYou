@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
-using DoWithYou.Model;
+using DoWithYou.Service;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace DoWithYou.UnitTest.Model
+namespace DoWithYou.UnitTest.Service
 {
     [TestFixture]
-    public class QueryGeneratorTests
+    public class DatabaseHandlerTests
     {
-        private QueryGenerator<IUser> _queryGenerator;
+        private DatabaseHandler<IUser> _queryGenerator;
 
-        private QueryGenerator<IUser> TestingGenerator
+        private DatabaseHandler<IUser> TestingGenerator
         {
             get
             {
@@ -31,34 +30,10 @@ namespace DoWithYou.UnitTest.Model
                 repository.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.SaveChanges()).DoNotCallBase();
 
-                _queryGenerator = new QueryGenerator<IUser>(repository);
+                _queryGenerator = new DatabaseHandler<IUser>(repository);
 
                 return _queryGenerator;
             }
-        }
-
-        // NOTE: Integration Test - Needs to connect to a DB as constructs EF Context
-        //[Theory]
-        //public void GetRepository_Returns_IRepository()
-        //{
-        //    // We need ApplicationSettings for this test to work
-        //    ResolverFactory.SetupResolverForTesting();
-
-        //    Assert.That(TestingGenerator.GetRepository(), Is.Not.Null.And.InstanceOf<IRepository<IUser>>());
-        //}
-
-        [Test]
-        public void GetRepository_Does_Not_Throw_TypeLoadException()
-        {
-            try
-            {
-                TestingGenerator.GetRepository();
-            }
-            catch (TypeLoadException ex)
-            {
-                Assert.Fail($"Threw TypeLoadException:\n\n{ex}");
-            } 
-            catch { /* Success */ }
         }
 
         [Test]

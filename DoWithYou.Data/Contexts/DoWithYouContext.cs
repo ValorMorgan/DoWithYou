@@ -2,19 +2,28 @@
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
 using DoWithYou.Interface.Shared;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants.SettingPaths;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoWithYou.Data.Contexts
 {
-    public class DoWithYouContext : DbContext
+    public class DoWithYouContext : DbContext, IDoWithYouContext
     {
-        #region CONSTRUCTORS
-        public DoWithYouContext() { }
+        #region VARIABLES
+        private readonly IApplicationSettings _settings;
+        #endregion
 
-        public DoWithYouContext(DbContextOptions<DoWithYouContext> options)
-            : base(options) { }
+        #region CONSTRUCTORS
+        public DoWithYouContext(IApplicationSettings settings)
+        {
+            _settings = settings;
+        }
+
+        public DoWithYouContext(IApplicationSettings settings, DbContextOptions<DoWithYouContext> options)
+            : base(options)
+        {
+            _settings = settings;
+        }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -27,7 +36,7 @@ namespace DoWithYou.Data.Contexts
                 return;
 
             string connectionStringSettingPath = ConnectionStrings.DoWithYouDB;
-            string connectionString = Resolver.Resolve<IApplicationSettings>()[connectionStringSettingPath];
+            string connectionString = _settings[connectionStringSettingPath];
             if (connectionString == default)
                 throw new NullReferenceException($"Failed to connect to database. No connection string was provided at \"{connectionStringSettingPath}\".");
 

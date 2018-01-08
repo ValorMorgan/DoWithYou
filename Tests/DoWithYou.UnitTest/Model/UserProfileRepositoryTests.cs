@@ -27,7 +27,7 @@ namespace DoWithYou.UnitTest.Model
             }
         }
 
-        private UserProfileRepository TestRepository => new UserProfileRepository(MockedRepository);
+        private UserProfileRepository TestRepository => new UserProfileRepository(null, MockedRepository);
 
         [Test]
         [TestCase(1)]

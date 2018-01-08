@@ -10,18 +10,20 @@ namespace DoWithYou.Model.Repository
     public class UserRepository : IRepository<IUser>
     {
         #region VARIABLES
-        private DoWithYouContext _context = new DoWithYouContext();
+        private IDoWithYouContext _context;
         private IRepository<User> _repository;
         #endregion
 
         #region CONSTRUCTORS
-        public UserRepository()
+        public UserRepository(IDoWithYouContext context)
         {
+            _context = context;
             _repository = new Repository<User>(_context);
         }
 
-        internal UserRepository(IRepository<User> repository)
+        internal UserRepository(IDoWithYouContext context, IRepository<User> repository)
         {
+            _context = context;
             _repository = repository;
         }
         #endregion

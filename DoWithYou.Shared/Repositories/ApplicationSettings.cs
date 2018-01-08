@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Interface;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using Microsoft.Extensions.Configuration;
@@ -12,21 +11,30 @@ namespace DoWithYou.Shared.Repositories
     {
         #region VARIABLES
         private readonly IConfiguration _configuration;
-        internal string selectedKey;
+        private string _selectedKey;
         #endregion
 
         #region PROPERTIES
-        public string this[string key] => Configuration[key ?? selectedKey];
+        public string this[string key] => Configuration[key ?? SelectedKey];
 
-        public string this[params string[] path] => Configuration[JoinPathToKey(path) ?? selectedKey];
+        public string this[params string[] path] => Configuration[JoinPathToKey(path) ?? SelectedKey];
 
-        private IConfiguration Configuration => _configuration ?? throw new NullReferenceException($"Cannot retrieve settings from a null {nameof(IConfiguration)} object.");
+        internal IConfiguration Configuration => _configuration ?? throw new NullReferenceException($"Cannot retrieve settings from a null {nameof(IConfiguration)} object.");
+
+        internal IStringConverter Converter { get; }
+
+        internal string SelectedKey
+        {
+            get => _selectedKey ?? string.Empty;
+            set => _selectedKey = value;
+        }
         #endregion
 
         #region CONSTRUCTORS
-        public ApplicationSettings(IConfiguration configuration)
+        public ApplicationSettings(IConfiguration configuration, IStringConverter converter)
         {
             _configuration = configuration;
+            Converter = converter;
         }
         #endregion
 
@@ -46,16 +54,17 @@ namespace DoWithYou.Shared.Repositories
         {
             if (key == default)
             {
-                if (selectedKey == default)
+                if (_selectedKey == default)
                     return default;
-                key = selectedKey;
+
+                key = _selectedKey;
             }
 
             string setting = Configuration[key];
             if (setting == default)
                 return default;
 
-            return Resolver.Resolve<IStringConverter>()?.Convert(setting)?.To(type) ?? default;
+            return Converter.Convert(setting)?.To(type) ?? default;
         }
 
         public dynamic As(Type type, params string[] path) =>
@@ -70,15 +79,21 @@ namespace DoWithYou.Shared.Repositories
     public static class ApplicationSettingsBuilder
     {
         public static IApplicationSettings Get(this IApplicationSettings applicationSettings, string key) =>
-            new ApplicationSettings(Resolver.Resolve<IConfiguration>())
-            {
-                selectedKey = key
-            };
+            GetApplicationSettings(applicationSettings, key);
 
         public static IApplicationSettings Get(this IApplicationSettings applicationSettings, params string[] path) =>
-            new ApplicationSettings(Resolver.Resolve<IConfiguration>())
+            GetApplicationSettings(applicationSettings, string.Join(":", path?.Where(p => p != default).Select(p => p.Trim())));
+
+        #region PRIVATE
+        private static ApplicationSettings GetApplicationSettings(IApplicationSettings settings, string key)
+        {
+            var config = ((ApplicationSettings)settings).Configuration;
+            var converter = ((ApplicationSettings)settings).Converter;
+            return new ApplicationSettings(config, converter)
             {
-                selectedKey = string.Join(":", path?.Where(p => p != default).Select(p => p.Trim()))
+                SelectedKey = key
             };
+        }
+        #endregion
     }
 }

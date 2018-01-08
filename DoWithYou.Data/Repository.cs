@@ -11,12 +11,12 @@ namespace DoWithYou.Data
         where T : BaseEntity
     {
         #region VARIABLES
-        private DoWithYouContext _context;
+        private IDoWithYouContext _context;
         private DbSet<T> _entities;
         #endregion
 
         #region CONSTRUCTORS
-        public Repository(DoWithYouContext context)
+        public Repository(IDoWithYouContext context)
         {
             _context = context;
             _entities = _context.Set<T>();

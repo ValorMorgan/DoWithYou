@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
 using DoWithYou.Interface.Shared;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants.SettingPaths;
+using DoWithYou.Shared.Converters;
 using DoWithYou.Shared.Repositories;
-using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace DoWithYou.UnitTest.Shared
@@ -21,9 +19,8 @@ namespace DoWithYou.UnitTest.Shared
             {
                 if (_settings != null)
                     return _settings;
-
-                ResolverFactory.SetupResolverForTesting();
-                _settings = new ApplicationSettings(Resolver.Resolve<IConfiguration>());
+                
+                _settings = new ApplicationSettings(TestSetupFactory.GetApplicationSettingsConfiguration(), new StringConverter());
 
                 return _settings;
             }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using DoWithYou.Interface.Data.Entity;
 
-namespace DoWithYou.Interface.Model
+namespace DoWithYou.Interface.Service
 {
-    public interface IQueryGenerator<T> : IDisposable
+    public interface IDatabaseHandler<T> : IDisposable
         where T : IBaseEntity
     {
         void Delete(T entity);

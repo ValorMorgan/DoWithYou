@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
-using DoWithYou.Interface.Model;
-using DoWithYou.Model.Repository;
-using DoWithYou.Shared;
-using Serilog;
+using DoWithYou.Interface.Service;
 
-namespace DoWithYou.Model
+namespace DoWithYou.Service
 {
-    public class QueryGenerator<T> : IQueryGenerator<T>
+    public class DatabaseHandler<T> : IDatabaseHandler<T>
         where T : IBaseEntity
     {
         #region VARIABLES
@@ -18,19 +15,14 @@ namespace DoWithYou.Model
         #endregion
 
         #region CONSTRUCTORS
-        public QueryGenerator()
+        public DatabaseHandler(IRepository<T> repository)
         {
-            _repository = GetRepository();
-        }
-
-        internal QueryGenerator(IRepository<T> repository)
-        {
-            Resolver.Resolve<Serilog.ILogger>().Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            //Resolver.Resolve<Serilog.ILogger>().Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
             // or
-            Log.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            //Log.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
             // or
-            var logger = Resolver.Resolve<ILogger>();
-            logger.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
+            //var logger = Resolver.Resolve<ILogger>();
+            //logger.Verbose("{Class} constructor entered.", nameof(QueryGenerator<T>));
             // or
             // ... use ILogger from constructor, DI ...
             // public QueryGenerator(ILogger logger, ...)
@@ -74,21 +66,5 @@ namespace DoWithYou.Model
             _repository?.Dispose();
             _repository = null;
         }
-
-        #region PRIVATE
-        internal IRepository<T> GetRepository()
-        {
-            switch (typeof(T))
-            {
-                case Type _ when typeof(T) == typeof(IUser):
-                    return new UserRepository() as IRepository<T>;
-
-                case Type _ when typeof(T) == typeof(IUserProfile):
-                    return new UserProfileRepository() as IRepository<T>;
-            }
-
-            throw new TypeLoadException($"Failed to locate related {nameof(IRepository<T>)} to provided type \"{typeof(T).FullName}\"");
-        }
-        #endregion
     }
 }
