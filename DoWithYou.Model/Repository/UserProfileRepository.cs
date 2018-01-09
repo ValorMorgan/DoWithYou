@@ -20,7 +20,7 @@ namespace DoWithYou.Model.Repository
         #region CONSTRUCTORS
         public UserProfileRepository(IDoWithYouContext context)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
 
             _context = context;
             _repository = new Repository<UserProfile>(_context);
@@ -28,7 +28,7 @@ namespace DoWithYou.Model.Repository
 
         internal UserProfileRepository(IDoWithYouContext context, IRepository<UserProfile> repository)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserProfileRepository));
 
             _context = context;
             _repository = repository;
@@ -49,7 +49,7 @@ namespace DoWithYou.Model.Repository
         
         public void Dispose()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(UserProfileRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(UserProfileRepository));
 
             _repository?.Dispose();
             _repository = null;

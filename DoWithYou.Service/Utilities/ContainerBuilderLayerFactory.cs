@@ -9,7 +9,7 @@ namespace DoWithYou.Service.Utilities
 {
     public class ContainerBuilderLayerFactory : IContainerBuilderLayerFactory
     {
-        public void RegisterBuilderTypes(ref ContainerBuilder builder)
+        public void RegisterBuilderLayerTypes(ref ContainerBuilder builder)
         {
             // Service
             builder.RegisterType<DatabaseHandler<IUser>>().As<IDatabaseHandler<IUser>>();

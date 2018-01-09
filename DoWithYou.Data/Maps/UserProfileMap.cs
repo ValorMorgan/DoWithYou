@@ -1,6 +1,9 @@
 ﻿using System;
 using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Serilog;
 
 namespace DoWithYou.Data.Maps
 {
@@ -10,6 +13,8 @@ namespace DoWithYou.Data.Maps
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
+
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping {Table} for {Class}", nameof(UserProfile), nameof(EntityTypeBuilder));
 
             MapKeys(builder);
             MapProperties(builder);
@@ -21,6 +26,8 @@ namespace DoWithYou.Data.Maps
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
 
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping {Table} Keys for {Class}", nameof(UserProfile), nameof(EntityTypeBuilder));
+
             builder.HasKey(e => e.ID);
         }
 
@@ -28,6 +35,8 @@ namespace DoWithYou.Data.Maps
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
+
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping {Table} Properties for {Class}", nameof(UserProfile), nameof(EntityTypeBuilder));
 
             builder.Property(e => e.FirstName).IsRequired();
             builder.Property(e => e.LastName).IsRequired();
@@ -41,6 +50,8 @@ namespace DoWithYou.Data.Maps
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"{nameof(EntityTypeBuilder)} cannot be NULL.");
+
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping {Table} Relationships for {Class}", nameof(UserProfile), nameof(EntityTypeBuilder));
 
             builder.HasOne(e => e.User)
                 .WithOne(e => e.UserProfile as UserProfile)

@@ -4,6 +4,6 @@ namespace DoWithYou.Service.Utilities
 {
     public interface IContainerBuilderLayerFactory
     {
-        void RegisterBuilderTypes(ref ContainerBuilder builder);
+        void RegisterBuilderLayerTypes(ref ContainerBuilder builder);
     }
 }

@@ -20,7 +20,7 @@ namespace DoWithYou.Service
         #region CONSTRUCTORS
         public DatabaseHandler(IRepository<T> repository)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(DatabaseHandler<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(DatabaseHandler<T>));
 
             _repository = repository;
         }
@@ -76,7 +76,7 @@ namespace DoWithYou.Service
 
         public void Dispose()
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(DatabaseHandler<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(DatabaseHandler<T>));
 
             _repository?.Dispose();
             _repository = null;

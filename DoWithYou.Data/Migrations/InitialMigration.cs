@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Data;
 using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Serilog;
 
 namespace DoWithYou.Data.Migrations
 {
@@ -9,6 +12,8 @@ namespace DoWithYou.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Migrating Up on {Class}", nameof(InitialMigration));
+
             migrationBuilder.CreateTable(
                 nameof(User),
                 table => new
@@ -58,6 +63,8 @@ namespace DoWithYou.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Migrating Down on {Class}", nameof(InitialMigration));
+
             migrationBuilder.DropTable(nameof(UserProfile));
             migrationBuilder.DropTable(nameof(User));
         }

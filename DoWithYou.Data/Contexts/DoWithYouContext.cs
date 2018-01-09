@@ -2,8 +2,11 @@
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
 using DoWithYou.Interface.Shared;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Constants.SettingPaths;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace DoWithYou.Data.Contexts
 {
@@ -16,12 +19,16 @@ namespace DoWithYou.Data.Contexts
         #region CONSTRUCTORS
         public DoWithYouContext(IApplicationSettings settings)
         {
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(DoWithYouContext));
+
             _settings = settings;
         }
 
         public DoWithYouContext(IApplicationSettings settings, DbContextOptions<DoWithYouContext> options)
             : base(options)
         {
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(DoWithYouContext));
+
             _settings = settings;
         }
         #endregion
@@ -29,17 +36,23 @@ namespace DoWithYou.Data.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             base.OnConfiguring(builder);
+
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"Cannot configure Context with a NULL {nameof(DbContextOptionsBuilder)}.");
 
             if (builder.IsConfigured)
                 return;
 
-            string connectionStringSettingPath = ConnectionStrings.DoWithYouDB;
-            string connectionString = _settings[connectionStringSettingPath];
-            if (connectionString == default)
-                throw new NullReferenceException($"Failed to connect to database. No connection string was provided at \"{connectionStringSettingPath}\".");
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Configuring {Class}", nameof(DoWithYouContext));
 
+            string connectionString = _settings[ConnectionStrings.DoWithYouDB];
+            if (connectionString == default)
+                throw new NullReferenceException($"Failed to connect to database. No connection string was provided at \"{ConnectionStrings.DoWithYouDB}\".");
+
+            Log.Logger.LogEventVerbose(
+                LoggerEvents.DATA, 
+                "{Class} to use SQL Server with {ConnectionString} connection string", 
+                nameof(DoWithYouContext), nameof(ConnectionStrings.DoWithYouDB));
             builder.UseSqlServer(connectionString);
         }
 
@@ -58,6 +71,8 @@ namespace DoWithYou.Data.Contexts
         #region PRIVATE
         private static void MapTableNames(ModelBuilder builder)
         {
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping table names for {Class}", nameof(DoWithYouContext));
+
             builder.Entity<User>().ToTable("User");
             builder.Entity<UserProfile>().ToTable("UserProfile");
         }
