@@ -1,7 +1,6 @@
 ﻿using System;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
-using DoWithYou.Shared.Factories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
@@ -18,27 +17,30 @@ namespace DoWithYou
 
         public static int Main(string[] args)
         {
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            Log.Logger = loggerFactory.GetLogger();
-
             try
             {
+                // Log.Logger not setup until after we build the WebHost
+                IWebHost host = BuildWebHost(args);
+
                 Log.Logger.LogEventInformation(LoggerEvents.STARTUP, "Starting web host");
-                BuildWebHost(args)
-                    .Run();
+                host.Run();
 
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Logger.LogEventFatal(ex, LoggerEvents.SHUTDOWN, "Host terminated unexpectedly");
+                if (Log.Logger != null)
+                    Log.Logger.LogEventFatal(ex, LoggerEvents.SHUTDOWN, "Host terminated unexpectedly");
 
                 return 1;
             }
             finally
             {
-                Log.Logger.LogEventInformation(LoggerEvents.SHUTDOWN, "Closing and Flushing logger.");
-                Log.CloseAndFlush();
+                if (Log.Logger != null)
+                {
+                    Log.Logger.LogEventInformation(LoggerEvents.SHUTDOWN, "Closing and Flushing logger.");
+                    Log.CloseAndFlush();
+                }
             }
         }
     }

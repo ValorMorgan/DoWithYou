@@ -4,15 +4,16 @@ using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 using DoWithYou.Shared.Repositories;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace DoWithYou.Shared.Factories
 {
     public class ContainerBuilderFactory : IContainerBuilderFactory
     {
-        public ContainerBuilder GetBuilder()
+        public ContainerBuilder GetBuilder(IConfiguration config = null)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, "Constructing {Class}.", nameof(ContainerBuilder));
+            Log.Logger.LogEventDebug(LoggerEvents.LIBRARY, "Constructing {Class}.", nameof(ContainerBuilder));
 
             // NOTE: We call Build early to expose any factories for instance setup
             var tempBuilder = new ContainerBuilder();
@@ -20,19 +21,21 @@ namespace DoWithYou.Shared.Factories
 
             var builder = new ContainerBuilder();
             RegisterTypesForBuilder(ref builder);
-            RegisterInstancesForBuilder(tempBuilder.Build(), ref builder);
+            RegisterInstancesForBuilder(ref builder, tempBuilder.Build(), config);
 
-            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, "{Class} constructed.", nameof(ContainerBuilder));
+            Log.Logger.LogEventDebug(LoggerEvents.LIBRARY, "{Class} constructed.", nameof(ContainerBuilder));
             return builder;
         }
 
         #region PRIVATE
-        private static void RegisterInstancesForBuilder(IContainer container, ref ContainerBuilder builder)
+        private static void RegisterInstancesForBuilder(ref ContainerBuilder builder, IContainer container, IConfiguration config)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
+            
+            ILoggerFactory loggerFactory = container.Resolve<ILoggerFactory>();
 
-            builder.RegisterInstance<ILogger>(container.Resolve<ILoggerFactory>().GetLogger());
+            builder.RegisterInstance<ILogger>(loggerFactory.GetLoggerFromConfiguration(config));
         }
 
         private static void RegisterTypesForBuilder(ref ContainerBuilder builder)

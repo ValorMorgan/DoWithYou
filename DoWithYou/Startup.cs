@@ -25,6 +25,9 @@ namespace DoWithYou
         #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
+
             Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(Startup));
 
             Configuration = configuration;
@@ -58,7 +61,7 @@ namespace DoWithYou
         {
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Generating {Class}", nameof(ContainerBuilder));
             IContainerBuilderFactory builderFactory = new ContainerBuilderFactory();
-            var builder = builderFactory.GetBuilder();
+            var builder = builderFactory.GetBuilder(Configuration);
 
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Registering layer types to {Class}", nameof(ContainerBuilder));
             IContainerBuilderLayerFactory builderRegistry = new ContainerBuilderLayerFactory();
