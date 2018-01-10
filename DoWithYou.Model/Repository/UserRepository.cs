@@ -4,6 +4,7 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using Serilog;
@@ -15,20 +16,25 @@ namespace DoWithYou.Model.Repository
         #region VARIABLES
         private IDoWithYouContext _context;
         private IRepository<User> _repository;
+        private readonly ILoggerTemplates _templates;
         #endregion
 
         #region CONSTRUCTORS
-        public UserRepository(IDoWithYouContext context)
+        public UserRepository(IDoWithYouContext context, ILoggerTemplates templates)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserRepository));
+            _templates = templates;
+
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserRepository));
 
             _context = context;
             _repository = new Repository<User>(_context);
         }
 
-        internal UserRepository(IDoWithYouContext context, IRepository<User> repository)
+        internal UserRepository(IDoWithYouContext context, IRepository<User> repository, ILoggerTemplates templates)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserRepository));
+            _templates = templates;
+
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserRepository));
 
             _context = context;
             _repository = repository;
@@ -49,7 +55,7 @@ namespace DoWithYou.Model.Repository
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(UserRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, nameof(UserRepository));
 
             _repository?.Dispose();
             _repository = null;

@@ -3,7 +3,7 @@ using Autofac;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
-using DoWithYou.Shared.Repositories;
+using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -33,9 +33,12 @@ namespace DoWithYou.Shared.Factories
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
             
+            // Logger
             ILoggerFactory loggerFactory = container.Resolve<ILoggerFactory>();
-
             builder.RegisterInstance<ILogger>(loggerFactory.GetLoggerFromConfiguration(config));
+
+            // Settings
+            builder.RegisterInstance(config.Get<AppConfig>());
         }
 
         private static void RegisterTypesForBuilder(ref ContainerBuilder builder)
@@ -44,8 +47,8 @@ namespace DoWithYou.Shared.Factories
                 throw new ArgumentNullException(nameof(builder));
 
             // Alphabetical order on Class name
-            builder.RegisterType<ApplicationSettings>()?.As<IApplicationSettings>();
             builder.RegisterType<LoggerFactory>()?.As<ILoggerFactory>();
+            builder.RegisterType<Repositories.LoggerTemplates>()?.As<ILoggerTemplates>();
             builder.RegisterType<StringConverter>()?.As<IStringConverter>();
         }
         #endregion

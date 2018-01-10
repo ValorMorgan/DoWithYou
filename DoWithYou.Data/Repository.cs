@@ -3,6 +3,7 @@ using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,15 @@ namespace DoWithYou.Data
         #region VARIABLES
         private IDoWithYouContext _context;
         private DbSet<T> _entities;
+        private readonly ILoggerTemplates _templates;
         #endregion
 
         #region CONSTRUCTORS
-        public Repository(IDoWithYouContext context)
+        public Repository(IDoWithYouContext context, ILoggerTemplates templates)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(Repository<T>));
+            _templates = templates;
+
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(Repository<T>));
 
             _context = context;
             _entities = _context.Set<T>();
@@ -33,7 +37,7 @@ namespace DoWithYou.Data
             if (entity == default(T))
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Deleting {Type}[{EntityId}]", typeof(T).Name, entity.ID);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataDelete, typeof(T).Name, entity.ID);
 
             _entities.Remove(entity);
             SaveChanges();
@@ -41,13 +45,13 @@ namespace DoWithYou.Data
 
         public T Get(long id)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Getting {Type}[{EntityId}]", typeof(T).Name, id);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataGet, typeof(T).Name, id);
             return _entities.SingleOrDefault(e => e.ID == id);
         }
 
         public IEnumerable<T> GetAll()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Getting all {Type}", typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataGetAll, typeof(T).Name);
             return _entities.AsEnumerable();
         }
 
@@ -56,7 +60,7 @@ namespace DoWithYou.Data
             if (entity == default(T))
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Inserting {Type}[{EntityId}]", typeof(T).Name, entity.ID);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataInsert, typeof(T).Name, entity.ID);
 
             _entities.Add(entity);
             SaveChanges();
@@ -64,7 +68,7 @@ namespace DoWithYou.Data
 
         public void SaveChanges()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Saving Changes for {Type}", typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataSaveChanges, typeof(T).Name);
             _context.SaveChanges();
         }
 
@@ -73,7 +77,7 @@ namespace DoWithYou.Data
             if (entity == default(T))
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, "Updating {Type}[{EntityId}]", typeof(T).Name, entity.ID);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataUpdate, typeof(T).Name, entity.ID);
 
             _entities.Update(entity);
             SaveChanges();
@@ -81,7 +85,7 @@ namespace DoWithYou.Data
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, "Disposing {Class}", nameof(Repository<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, nameof(Repository<T>));
 
             _entities = null;
 

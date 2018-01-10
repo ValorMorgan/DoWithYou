@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DoWithYou.Infrastructure.Middleware;
@@ -6,6 +7,7 @@ using DoWithYou.Service.Utilities;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Factories;
+using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ namespace DoWithYou
 {
     public class Startup
     {
+        private Shared.Repositories.LoggerTemplates _templates;
+
         #region PROPERTIES
         public IContainer ApplicationContainer { get; set; }
 
@@ -25,10 +29,12 @@ namespace DoWithYou
         #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
+            _templates = new Shared.Repositories.LoggerTemplates(configuration.Get<AppConfig>());
+
             ILoggerFactory loggerFactory = new LoggerFactory();
             Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
 
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(Startup));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(Startup));
 
             Configuration = configuration;
         }
@@ -40,7 +46,7 @@ namespace DoWithYou
             ConfigureForEnvironment(ref app, env);
             ConfigureMiddleware(ref app);
 
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering {Class} to event \"{Event}\"", nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, _templates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
             applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
 
