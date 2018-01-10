@@ -13,9 +13,11 @@ namespace DoWithYou.Shared.Factories
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
             string today = DateTime.Now.ToString("yyyyMMdd");
 
+            // TODO: Serilog -> Settings to appsettings.json file
             return new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.Debug()

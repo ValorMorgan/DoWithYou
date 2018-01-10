@@ -1,6 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using DoWithYou.Infrastructure.Middleware;
 using DoWithYou.Service.Utilities;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
@@ -34,7 +35,7 @@ namespace DoWithYou
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
             ConfigureForEnvironment(ref app, env);
-            ConfigureUsings(ref app);
+            ConfigureMiddleware(ref app);
 
             Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering {Class} to event \"{Event}\"", nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
             applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
@@ -75,21 +76,26 @@ namespace DoWithYou
         private static void ConfigureForEnvironment(ref IApplicationBuilder app, IHostingEnvironment env)
         {
             Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Environment: {Environment}", env.EnvironmentName);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                return;
             }
-            else
-                app.UseExceptionHandler("/Error");
+
+            app.UseExceptionHandler("/Error");
         }
 
-        private static void ConfigureUsings(ref IApplicationBuilder app)
+        private static void ConfigureMiddleware(ref IApplicationBuilder app)
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Setting {Interface} to Use Static Files", nameof(IApplicationBuilder));
+            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Setting up {Interface} middleware.", nameof(IApplicationBuilder));
+
+            // Logging for requests
+            app.UseMiddleware<SerilogMiddleware>();
+            
             app.UseStaticFiles();
 
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Setting {Interface} to Use MVC Framework", nameof(IApplicationBuilder));
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
