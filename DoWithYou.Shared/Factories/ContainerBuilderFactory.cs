@@ -1,34 +1,45 @@
 ﻿using System;
 using Autofac;
 using DoWithYou.Interface.Shared;
+using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 using DoWithYou.Shared.Repositories;
+using DoWithYou.Shared.Repositories.Settings;
+using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace DoWithYou.Shared.Factories
 {
     public class ContainerBuilderFactory : IContainerBuilderFactory
     {
-        public ContainerBuilder GetBuilder()
+        public ContainerBuilder GetBuilder(IConfiguration config = null)
         {
+            Log.Logger.LogEventDebug(LoggerEvents.LIBRARY, "Constructing {Class}.", nameof(ContainerBuilder));
+
             // NOTE: We call Build early to expose any factories for instance setup
             var tempBuilder = new ContainerBuilder();
             RegisterTypesForBuilder(ref tempBuilder);
 
             var builder = new ContainerBuilder();
             RegisterTypesForBuilder(ref builder);
-            RegisterInstancesForBuilder(tempBuilder.Build(), ref builder);
+            RegisterInstancesForBuilder(ref builder, tempBuilder.Build(), config);
 
+            Log.Logger.LogEventDebug(LoggerEvents.LIBRARY, "{Class} constructed.", nameof(ContainerBuilder));
             return builder;
         }
-        
-        private static void RegisterInstancesForBuilder(IContainer container, ref ContainerBuilder builder)
+
+        #region PRIVATE
+        private static void RegisterInstancesForBuilder(ref ContainerBuilder builder, IContainer container, IConfiguration config)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            // TODO: [Resolver] Setup factories
+            // Logger
+            ILoggerFactory loggerFactory = container.Resolve<ILoggerFactory>();
+            builder.RegisterInstance<ILogger>(loggerFactory.GetLoggerFromConfiguration(config));
 
-            builder.RegisterInstance<Serilog.ILogger>(container.Resolve<ILoggerFactory>().GetLogger());
+            // Settings
+            builder.RegisterInstance(config.Get<AppConfig>());
         }
 
         private static void RegisterTypesForBuilder(ref ContainerBuilder builder)
@@ -36,9 +47,11 @@ namespace DoWithYou.Shared.Factories
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            builder.RegisterType<ApplicationSettings>()?.As<IApplicationSettings>();
-            builder.RegisterType<StringConverter>()?.As<IStringConverter>();
+            // Alphabetical order on Class name
             builder.RegisterType<LoggerFactory>()?.As<ILoggerFactory>();
+            builder.RegisterType<LoggerTemplates>()?.As<ILoggerTemplates>();
+            builder.RegisterType<StringConverter>()?.As<IStringConverter>();
         }
+        #endregion
     }
 }

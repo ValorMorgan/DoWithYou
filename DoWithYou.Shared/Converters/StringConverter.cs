@@ -1,5 +1,7 @@
 ﻿using System;
 using DoWithYou.Interface.Shared;
+using DoWithYou.Shared.Constants;
+using Serilog;
 
 namespace DoWithYou.Shared.Converters
 {
@@ -7,16 +9,25 @@ namespace DoWithYou.Shared.Converters
     {
         #region VARIABLES
         private readonly string _toConvert;
+        internal readonly ILoggerTemplates templates;
         #endregion
 
         #region CONSTRUCTORS
-        public StringConverter()
+        public StringConverter(ILoggerTemplates templates)
         {
+            this.templates = templates;
+
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(StringConverter));
+
             _toConvert = default;
         }
 
-        internal StringConverter(string value)
+        internal StringConverter(ILoggerTemplates templates, string value)
         {
+            this.templates = templates;
+
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(StringConverter));
+
             _toConvert = value;
         }
         #endregion
@@ -26,8 +37,10 @@ namespace DoWithYou.Shared.Converters
 
         public dynamic To(Type type)
         {
-            if (_toConvert == default)
+            if (_toConvert == default || type == default)
                 return default;
+
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, templates.ConvertTo, _toConvert, type.FullName);
 
             // Try and let System.ComponentModel.StringConverter do the conversion
             var converter = new System.ComponentModel.StringConverter();
@@ -40,6 +53,8 @@ namespace DoWithYou.Shared.Converters
         #region PRIVATE
         private dynamic GetStringConvertedToType(Type type)
         {
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, "Attempting manual conversion of {Value} to type {Type}", _toConvert, type.FullName);
+
             switch (type)
             {
                 case Type _ when type == typeof(string):
@@ -98,6 +113,7 @@ namespace DoWithYou.Shared.Converters
                         convertedToUShort : default;
             }
 
+            Log.Logger.LogEventWarning(LoggerEvents.LIBRARY, "Manual conversion of {Value} to type {Type} failed. Returning default(string).", _toConvert, type.FullName);
             return default;
         }
         #endregion
@@ -106,6 +122,6 @@ namespace DoWithYou.Shared.Converters
     public static class StringConverterBuilder
     {
         public static IStringConverter Convert(this IStringConverter converter, string value) =>
-            new StringConverter(value);
+            new StringConverter(((StringConverter)converter).templates, value);
     }
 }

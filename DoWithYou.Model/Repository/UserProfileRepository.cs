@@ -4,6 +4,10 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Shared;
+using DoWithYou.Shared;
+using DoWithYou.Shared.Constants;
+using Serilog;
 
 namespace DoWithYou.Model.Repository
 {
@@ -12,17 +16,26 @@ namespace DoWithYou.Model.Repository
         #region VARIABLES
         private IDoWithYouContext _context;
         private IRepository<UserProfile> _repository;
+        private readonly ILoggerTemplates _templates;
         #endregion
 
         #region CONSTRUCTORS
-        public UserProfileRepository(IDoWithYouContext context)
+        public UserProfileRepository(IDoWithYouContext context, ILoggerTemplates templates)
         {
+            _templates = templates;
+
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserProfileRepository));
+
             _context = context;
-            _repository = new Repository<UserProfile>(_context);
+            _repository = new Repository<UserProfile>(_context, templates);
         }
 
-        internal UserProfileRepository(IDoWithYouContext context, IRepository<UserProfile> repository)
+        internal UserProfileRepository(IDoWithYouContext context, IRepository<UserProfile> repository, ILoggerTemplates templates)
         {
+            _templates = templates;
+
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserProfileRepository));
+
             _context = context;
             _repository = repository;
         }
@@ -39,9 +52,11 @@ namespace DoWithYou.Model.Repository
         public void SaveChanges() => _repository.SaveChanges();
 
         public void Update(IUserProfile entity) => _repository.Update((UserProfile)entity);
-        
+
         public void Dispose()
         {
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, nameof(UserProfileRepository));
+
             _repository?.Dispose();
             _repository = null;
 

@@ -21,10 +21,7 @@ namespace DoWithYou.Data.Migrations
                     Email = table.Column<string>($"{SqlDbType.VarChar.ToString()}(max)")
                 },
                 null,
-                table =>
-                {
-                    table.PrimaryKey($"PK_{nameof(User)}", u => u.ID);
-                });
+                table => table.PrimaryKey($"PK_{nameof(User)}", u => u.ID));
 
             migrationBuilder.CreateTable(
                 nameof(UserProfile),
