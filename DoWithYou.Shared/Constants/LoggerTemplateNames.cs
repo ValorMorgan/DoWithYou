@@ -1,14 +1,21 @@
 ﻿namespace DoWithYou.Shared.Constants
 {
-    public static class LoggerTemplates
+    public static class LoggerTemplateNames
     {
         #region VARIABLES
+        public const string CONFIGURING = "Configuring";
+        public const string CONNECTION_TYPE = "ConnectionType";
         public const string CONSTRUCTOR = "Constructor";
         public const string CONVERT_TO = "ConvertTo";
         public const string DATA_DELETE = "DataDelete";
         public const string DATA_GET = "DataGet";
         public const string DATA_GET_ALL = "DataGetAll";
         public const string DATA_INSERT = "DataInsert";
+        public const string DATA_MAP = "DataMap";
+        public const string DATA_MAP_KEYS = "DataMapKeys";
+        public const string DATA_MAP_PROPERTIES = "DataMapProperties";
+        public const string DATA_MAP_RELATIONSHIPS = "DataMapRelationships";
+        public const string DATA_MAP_TABLES = "DataMapTables";
         public const string DATA_SAVE_CHANGES = "DataSaveChanges";
         public const string DATA_UPDATE = "DataUpdate";
         public const string DISPOSE = "Dispose";

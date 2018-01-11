@@ -7,7 +7,7 @@ namespace DoWithYou.UnitTest.Shared
     [TestFixture]
     public class StringConverterTests
     {
-        private readonly IStringConverter _converter = new StringConverter();
+        private readonly IStringConverter _converter = new StringConverter(TestSetupFactory.GetLoggerTemplates());
 
         [Test]
         public void Convert_Should_Return_IStringConverter()

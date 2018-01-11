@@ -27,7 +27,7 @@ namespace DoWithYou.Model.Repository
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserProfileRepository));
 
             _context = context;
-            _repository = new Repository<UserProfile>(_context);
+            _repository = new Repository<UserProfile>(_context, templates);
         }
 
         internal UserProfileRepository(IDoWithYouContext context, IRepository<UserProfile> repository, ILoggerTemplates templates)

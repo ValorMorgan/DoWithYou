@@ -10,39 +10,53 @@ namespace DoWithYou.Shared.Repositories
         #endregion
 
         #region PROPERTIES
-        public string Constructor => _config.Serilog.FindTemplate(Constants.LoggerTemplates.CONSTRUCTOR);
+        public string Configuring => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.CONFIGURING);
 
-        public string ConvertTo => _config.Serilog.FindTemplate(Constants.LoggerTemplates.CONVERT_TO);
+        public string ConnectionType => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.CONNECTION_TYPE);
 
-        public string DataDelete => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_DELETE);
+        public string Constructor => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.CONSTRUCTOR);
 
-        public string DataGet => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_GET);
+        public string ConvertTo => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.CONVERT_TO);
 
-        public string DataGetAll => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_GET_ALL);
+        public string DataDelete => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_DELETE);
 
-        public string DataInsert => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_INSERT);
+        public string DataGet => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_GET);
 
-        public string DataSaveChanges => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_SAVE_CHANGES);
+        public string DataGetAll => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_GET_ALL);
 
-        public string DataUpdate => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DATA_UPDATE);
+        public string DataInsert => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_INSERT);
 
-        public string Dispose => _config.Serilog.FindTemplate(Constants.LoggerTemplates.DISPOSE);
+        public string DataMap => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_MAP);
 
-        public string RegisterEvent => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REGISTER_EVENT);
+        public string DataMapKeys => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_MAP_KEYS);
 
-        public string RequestDelete => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_DELETE);
+        public string DataMapProperties => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_MAP_PROPERTIES);
 
-        public string RequestGet => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_GET);
+        public string DataMapRelationships => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_MAP_RELATIONSHIPS);
 
-        public string RequestGetDynamic => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_GET_DYNAMIC);
+        public string DataMapTables => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_MAP_TABLES);
 
-        public string RequestInsert => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_INSERT);
+        public string DataSaveChanges => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_SAVE_CHANGES);
 
-        public string RequestSaveChanges => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_SAVE_CHANGES);
+        public string DataUpdate => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DATA_UPDATE);
 
-        public string RequestUpdate => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_UPDATE);
+        public string Dispose => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.DISPOSE);
 
-        public string RequestUpdateDynamic => _config.Serilog.FindTemplate(Constants.LoggerTemplates.REQUEST_UPDATE_DYNAMIC);
+        public string RegisterEvent => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REGISTER_EVENT);
+
+        public string RequestDelete => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_DELETE);
+
+        public string RequestGet => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_GET);
+
+        public string RequestGetDynamic => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_GET_DYNAMIC);
+
+        public string RequestInsert => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_INSERT);
+
+        public string RequestSaveChanges => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_SAVE_CHANGES);
+
+        public string RequestUpdate => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_UPDATE);
+
+        public string RequestUpdateDynamic => _config.Serilog.FindTemplate(Constants.LoggerTemplateNames.REQUEST_UPDATE_DYNAMIC);
         #endregion
 
         #region CONSTRUCTORS

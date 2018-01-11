@@ -1,12 +1,13 @@
 using System;
-using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DoWithYou.Infrastructure.Middleware;
+using DoWithYou.Interface.Shared;
 using DoWithYou.Service.Utilities;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Factories;
+using DoWithYou.Shared.Repositories;
 using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,9 @@ namespace DoWithYou
 {
     public class Startup
     {
-        private Shared.Repositories.LoggerTemplates _templates;
+        #region VARIABLES
+        private readonly ILoggerTemplates _templates;
+        #endregion
 
         #region PROPERTIES
         public IContainer ApplicationContainer { get; set; }
@@ -29,7 +32,7 @@ namespace DoWithYou
         #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
-            _templates = new Shared.Repositories.LoggerTemplates(configuration.Get<AppConfig>());
+            _templates = new LoggerTemplates(configuration.Get<AppConfig>());
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
@@ -102,7 +105,7 @@ namespace DoWithYou
 
             // Logging for requests
             app.UseMiddleware<SerilogMiddleware>();
-            
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

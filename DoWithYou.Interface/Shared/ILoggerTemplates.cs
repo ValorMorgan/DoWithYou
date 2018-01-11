@@ -2,6 +2,10 @@
 {
     public interface ILoggerTemplates
     {
+        string Configuring { get; }
+
+        string ConnectionType { get; }
+
         string Constructor { get; }
 
         string ConvertTo { get; }
@@ -13,6 +17,16 @@
         string DataGetAll { get; }
 
         string DataInsert { get; }
+
+        string DataMap { get; }
+
+        string DataMapKeys { get; }
+
+        string DataMapProperties { get; }
+
+        string DataMapRelationships { get; }
+
+        string DataMapTables { get; }
 
         string DataSaveChanges { get; }
 

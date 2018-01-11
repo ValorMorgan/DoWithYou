@@ -27,7 +27,7 @@ namespace DoWithYou.UnitTest.Model
             }
         }
 
-        private UserRepository TestRepository => new UserRepository(null, MockedRepository);
+        private UserRepository TestRepository => new UserRepository(null, MockedRepository, TestSetupFactory.GetLoggerTemplates());
 
         [Test]
         [TestCase(1)]
