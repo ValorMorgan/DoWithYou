@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,13 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DoWithYou.Data\DoWithYou.Data.csproj" />
-    <ProjectReference Include="..\DoWithYou.Interface\DoWithYou.Interface.csproj" />
-    <ProjectReference Include="..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="System">
-      <HintPath>System</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>
