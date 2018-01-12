@@ -11,17 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
@@ -33,11 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DoWithYou.Data\DoWithYou.Data.csproj" />
-    <ProjectReference Include="..\..\DoWithYou.Interface\DoWithYou.Interface.csproj" />
-    <ProjectReference Include="..\..\DoWithYou.Model\DoWithYou.Model.csproj" />
-    <ProjectReference Include="..\..\DoWithYou.Service\DoWithYou.Service.csproj" />
-    <ProjectReference Include="..\..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
+    <ProjectReference Include="..\..\DoWithYou\DoWithYou.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -17,8 +17,6 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DoWithYou.Interface\DoWithYou.Interface.csproj" />
     <ProjectReference Include="..\DoWithYou.Service\DoWithYou.Service.csproj" />
-    <ProjectReference Include="..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
   </ItemGroup>
 </Project>
