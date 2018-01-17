@@ -1,6 +1,6 @@
 ﻿namespace DoWithYou.Interface.Data.Entity
 {
-    public interface IUserProfile : IBaseEntity
+    public interface IUserProfile : IBaseUserEntity
     {
         string Address1 { get; set; }
         string Address2 { get; set; }
@@ -10,7 +10,6 @@
         string MiddleName { get; set; }
         string Phone { get; set; }
         string State { get; set; }
-        IUser User { get; set; }
         string ZipCode { get; set; }
     }
 }

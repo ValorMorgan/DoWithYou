@@ -3,14 +3,14 @@ using DoWithYou.Interface.Data.Entity;
 
 namespace DoWithYou.Data.Entities.DoWithYou
 {
-    public class User : BaseEntity, IUser
+    public class User : BaseUserEntity, IUser
     {
         public string Email { get; set; }
 
-        public string Password { get; set; }
-
         public string Username { get; set; }
 
-        public virtual IUserProfile UserProfile { get; set; }
+        public string Password { get; set; }
+
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

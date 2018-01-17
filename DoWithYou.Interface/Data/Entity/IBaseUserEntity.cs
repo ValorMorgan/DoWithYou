@@ -2,10 +2,12 @@
 
 namespace DoWithYou.Interface.Data.Entity
 {
-    public interface IBaseEntity
+    public interface IBaseUserEntity
     {
         DateTime CreationDate { get; set; }
 
         DateTime ModifiedDate { get; set; }
+
+        long UserId { get; set; }
     }
 }

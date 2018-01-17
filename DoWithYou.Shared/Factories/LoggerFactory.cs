@@ -9,27 +9,28 @@ namespace DoWithYou.Shared.Factories
 {
     public class LoggerFactory : ILoggerFactory
     {
-        [Obsolete("Should use <cref=\"GetLoggerFromConfiguration\"> which generates based on provided settings.")]
         public Logger GetLogger()
         {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "Logs");
             string today = DateTime.Now.ToString("yyyyMMdd");
 
-            return new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Debug()
-                .WriteTo.File(
-                    path: Path.Combine(filePath, $"{today}.log"))
-                .CreateLogger();
+            var configuration = new LoggerConfiguration()
+                .MinimumLevel?.Verbose()
+                ?.MinimumLevel?.Override("Microsoft", LogEventLevel.Warning)
+                ?.MinimumLevel?.Override("System", LogEventLevel.Warning)
+                ?.Enrich?.FromLogContext()
+                ?.WriteTo.Console()
+                ?.WriteTo.Debug()
+                ?.WriteTo.File(Path.Combine(filePath, $"{today}.log"));
+
+            return configuration?.CreateLogger()
+                ?? throw new ApplicationException($"Failed to generate a new {nameof(Logger)}");
         }
 
-        public Logger GetLoggerFromConfiguration(IConfiguration config) =>
+        public Logger GetLoggerFromConfiguration(IConfiguration config) => config == default(IConfiguration) ?
+            GetLogger() :
             new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
-                .CreateLogger();
+                ?.CreateLogger();
     }
 }
