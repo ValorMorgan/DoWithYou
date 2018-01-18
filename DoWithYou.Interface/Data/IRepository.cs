@@ -7,8 +7,6 @@ namespace DoWithYou.Interface.Data
     {
         void Delete(T entity);
 
-        T Get(long id);
-
         IEnumerable<T> GetAll();
 
         void Insert(T entity);

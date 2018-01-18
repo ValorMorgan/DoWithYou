@@ -36,12 +36,6 @@ namespace DoWithYou.Service
             _repository.Delete(entity);
         }
 
-        public T Get(long id)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGet, typeof(T).Name, id);
-            return _repository.Get(id);
-        }
-
         public T Get(Func<IEnumerable<T>, T> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);

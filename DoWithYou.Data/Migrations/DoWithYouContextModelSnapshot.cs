@@ -22,7 +22,7 @@ namespace DoWithYou.Data.Migrations
 
             modelBuilder.Entity("DoWithYou.Data.Entities.DoWithYou.User", b =>
                 {
-                    b.Property<long>("UserId");
+                    b.Property<long>("UserID");
 
                     b.Property<DateTime>("CreationDate");
 
@@ -37,14 +37,14 @@ namespace DoWithYou.Data.Migrations
                     b.Property<string>("Username")
                         .IsRequired();
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserID");
 
                     b.ToTable("User");
                 });
 
             modelBuilder.Entity("DoWithYou.Data.Entities.DoWithYou.UserProfile", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("UserProfileID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address1")
@@ -72,21 +72,23 @@ namespace DoWithYou.Data.Migrations
                     b.Property<string>("State")
                         .IsRequired();
 
+                    b.Property<long>("UserID");
+
                     b.Property<string>("ZipCode")
                         .IsRequired();
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserProfileID");
 
                     b.ToTable("UserProfile");
                 });
 
-            modelBuilder.Entity("DoWithYou.Data.Entities.DoWithYou.UserProfile", b =>
-            {
-                b.HasOne("DoWithYou.Data.Entities.DoWithYou.User", "User")
-                    .WithOne("UserProfile")
-                    .HasForeignKey("DoWithYou.Data.Entities.DoWithYou.User", "UserId")
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+            modelBuilder.Entity("DoWithYou.Data.Entities.DoWithYou.User", b =>
+                {
+                    b.HasOne("DoWithYou.Data.Entities.DoWithYou.UserProfile", "UserProfile")
+                        .WithOne("User")
+                        .HasForeignKey("DoWithYou.Data.Entities.DoWithYou.User", "UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 #pragma warning restore 612, 618
         }
     }

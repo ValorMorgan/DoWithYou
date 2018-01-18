@@ -59,7 +59,8 @@ namespace DoWithYou.Data.Factories
                 throw new NullReferenceException($"Failed to retrieve a valid connection string from the provided {nameof(AppConfig)}.");
 
             return new DbContextOptionsBuilder<DoWithYouContext>()
-                .UseSqlServer(connectionString);
+                .UseSqlServer(connectionString)
+                .ConfigureWarnings(warningsBuilder => warningsBuilder.Default(WarningBehavior.Log));
         }
         #endregion
     }

@@ -8,11 +8,12 @@ namespace DoWithYou.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(nullable: false)
+                    UserID = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
@@ -20,13 +21,18 @@ namespace DoWithYou.Data.Migrations
                     CreationDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK_User", x => x.UserId); });
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserID);
+                });
 
             migrationBuilder.CreateTable(
                 name: "UserProfile",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(nullable: false),
+                    UserProfileID = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserID = table.Column<long>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     MiddleName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: false),
@@ -41,12 +47,12 @@ namespace DoWithYou.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProfile", x => x.UserId);
+                    table.PrimaryKey("PK_UserProfile", x => x.UserProfileID);
                     table.ForeignKey(
-                        name: "FK_UserProfile_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_UserProfile_User_UserID",
+                        column: x => x.UserID,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
         }

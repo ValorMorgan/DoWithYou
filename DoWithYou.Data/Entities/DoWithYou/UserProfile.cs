@@ -3,8 +3,12 @@ using DoWithYou.Interface.Data.Entity;
 
 namespace DoWithYou.Data.Entities.DoWithYou
 {
-    public class UserProfile : BaseUserEntity, IUserProfile
+    public class UserProfile : BaseEntity, IUserProfile
     {
+        public long UserProfileID { get; set; }
+
+        public long UserID { get; set; }
+
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }

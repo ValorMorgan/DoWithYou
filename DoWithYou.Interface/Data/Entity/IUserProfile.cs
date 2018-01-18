@@ -1,7 +1,8 @@
 ﻿namespace DoWithYou.Interface.Data.Entity
 {
-    public interface IUserProfile : IBaseUserEntity
+    public interface IUserProfile : IBaseEntity
     {
+        long UserProfileID { get; set; }
         string Address1 { get; set; }
         string Address2 { get; set; }
         string City { get; set; }

@@ -32,7 +32,7 @@ namespace DoWithYou.Data.Maps
         {
             Log.Logger.LogEventVerbose(LoggerEvents.DATA, TEMPLATES.DataMapKeys, nameof(User), nameof(EntityTypeBuilder));
 
-            builder.HasKey(e => e.UserId);
+            builder.HasKey(e => e.UserID);
         }
 
         private static void MapProperties(EntityTypeBuilder<User> builder)
@@ -50,7 +50,7 @@ namespace DoWithYou.Data.Maps
 
             builder.HasOne(e => e.UserProfile)
                 .WithOne(e => e.User)
-                .HasForeignKey<UserProfile>(e => e.UserId);
+                .HasForeignKey<UserProfile>(e => e.UserID);
         }
         #endregion
     }

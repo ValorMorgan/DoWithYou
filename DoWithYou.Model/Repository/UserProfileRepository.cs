@@ -43,8 +43,6 @@ namespace DoWithYou.Model.Repository
 
         public void Delete(IUserProfile entity) => _repository.Delete((UserProfile)entity);
 
-        public IUserProfile Get(long id) => _repository.Get(id);
-
         public IEnumerable<IUserProfile> GetAll() => _repository.GetAll();
 
         public void Insert(IUserProfile entity) => _repository.Insert((UserProfile)entity);

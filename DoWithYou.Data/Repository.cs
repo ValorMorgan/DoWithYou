@@ -43,12 +43,6 @@ namespace DoWithYou.Data
             SaveChanges();
         }
 
-        public T Get(long id)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataGet, typeof(T).Name, id);
-            return _entities.SingleOrDefault(e => e.UserId == id);
-        }
-
         public IEnumerable<T> GetAll()
         {
             Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataGetAll, typeof(T).Name);
@@ -60,7 +54,7 @@ namespace DoWithYou.Data
             if (entity == default(T))
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataInsert, typeof(T).Name, entity.UserId);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataInsert, typeof(T).Name);
 
             _entities.Add(entity);
             SaveChanges();
@@ -77,7 +71,7 @@ namespace DoWithYou.Data
             if (entity == default(T))
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataUpdate, typeof(T).Name, entity.UserId);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataUpdate, typeof(T).Name);
 
             _entities.Update(entity);
             SaveChanges();
