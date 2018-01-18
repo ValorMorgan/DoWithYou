@@ -32,14 +32,8 @@ namespace DoWithYou.Service
 
         public void Delete(T entity)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestDelete, typeof(T).Name, entity?.ID ?? -1);
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestDelete, typeof(T).Name);
             _repository.Delete(entity);
-        }
-
-        public T Get(long id)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGet, typeof(T).Name, id);
-            return _repository.Get(id);
         }
 
         public T Get(Func<IEnumerable<T>, T> operation)
@@ -52,7 +46,7 @@ namespace DoWithYou.Service
 
         public void Insert(T entity)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestInsert, typeof(T).Name, entity?.ID ?? -1);
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestInsert, typeof(T).Name);
             _repository.Insert(entity);
         }
 
@@ -64,7 +58,7 @@ namespace DoWithYou.Service
 
         public void Update(T entity)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestUpdate, typeof(T).Name, entity?.ID ?? -1);
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestUpdate, typeof(T).Name);
             _repository.Update(entity);
         }
 

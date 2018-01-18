@@ -23,8 +23,7 @@ namespace DoWithYou.UnitTest.Service
                     return _queryGenerator;
 
                 IRepository<IUser> repository = Substitute.For<IRepository<IUser>>();
-
-                repository.Get(Arg.Any<long>()).Returns(new User());
+                
                 repository.GetAll().Returns(new List<IUser>());
                 repository.When(x => x.Delete(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.Insert(Arg.Any<IUser>())).DoNotCallBase();
@@ -35,15 +34,6 @@ namespace DoWithYou.UnitTest.Service
 
                 return _queryGenerator;
             }
-        }
-
-        [Test]
-        [TestCase(-1)]
-        [TestCase(1)]
-        [TestCase(long.MaxValue)]
-        public void Get_When_Provided_Id_Returns_IUser(long id)
-        {
-            Assert.That(TestingGenerator.Get(id), Is.Not.Null.And.InstanceOf<IUser>());
         }
 
         [Test]

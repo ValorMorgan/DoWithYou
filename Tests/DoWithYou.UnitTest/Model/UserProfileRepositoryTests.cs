@@ -16,8 +16,7 @@ namespace DoWithYou.UnitTest.Model
             get
             {
                 IRepository<UserProfile> substitute = Substitute.For<IRepository<UserProfile>>();
-
-                substitute.Get(Arg.Any<long>()).Returns(new UserProfile());
+                
                 substitute.GetAll().Returns(new List<UserProfile>());
                 substitute.When(r => r.Delete(Arg.Any<UserProfile>())).DoNotCallBase();
                 substitute.When(r => r.Insert(Arg.Any<UserProfile>())).DoNotCallBase();
@@ -29,16 +28,6 @@ namespace DoWithYou.UnitTest.Model
         }
 
         private UserProfileRepository TestRepository => new UserProfileRepository(null, MockedRepository, TestSetupFactory.GetLoggerTemplates());
-
-        [Test]
-        [TestCase(1)]
-        [TestCase(-1)]
-        [TestCase(long.MaxValue)]
-        public void Get_Returns_One_Match(long id)
-        {
-            using (var repo = TestRepository)
-                Assert.That(repo.Get(id), Is.Not.Null.And.InstanceOf<UserProfile>());
-        }
 
         [Test]
         public void GetAll_Returns_Enumerable()

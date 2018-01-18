@@ -9,7 +9,6 @@ namespace DoWithYou.Interface.Service
     {
         void Delete(T entity);
         T Get(Func<IEnumerable<T>, T> operation);
-        T Get(long id);
         void Insert(T entity);
         void SaveChanges();
         void Update(Func<IEnumerable<T>, T> operation);
