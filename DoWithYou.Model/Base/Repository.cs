@@ -15,7 +15,7 @@ namespace DoWithYou.Model.Base
         where T : BaseEntity
     {
         #region VARIABLES
-        private IDoWithYouContext _context;
+        private readonly IDoWithYouContext _context;
         private DbSet<T> _entities;
         protected readonly ILoggerTemplates templates;
         #endregion
@@ -83,8 +83,7 @@ namespace DoWithYou.Model.Base
 
             _entities = null;
 
-            _context?.Dispose();
-            _context = null;
+            // NOTE: Purposefully do not dispose of Context. Autofac handles disposing of this object.
         }
     }
 }

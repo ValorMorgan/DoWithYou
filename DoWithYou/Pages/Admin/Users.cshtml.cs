@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Autofac.Features.OwnedInstances;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Service;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,13 +11,17 @@ namespace DoWithYou.Pages.Admin
     public class UsersModel : PageModel
     {
         #region PROPERTIES
-        public IEnumerable<IUser> Users { get; set; }
+        public IList<IUser> Users { get; set; }
         #endregion
 
         #region CONSTRUCTORS
-        public UsersModel(IDatabaseHandler<IUser> repository)
+        public UsersModel(Owned<IDatabaseHandler<IUser>> ownedScope)
         {
-            Users = repository?.Get(u => u?.Where(e => e != null));
+            if (ownedScope == null)
+                throw new ArgumentNullException(nameof(ownedScope));
+
+            using (ownedScope)
+                Users = ownedScope.Value?.Get(u => u?.Where(e => e != null));
         }
         #endregion
 

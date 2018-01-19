@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Service;
@@ -43,12 +44,12 @@ namespace DoWithYou.Service
                 operation(_repository.GetAll());
         }
 
-        public IEnumerable<T> Get(Func<IEnumerable<T>, IEnumerable<T>> operation)
+        public IList<T> Get(Func<IEnumerable<T>, IEnumerable<T>> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
             return operation == default ?
                 default :
-                operation(_repository.GetAll());
+                operation(_repository.GetAll()).ToList();
         }
 
         public void Insert(T entity)

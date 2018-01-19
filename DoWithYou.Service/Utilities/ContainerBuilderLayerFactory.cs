@@ -24,8 +24,6 @@ namespace DoWithYou.Service.Utilities
         #region PRIVATE
         private static void RegisterDataLayerTypes(ref ContainerBuilder builder)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer to {Class}", nameof(ContainerBuilder));
-
             RegisterTypes(ref builder);
             RegisterInstances(ref builder);
 
@@ -38,15 +36,15 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Instances to {Class}", nameof(ContainerBuilder));
 
+                // NOTE: Data Contexts are single instance to reduce EF creation processing.
                 var doWithYouContextFactory = new DoWithYouContextFactory();
-                build.RegisterInstance<IDoWithYouContext>(doWithYouContextFactory.CreateDbContext(null));
+                build.RegisterInstance<IDoWithYouContext>(doWithYouContextFactory.CreateDbContext(null))
+                    .SingleInstance();
             }
         }
 
         private static void RegisterModelLayerTypes(ref ContainerBuilder builder)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Model Layer to {Class}", nameof(ContainerBuilder));
-
             RegisterTypes(ref builder);
             RegisterInstances(ref builder);
 
@@ -67,8 +65,6 @@ namespace DoWithYou.Service.Utilities
 
         private static void RegisterServiceLayerTypes(ref ContainerBuilder builder)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Service Layer to {Class}", nameof(ContainerBuilder));
-
             RegisterTypes(ref builder);
             RegisterInstances(ref builder);
 
