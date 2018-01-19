@@ -36,20 +36,16 @@ namespace DoWithYou.Service
             _repository.Delete(entity);
         }
 
-        public T Get(Func<IEnumerable<T>, T> operation)
+        public T Get(Func<T, bool> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
-            return operation == default ?
-                default :
-                operation(_repository.GetAll());
+            return _repository.Get(operation);
         }
 
-        public IList<T> Get(Func<IEnumerable<T>, IEnumerable<T>> operation)
+        public IList<T> GetMany(Func<T, bool> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
-            return operation == default ?
-                default :
-                operation(_repository.GetAll()).ToList();
+            return _repository.GetMany(operation)?.ToList() ?? new List<T>();
         }
 
         public void Insert(T entity)
@@ -70,7 +66,7 @@ namespace DoWithYou.Service
             _repository.Update(entity);
         }
 
-        public void Update(Func<IEnumerable<T>, T> operation)
+        public void Update(Func<T, bool> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestUpdateDynamic, typeof(T).Name);
 

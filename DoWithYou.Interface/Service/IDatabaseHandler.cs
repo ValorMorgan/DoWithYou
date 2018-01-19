@@ -8,11 +8,11 @@ namespace DoWithYou.Interface.Service
         where T : IBaseEntity
     {
         void Delete(T entity);
-        T Get(Func<IEnumerable<T>, T> operation);
-        IList<T> Get(Func<IEnumerable<T>, IEnumerable<T>> operation);
+        T Get(Func<T, bool> operation);
+        IList<T> GetMany(Func<T, bool> operation);
         void Insert(T entity);
         void SaveChanges();
-        void Update(Func<IEnumerable<T>, T> operation);
+        void Update(Func<T, bool> operation);
         void Update(T entity);
     }
 }

@@ -7,6 +7,10 @@ namespace DoWithYou.Interface.Data
     {
         void Delete(T entity);
 
+        T Get(Func<T, bool> operation);
+
+        IEnumerable<T> GetMany(Func<T, bool> operation);
+
         IEnumerable<T> GetAll();
 
         void Insert(T entity);

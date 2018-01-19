@@ -52,9 +52,9 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Model Layer Types to {Class}", nameof(ContainerBuilder));
 
-                build.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
-                build.RegisterType<UserRepository>().As<IRepository<IUser>>();
-                build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>();
+                build.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+                build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
+                build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)
@@ -72,7 +72,7 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Service Layer Types to {Class}", nameof(ContainerBuilder));
 
-                build.RegisterGeneric(typeof(DatabaseHandler<>)).As(typeof(IDatabaseHandler<>));
+                build.RegisterGeneric(typeof(DatabaseHandler<>)).As(typeof(IDatabaseHandler<>)).InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

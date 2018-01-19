@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
@@ -20,6 +21,12 @@ namespace DoWithYou.Model
 
         public void Delete(IUserProfile entity) =>
             base.Delete(entity as UserProfile);
+
+        public IUserProfile Get(Func<IUserProfile, bool> operation) =>
+            base.Get(operation);
+
+        public IEnumerable<IUserProfile> GetMany(Func<IUserProfile, bool> operation) =>
+            base.GetMany(operation);
 
         public void Insert(IUserProfile entity) =>
             base.Insert(entity as UserProfile);
