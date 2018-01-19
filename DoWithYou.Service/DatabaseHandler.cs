@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Service;
@@ -41,7 +40,15 @@ namespace DoWithYou.Service
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
             return operation == default ?
                 default :
-                operation(_repository.GetAll()?.Select(e => e));
+                operation(_repository.GetAll());
+        }
+
+        public IEnumerable<T> Get(Func<IEnumerable<T>, IEnumerable<T>> operation)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
+            return operation == default ?
+                default :
+                operation(_repository.GetAll());
         }
 
         public void Insert(T entity)
@@ -74,7 +81,7 @@ namespace DoWithYou.Service
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, nameof(DatabaseHandler<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, $"{nameof(DatabaseHandler<T>)}<{typeof(T).Name}>");
 
             _repository?.Dispose();
             _repository = null;

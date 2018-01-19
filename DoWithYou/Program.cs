@@ -17,31 +17,51 @@ namespace DoWithYou
 
         public static int Main(string[] args)
         {
+            int returnCode = 0;
+
             try
             {
                 // Log.Logger not setup until after we build the WebHost
-                IWebHost host = BuildWebHost(args);
-
-                Log.Logger.LogEventInformation(LoggerEvents.STARTUP, "Starting web host");
-                host.Run();
-
-                return 0;
+                using (IWebHost host = BuildWebHost(args))
+                {
+                    Log.Logger.LogEventInformation(LoggerEvents.STARTUP, "Starting web host");
+                    host.Run();
+                }
             }
             catch (Exception ex)
             {
                 if (Log.Logger != null)
                     Log.Logger.LogEventFatal(ex, LoggerEvents.SHUTDOWN, "Host terminated unexpectedly");
 
-                return 1;
+                returnCode = 1;
             }
             finally
             {
-                if (Log.Logger != null)
-                {
-                    Log.Logger.LogEventInformation(LoggerEvents.SHUTDOWN, "Closing and Flushing logger.");
-                    Log.CloseAndFlush();
-                }
+                if (!TryCloseAndFlushLogger())
+                    returnCode = 1;
+            }
+
+            return returnCode;
+        }
+
+        #region PRIVATE
+        private static bool TryCloseAndFlushLogger()
+        {
+            if (Log.Logger == null)
+                return true;
+
+            try
+            {
+                Log.Logger.LogEventInformation(LoggerEvents.SHUTDOWN, "Closing and Flushing logger.");
+                Log.CloseAndFlush();
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
+        #endregion
     }
 }

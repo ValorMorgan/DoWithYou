@@ -17,7 +17,7 @@ using Serilog;
 
 namespace DoWithYou
 {
-    public class Startup
+    public class Startup : IDisposable
     {
         #region VARIABLES
         private readonly ILoggerTemplates _templates;
@@ -32,10 +32,9 @@ namespace DoWithYou
         #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
-            _templates = new LoggerTemplates(configuration.Get<AppConfig>());
+            SetupLogger(configuration);
 
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
+            _templates = new LoggerTemplates(configuration.Get<AppConfig>());
 
             Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(Startup));
 
@@ -48,21 +47,25 @@ namespace DoWithYou
         {
             ConfigureForEnvironment(ref app, env);
             ConfigureMiddleware(ref app);
-
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, _templates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
-            applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
+            RegisterEvents(ref applicationLifetime);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Adding Services to {Interface}", nameof(IServiceCollection));
-            services.AddMvc();
+            services.AddMvc().AddControllersAsServices();
             services.AddAutofac();
 
             ConfigureApplicationContainer(services);
 
             return new AutofacServiceProvider(ApplicationContainer);
+        }
+
+        public void Dispose()
+        {
+            ApplicationContainer?.Dispose();
+            ApplicationContainer = null;
         }
 
         #region PRIVATE
@@ -114,6 +117,18 @@ namespace DoWithYou
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+        }
+
+        private void RegisterEvents(ref IApplicationLifetime applicationLifetime)
+        {
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, _templates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
+            applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
+        }
+
+        private static void SetupLogger(IConfiguration configuration)
+        {
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
         }
         #endregion
     }

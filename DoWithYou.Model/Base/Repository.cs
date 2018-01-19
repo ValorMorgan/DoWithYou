@@ -9,23 +9,23 @@ using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace DoWithYou.Data
+namespace DoWithYou.Model.Base
 {
-    public class Repository<T> : IRepository<T>
+    public abstract class Repository<T> : IRepository<T>
         where T : BaseEntity
     {
         #region VARIABLES
         private IDoWithYouContext _context;
         private DbSet<T> _entities;
-        private readonly ILoggerTemplates _templates;
+        protected readonly ILoggerTemplates templates;
         #endregion
 
         #region CONSTRUCTORS
-        public Repository(IDoWithYouContext context, ILoggerTemplates templates)
+        protected Repository(IDoWithYouContext context, ILoggerTemplates templates)
         {
-            _templates = templates;
+            this.templates = templates;
 
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(Repository<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(Repository<T>));
 
             _context = context;
             _entities = _context.Set<T>();
@@ -34,10 +34,10 @@ namespace DoWithYou.Data
 
         public void Delete(T entity)
         {
-            if (entity == default(T))
+            if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataDelete, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataDelete, typeof(T).Name);
 
             _entities.Remove(entity);
             SaveChanges();
@@ -45,16 +45,16 @@ namespace DoWithYou.Data
 
         public IEnumerable<T> GetAll()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataGetAll, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataGetAll, typeof(T).Name);
             return _entities.AsEnumerable();
         }
 
         public void Insert(T entity)
         {
-            if (entity == default(T))
+            if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataInsert, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataInsert, typeof(T).Name);
 
             _entities.Add(entity);
             SaveChanges();
@@ -62,16 +62,16 @@ namespace DoWithYou.Data
 
         public void SaveChanges()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataSaveChanges, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataSaveChanges, typeof(T).Name);
             _context.SaveChanges();
         }
 
         public void Update(T entity)
         {
-            if (entity == default(T))
+            if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, _templates.DataUpdate, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataUpdate, typeof(T).Name);
 
             _entities.Update(entity);
             SaveChanges();
@@ -79,7 +79,7 @@ namespace DoWithYou.Data
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, _templates.Dispose, nameof(Repository<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, templates.Dispose, $"{nameof(Repository<T>)}<{typeof(T).Name}>");
 
             _entities = null;
 
