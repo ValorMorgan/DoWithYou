@@ -23,8 +23,8 @@ namespace DoWithYou.UnitTest.Service
                     return _queryGenerator;
 
                 IRepository<IUser> repository = Substitute.For<IRepository<IUser>>();
-                
-                repository.GetAll().Returns(new List<IUser>());
+
+                repository.GetQueryable().Returns(new List<User>().AsQueryable());
                 repository.When(x => x.Delete(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.Insert(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
@@ -39,7 +39,7 @@ namespace DoWithYou.UnitTest.Service
         [Test]
         public void Get_When_Provided_Query_Returns_Default_Or_IUser()
         {
-            Assert.That(TestingGenerator.Get(u => u != null), Is.EqualTo(default(IUser)).Or.InstanceOf<IUser>());
+            Assert.That(TestingGenerator.Get(users => users.FirstOrDefault()), Is.EqualTo(default(IUser)).Or.InstanceOf<IUser>());
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace DoWithYou.UnitTest.Service
         [Test]
         public void Update_When_Provided_Query_Throws_Nothing()
         {
-            Assert.That(() => TestingGenerator.Update(u => u != null), Throws.Nothing);
+            Assert.That(() => TestingGenerator.Update(users => users.FirstOrDefault()), Throws.Nothing);
         }
 
         [Test]

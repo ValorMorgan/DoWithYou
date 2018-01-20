@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DoWithYou.Interface.Data
 {
@@ -7,11 +8,7 @@ namespace DoWithYou.Interface.Data
     {
         void Delete(T entity);
 
-        T Get(Func<T, bool> operation);
-
-        IEnumerable<T> GetMany(Func<T, bool> operation);
-
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetQueryable();
 
         void Insert(T entity);
 

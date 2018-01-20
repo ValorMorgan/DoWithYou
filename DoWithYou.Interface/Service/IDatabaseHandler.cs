@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DoWithYou.Interface.Data.Entity;
 
 namespace DoWithYou.Interface.Service
@@ -8,11 +9,19 @@ namespace DoWithYou.Interface.Service
         where T : IBaseEntity
     {
         void Delete(T entity);
-        T Get(Func<T, bool> operation);
-        IList<T> GetMany(Func<T, bool> operation);
+
+        T Get(Func<IQueryable<T>, T> operation);
+
+        IList<T> GetMany(Func<IQueryable<T>, IQueryable<T>> operation);
+
+        IList<T> GetAll();
+
         void Insert(T entity);
+
         void SaveChanges();
-        void Update(Func<T, bool> operation);
+
+        void Update(Func<IQueryable<T>, T> operation);
+
         void Update(T entity);
     }
 }

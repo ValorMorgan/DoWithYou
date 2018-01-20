@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
@@ -22,12 +21,6 @@ namespace DoWithYou.Model
         public void Delete(IUser entity) =>
             base.Delete(entity as User);
 
-        public IUser Get(Func<IUser, bool> operation) =>
-            base.Get(operation);
-
-        public IEnumerable<IUser> GetMany(Func<IUser, bool> operation) =>
-            base.GetMany(operation);
-
         public void Insert(IUser entity) =>
             base.Insert(entity as User);
 
@@ -42,8 +35,8 @@ namespace DoWithYou.Model
         }
 
         #region PRIVATE
-        IEnumerable<IUser> IRepository<IUser>.GetAll() =>
-            base.GetAll();
+        IQueryable<IUser> IRepository<IUser>.GetQueryable() =>
+            base.GetQueryable();
         #endregion
     }
 }

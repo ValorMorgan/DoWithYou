@@ -36,16 +36,32 @@ namespace DoWithYou.Service
             _repository.Delete(entity);
         }
 
-        public T Get(Func<T, bool> operation)
+        public T Get(Func<IQueryable<T>, T> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
-            return _repository.Get(operation);
+
+            if (operation == default)
+                return default;
+
+            return operation(_repository.GetQueryable());
         }
 
-        public IList<T> GetMany(Func<T, bool> operation)
+        public IList<T> GetMany(Func<IQueryable<T>, IQueryable<T>> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
-            return _repository.GetMany(operation)?.ToList() ?? new List<T>();
+
+            if (operation == default)
+                return new List<T>();
+
+            return operation(_repository.GetQueryable())
+                ?.ToList() ?? new List<T>();
+        }
+
+        public IList<T> GetAll()
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
+            return _repository.GetQueryable()
+                ?.ToList() ?? new List<T>();
         }
 
         public void Insert(T entity)
@@ -66,13 +82,10 @@ namespace DoWithYou.Service
             _repository.Update(entity);
         }
 
-        public void Update(Func<T, bool> operation)
+        public void Update(Func<IQueryable<T>, T> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestUpdateDynamic, typeof(T).Name);
-
-            if (operation == default)
-                return;
-
+            
             _repository.Update(Get(operation));
         }
 

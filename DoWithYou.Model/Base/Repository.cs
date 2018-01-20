@@ -44,28 +44,10 @@ namespace DoWithYou.Model.Base
             SaveChanges();
         }
 
-        public T Get(Func<T, bool> operation)
-        {
-            if (operation == default)
-                return default;
-
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataGet, typeof(T).Name);
-            return _entities.FirstOrDefault(operation);
-        }
-
-        public IEnumerable<T> GetMany(Func<T, bool> operation)
-        {
-            if (operation == default)
-                return default;
-
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataGet, typeof(T).Name);
-            return _entities.Where(operation);
-        }
-
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetQueryable()
         {
             Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataGetAll, typeof(T).Name);
-            return _entities.AsEnumerable();
+            return _entities.AsQueryable();
         }
 
         public void Insert(T entity)

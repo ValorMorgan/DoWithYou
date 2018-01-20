@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac.Features.OwnedInstances;
 using DoWithYou.Interface.Data.Entity;
 using DoWithYou.Interface.Service;
@@ -20,7 +21,10 @@ namespace DoWithYou.Pages.Admin
                 throw new ArgumentNullException(nameof(ownedScope));
 
             using (ownedScope)
-                Users = ownedScope.Value?.GetMany(u => u != null);
+                Users = ownedScope.Value?.GetMany(users => users
+                    .Where(u => u != null)
+                    .OrderBy(u => u.UserID)
+                    .ThenBy(u => u.Username));
         }
         #endregion
 
