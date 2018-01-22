@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
@@ -30,6 +32,16 @@ namespace DoWithYou.Model.Base
             _entities = _context.Set<T>();
         }
         #endregion
+
+        public T Get(Func<IQueryable<T>, T> operation)
+        {
+            return operation(GetQueryable());
+        }
+
+        public IEnumerable<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation)
+        {
+            return operation(GetQueryable());
+        } 
 
         public void Delete(T entity)
         {

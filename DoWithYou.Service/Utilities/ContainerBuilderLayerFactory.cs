@@ -74,7 +74,7 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Service Layer Types to {Class}", nameof(ContainerBuilder));
 
-                build.RegisterGeneric(typeof(DatabaseHandler<>)).As(typeof(IDatabaseHandler<>)).InstancePerLifetimeScope();
+                build.RegisterGeneric(typeof(ModelRequestor<>)).As(typeof(IModelRequestor<>)).InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

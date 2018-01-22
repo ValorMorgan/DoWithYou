@@ -13,9 +13,9 @@ namespace DoWithYou.UnitTest.Service
     [TestFixture]
     public class DatabaseHandlerTests
     {
-        private DatabaseHandler<IUser> _queryGenerator;
+        private ModelRequestor<IUser> _queryGenerator;
 
-        private DatabaseHandler<IUser> TestingGenerator
+        private ModelRequestor<IUser> TestingGenerator
         {
             get
             {
@@ -30,7 +30,7 @@ namespace DoWithYou.UnitTest.Service
                 repository.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.SaveChanges()).DoNotCallBase();
 
-                _queryGenerator = new DatabaseHandler<IUser>(repository, TestSetupFactory.GetLoggerTemplates());
+                _queryGenerator = new ModelRequestor<IUser>(repository, TestSetupFactory.GetLoggerTemplates());
 
                 return _queryGenerator;
             }
