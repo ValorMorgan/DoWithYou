@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 
 namespace DoWithYou.Interface.Service
 {
@@ -12,7 +12,7 @@ namespace DoWithYou.Interface.Service
 
         T Get(Func<IQueryable<T>, T> operation);
 
-        IList<T> GetMany(Func<IQueryable<T>, IQueryable<T>> operation);
+        IList<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation);
 
         IList<T> GetAll();
 

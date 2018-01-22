@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac.Features.OwnedInstances;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Service;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,16 +15,20 @@ namespace DoWithYou.Pages.Admin
         #endregion
 
         #region CONSTRUCTORS
-        public UsersModel(Owned<IDatabaseHandler<IUser>> ownedScope)
+        public UsersModel(Owned<IDatabaseHandler<IUser>> scope)
         {
-            if (ownedScope == null)
-                throw new ArgumentNullException(nameof(ownedScope));
+            if (scope == null)
+                throw new ArgumentNullException(nameof(scope));
+            if (scope.Value == null)
+                throw new ArgumentNullException($"{scope.Value} : {nameof(IDatabaseHandler<IUser>)}<{nameof(IUser)}>");
 
-            using (ownedScope)
-                Users = ownedScope.Value?.GetMany(users => users
+            using (scope)
+            {
+                Users = scope.Value?.GetMany(users => users
                     .Where(u => u != null)
                     .OrderBy(u => u.UserID)
                     .ThenBy(u => u.Username));
+            }
         }
         #endregion
 

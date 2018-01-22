@@ -1,5 +1,5 @@
 ﻿using System;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 
 namespace DoWithYou.Data.Entities.DoWithYou.Base
 {

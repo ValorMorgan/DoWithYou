@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Service;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
@@ -46,7 +46,7 @@ namespace DoWithYou.Service
             return operation(_repository.GetQueryable());
         }
 
-        public IList<T> GetMany(Func<IQueryable<T>, IQueryable<T>> operation)
+        public IList<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation)
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
 

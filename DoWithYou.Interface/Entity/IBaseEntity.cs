@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DoWithYou.Interface.Data.Entity
+namespace DoWithYou.Interface.Entity
 {
     public interface IBaseEntity
     {

@@ -2,10 +2,11 @@
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Factories;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Service;
 using DoWithYou.Model;
 using DoWithYou.Model.Base;
+using DoWithYou.Model.Mappers;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using Serilog;
@@ -55,6 +56,7 @@ namespace DoWithYou.Service.Utilities
                 build.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
                 build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
                 build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
+                build.RegisterType<UserModelMapper>().As<IUserModelMapper>();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

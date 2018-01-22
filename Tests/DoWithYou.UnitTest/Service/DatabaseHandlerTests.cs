@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Service;
 using NSubstitute;
 using NUnit.Framework;

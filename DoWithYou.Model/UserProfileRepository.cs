@@ -2,7 +2,7 @@
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Model.Base;
 using DoWithYou.Shared;
