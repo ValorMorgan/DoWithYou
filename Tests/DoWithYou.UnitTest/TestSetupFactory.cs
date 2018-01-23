@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using DoWithYou.Interface.Shared;
-using DoWithYou.Shared.Repositories;
-using DoWithYou.Shared.Repositories.Settings;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
@@ -25,13 +21,6 @@ namespace DoWithYou.UnitTest
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 ?.Build();
-        }
-
-        internal static ILoggerTemplates GetLoggerTemplates()
-        {
-            IConfiguration configuration = GetApplicationSettingsConfiguration();
-            AppConfig appConfig = configuration.Get<AppConfig>();
-            return new LoggerTemplates(appConfig);
         }
     }
 }

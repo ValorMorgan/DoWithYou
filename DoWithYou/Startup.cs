@@ -2,13 +2,10 @@ using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DoWithYou.Infrastructure.Middleware;
-using DoWithYou.Interface.Shared;
 using DoWithYou.Service.Utilities;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Factories;
-using DoWithYou.Shared.Repositories;
-using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,10 +16,6 @@ namespace DoWithYou
 {
     public class Startup : IDisposable
     {
-        #region VARIABLES
-        private readonly ILoggerTemplates _templates;
-        #endregion
-
         #region PROPERTIES
         public IContainer ApplicationContainer { get; set; }
 
@@ -34,9 +27,7 @@ namespace DoWithYou
         {
             SetupLogger(configuration);
 
-            _templates = new LoggerTemplates(configuration.Get<AppConfig>());
-
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(Startup));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(Startup));
 
             Configuration = configuration;
         }
@@ -121,7 +112,7 @@ namespace DoWithYou
 
         private void RegisterEvents(ref IApplicationLifetime applicationLifetime)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, _templates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, LoggerTemplates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
             applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
 

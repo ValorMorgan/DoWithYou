@@ -31,7 +31,7 @@ namespace DoWithYou.UnitTest.Service
                 repository.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.SaveChanges()).DoNotCallBase();
 
-                _queryGenerator = new DatabaseHandler<IUser>(repository, TestSetupFactory.GetLoggerTemplates());
+                _queryGenerator = new DatabaseHandler<IUser>(repository);
 
                 return _queryGenerator;
             }

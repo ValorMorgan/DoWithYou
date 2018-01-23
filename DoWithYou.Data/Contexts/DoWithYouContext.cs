@@ -1,7 +1,6 @@
 ﻿using System;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
-using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +10,11 @@ namespace DoWithYou.Data.Contexts
 {
     public class DoWithYouContext : DbContext, IDoWithYouContext
     {
-        #region VARIABLES
-        private readonly ILoggerTemplates _templates;
-        #endregion
-
         #region CONSTRUCTORS
-        public DoWithYouContext(DbContextOptions<DoWithYouContext> options, ILoggerTemplates templates)
+        public DoWithYouContext(DbContextOptions<DoWithYouContext> options)
             : base(options)
         {
-            _templates = templates;
-
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(DoWithYouContext));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(DoWithYouContext));
         }
         #endregion
 
@@ -31,8 +24,8 @@ namespace DoWithYou.Data.Contexts
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder), $"Cannot create Context Model with a null {nameof(ModelBuilder)}.");
 
-            UserMap.Map(builder.Entity<User>(), _templates);
-            UserProfileMap.Map(builder.Entity<UserProfile>(), _templates);
+            UserMap.Map(builder.Entity<User>());
+            UserProfileMap.Map(builder.Entity<UserProfile>());
 
             MapTableNames(builder);
         }
@@ -40,7 +33,7 @@ namespace DoWithYou.Data.Contexts
         #region PRIVATE
         private static void MapTableNames(ModelBuilder builder)
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.DATA, "Mapping table names for {Class}", nameof(DoWithYouContext));
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, LoggerTemplates.DataMapTables, nameof(DoWithYouContext));
 
             builder.Entity<User>().ToTable("User");
             builder.Entity<UserProfile>().ToTable("UserProfile");

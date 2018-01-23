@@ -5,7 +5,6 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
-using DoWithYou.Interface.Shared;
 using DoWithYou.Model.Base;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
@@ -16,8 +15,8 @@ namespace DoWithYou.Model
     public class UserRepository : Repository<User>, IRepository<IUser>
     {
         #region CONSTRUCTORS
-        public UserRepository(IDoWithYouContext context, ILoggerTemplates templates)
-            : base(context, templates) { }
+        public UserRepository(IDoWithYouContext context)
+            : base(context) { }
         #endregion
 
         public void Delete(IUser entity) =>
@@ -37,7 +36,7 @@ namespace DoWithYou.Model
 
         public new void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, templates.Dispose, nameof(UserRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.Disposing, nameof(UserRepository));
 
             base.Dispose();
         }

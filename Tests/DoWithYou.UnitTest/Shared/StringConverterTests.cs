@@ -1,5 +1,4 @@
-﻿using System;
-using DoWithYou.Interface.Shared;
+﻿using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using NUnit.Framework;
 
@@ -8,7 +7,7 @@ namespace DoWithYou.UnitTest.Shared
     [TestFixture]
     public class StringConverterTests
     {
-        private readonly IStringConverter _converter = new StringConverter(TestSetupFactory.GetLoggerTemplates());
+        private readonly IStringConverter _converter = new StringConverter();
 
         [Test]
         public void Convert_Should_Return_IStringConverter()

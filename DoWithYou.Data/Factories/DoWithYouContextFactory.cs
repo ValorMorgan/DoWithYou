@@ -2,7 +2,6 @@
 using System.Linq;
 using Autofac;
 using DoWithYou.Data.Contexts;
-using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Factories;
 using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -23,13 +22,12 @@ namespace DoWithYou.Data.Factories
                 using (var scope = container.BeginLifetimeScope())
                 {
                     AppConfig appConfig = scope.Resolve<AppConfig>();
-                    ILoggerTemplates loggerTemplates = scope.Resolve<ILoggerTemplates>();
 
                     DbContextOptionsBuilder<DoWithYouContext> dbOptionsBuilder = GetDbContextOptionsBuilder(appConfig);
                     if (dbOptionsBuilder == default(DbContextOptionsBuilder<DoWithYouContext>))
                         throw new ApplicationException($"Failed to setup the {nameof(DoWithYouContext)} Options Builder.");
 
-                    return new DoWithYouContext(dbOptionsBuilder.Options, loggerTemplates);
+                    return new DoWithYouContext(dbOptionsBuilder.Options);
                 }
             }
             catch (Exception ex)

@@ -9,24 +9,19 @@ namespace DoWithYou.Shared.Converters
     {
         #region VARIABLES
         private readonly string _toConvert;
-        internal readonly ILoggerTemplates templates;
         #endregion
 
         #region CONSTRUCTORS
-        public StringConverter(ILoggerTemplates templates)
+        public StringConverter()
         {
-            this.templates = templates;
-
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(StringConverter));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(StringConverter));
 
             _toConvert = default;
         }
 
-        internal StringConverter(ILoggerTemplates templates, string value)
+        internal StringConverter(string value)
         {
-            this.templates = templates;
-
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(StringConverter));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(StringConverter));
 
             _toConvert = value;
         }
@@ -40,7 +35,7 @@ namespace DoWithYou.Shared.Converters
             if (_toConvert == default || type == default)
                 return default;
 
-            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, templates.ConvertTo, _toConvert, type.FullName);
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, LoggerTemplates.ConvertTo, _toConvert, type.FullName);
 
             // Try and let System.ComponentModel.StringConverter do the conversion
             var converter = new System.ComponentModel.StringConverter();
@@ -122,6 +117,6 @@ namespace DoWithYou.Shared.Converters
     public static class StringConverterBuilder
     {
         public static IStringConverter Convert(this IStringConverter converter, string value) =>
-            new StringConverter(((StringConverter)converter).templates, value);
+            new StringConverter(value);
     }
 }

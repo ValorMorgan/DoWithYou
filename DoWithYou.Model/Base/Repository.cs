@@ -4,7 +4,6 @@ using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Shared;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +17,12 @@ namespace DoWithYou.Model.Base
         #region VARIABLES
         private readonly IDoWithYouContext _context;
         private DbSet<T> _entities;
-        protected readonly ILoggerTemplates templates;
         #endregion
 
         #region CONSTRUCTORS
-        protected Repository(IDoWithYouContext context, ILoggerTemplates templates)
+        protected Repository(IDoWithYouContext context)
         {
-            this.templates = templates;
-
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, this.templates.Constructor, nameof(Repository<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(Repository<T>));
 
             _context = context;
             _entities = _context.Set<T>();
@@ -48,7 +44,7 @@ namespace DoWithYou.Model.Base
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataDelete, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataDelete, typeof(T).Name);
 
             _entities.Remove(entity);
             SaveChanges();
@@ -56,7 +52,7 @@ namespace DoWithYou.Model.Base
 
         public IQueryable<T> GetQueryable()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataGetAll, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataGetAll, typeof(T).Name);
             return _entities.AsQueryable();
         }
 
@@ -65,7 +61,7 @@ namespace DoWithYou.Model.Base
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataInsert, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataInsert, typeof(T).Name);
 
             _entities.Add(entity);
             SaveChanges();
@@ -73,7 +69,7 @@ namespace DoWithYou.Model.Base
 
         public void SaveChanges()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataSaveChanges, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataSaveChanges, typeof(T).Name);
             _context.SaveChanges();
         }
 
@@ -82,7 +78,7 @@ namespace DoWithYou.Model.Base
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, templates.DataUpdate, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataUpdate, typeof(T).Name);
 
             _entities.Update(entity);
             SaveChanges();
@@ -90,7 +86,7 @@ namespace DoWithYou.Model.Base
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, templates.Dispose, $"{nameof(Repository<T>)}<{typeof(T).Name}>");
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.Disposing, $"{nameof(Repository<T>)}<{typeof(T).Name}>");
 
             _entities = null;
 
