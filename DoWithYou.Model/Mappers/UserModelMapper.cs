@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Interface.Service;
@@ -10,70 +9,55 @@ using Serilog;
 
 namespace DoWithYou.Model.Mappers
 {
-    public class UserModelMapper : IUserModelMapper
+    public class UserModelMapper : IModelMapper<IUserModel, IUser, IUserProfile>
     {
-        #region VARIABLES
-        private readonly IDatabaseHandler<IUserProfile> _profileHandler;
-        private readonly IDatabaseHandler<IUser> _userHandler;
-        #endregion
-
         #region CONSTRUCTORS
-        public UserModelMapper(IDatabaseHandler<IUser> userHandler, IDatabaseHandler<IUserProfile> profileHandler)
+        public UserModelMapper()
         {
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserModelMapper));
-
-            _userHandler = userHandler ?? throw new ArgumentNullException(nameof(userHandler));
-            _profileHandler = profileHandler ?? throw new ArgumentNullException(nameof(profileHandler));
         }
         #endregion
 
-        public IUserModel GetUserModel(IUser user, IUserProfile profile) =>
-            new UserModel
-            {
-                Address1 = profile.Address1,
-                Address2 = profile.Address2,
-                City = profile.City,
-                Email = user.Email,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
-                MiddleName = profile.MiddleName,
-                Phone = profile.Phone,
-                State = profile.State,
-                UserID = user.UserID,
-                Username = user.Username,
-                ZipCode = profile.ZipCode
-            };
-
-        public IUser MapUserModelToUser(IUserModel model)
+        public IUserModel MapEntityToModel(IUser user, IUserProfile profile)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserModel), nameof(IUser));
+            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom1} & {ClassFrom2} to {ClassTo}", nameof(IUser), nameof(IUserProfile), nameof(IUserModel));
 
-            return _userHandler.Get(users => users.FirstOrDefault(u => u.UserID == ((UserModel)model).UserID));
+            return new UserModel(user, profile);
         }
 
-        public IUserProfile MapUserModelToUserProfile(IUserModel model)
+        public (IUser, IUserProfile) MapModelToEntity(IUserModel model)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserModel), nameof(IUserProfile));
+            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo1} & {ClassTo2}", nameof(IUserModel), nameof(IUser), nameof(IUserProfile));
 
-            return _profileHandler.Get(profiles => profiles.FirstOrDefault(p => p.UserID == ((UserModel)model).UserID));
+            IUser user = GetNewUser((UserModel)model);
+            IUserProfile profile = GetNewUserProfile((UserModel)model);
+
+            return (user, profile);
         }
 
-        public IUserModel MapUserProfileToUserModel(IUserProfile profile)
+        #region PRIVATE
+        private IUser GetNewUser(UserModel model) => new User
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserProfile), nameof(IUserModel));
+            Email = model.Email,
+            Password = model.Password,
+            UserID = model.UserID,
+            Username = model.Username
+        };
 
-            IUser user = _userHandler.Get(users => users.FirstOrDefault(u => u.UserID == profile.UserID));
-
-            return GetUserModel(user, profile);
-        }
-
-        public IUserModel MapUserToUserModel(IUser user)
+        private IUserProfile GetNewUserProfile(UserModel model) => new UserProfile
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUser), nameof(IUserModel));
-
-            IUserProfile profile = _profileHandler.Get(profiles => profiles.FirstOrDefault(p => p.UserID == user.UserID));
-
-            return GetUserModel(user, profile);
-        }
+            Address1 = model.Address1,
+            Address2 = model.Address2,
+            City = model.City,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            MiddleName = model.MiddleName,
+            Phone = model.Phone,
+            State = model.State,
+            UserID = model.UserID,
+            UserProfileID = model.UserProfileID,
+            ZipCode = model.ZipCode
+        };
+        #endregion
     }
 }

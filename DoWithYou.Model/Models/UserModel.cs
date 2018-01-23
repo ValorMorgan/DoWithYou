@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 
 namespace DoWithYou.Model.Models
@@ -6,93 +8,112 @@ namespace DoWithYou.Model.Models
     public class UserModel : IUserModel
     {
         #region VARIABLES
-        private string _address1;
-        private string _address2;
-        private string _city;
-        private string _email;
-        private string _firstName;
-        private string _lastName;
-        private string _middleName;
-        private string _phone;
-        private string _state;
-        private string _username;
-        private string _zipCode;
+        private IUser _user;
+        private IUserProfile _userProfile;
         #endregion
 
         #region PROPERTIES
         public string Address1
         {
-            get => _address1;
-            set => _address1 = value?.Trim() ?? string.Empty;
+            get => UserProfile.Address1?.Trim() ?? string.Empty;
+            set => UserProfile.Address1 = value?.Trim();
         }
 
         public string Address2
         {
-            get => _address2;
-            set => _address2 = value?.Trim() ?? string.Empty;
+            get => UserProfile.Address1?.Trim() ?? string.Empty;
+            set => UserProfile.Address2 = value?.Trim();
         }
 
         public string City
         {
-            get => _city;
-            set => _city = value?.Trim() ?? string.Empty;
+            get => UserProfile.City?.Trim() ?? string.Empty;
+            set => UserProfile.City = value?.Trim();
         }
 
         [EmailAddress]
         public string Email
         {
-            get => _email;
-            set => _email = value?.Trim() ?? string.Empty;
+            get => User.Email?.Trim() ?? string.Empty;
+            set => User.Email = value?.Trim();
         }
 
         public string FirstName
         {
-            get => _firstName;
-            set => _firstName = value?.Trim() ?? string.Empty;
+            get => UserProfile.FirstName?.Trim() ?? string.Empty;
+            set => UserProfile.FirstName = value?.Trim();
         }
 
-        public string FullAddress => $"{$"{Address1} {Address2}".Trim()}, {City}, {State}, {ZipCode}".Trim();
+        public string FullAddress => $"{$"{Address1} {Address2}".Trim()}, {City}, {State}, {ZipCode}";
 
-        public string FullName => $"{$"{FirstName} {MiddleName}".Trim()} {LastName}".Trim();
+        public string FullName => $"{$"{FirstName} {MiddleName}".Trim()} {LastName}";
 
         public string LastName
         {
-            get => _lastName;
-            set => _lastName = value?.Trim() ?? string.Empty;
+            get => UserProfile.LastName?.Trim() ?? string.Empty;
+            set => UserProfile.LastName = value?.Trim();
         }
 
         public string MiddleName
         {
-            get => _middleName;
-            set => _middleName = value?.Trim() ?? string.Empty;
+            get => UserProfile.MiddleName?.Trim() ?? string.Empty;
+            set => UserProfile.MiddleName = value?.Trim();
         }
 
         [Phone]
         public string Phone
         {
-            get => _phone;
-            set => _phone = value?.Trim() ?? string.Empty;
+            get => UserProfile.Phone?.Trim() ?? string.Empty;
+            set => UserProfile.Phone = value?.Trim();
         }
 
         public string State
         {
-            get => _state;
-            set => _state = value?.Trim() ?? string.Empty;
+            get => UserProfile.State?.Trim() ?? string.Empty;
+            set => UserProfile.State = value?.Trim();
         }
 
         public string Username
         {
-            get => _username;
-            set => _username = value?.Trim() ?? string.Empty;
+            get => User.Username?.Trim() ?? string.Empty;
+            set => User.Username = value?.Trim();
         }
 
         public string ZipCode
         {
-            get => _zipCode;
-            set => _zipCode = value?.Trim() ?? string.Empty;
+            get => UserProfile.ZipCode?.Trim() ?? string.Empty;
+            set => UserProfile.ZipCode = value?.Trim();
         }
 
-        internal long UserID { get; set; }
+        internal string Password
+        {
+            get => User.Password?.Trim() ?? string.Empty;
+            set => User.Password = value?.Trim();
+        }
+
+        internal long UserID
+        {
+            get => User.UserID;
+            set => User.UserID = value;
+        }
+
+        internal long UserProfileID
+        {
+            get => UserProfile.UserProfileID;
+            set => UserProfile.UserProfileID = value;
+        }
+
+        private IUser User => _user ?? (_user = new User());
+
+        private IUserProfile UserProfile => _userProfile ?? (_userProfile = new UserProfile());
+        #endregion
+
+        #region CONSTRUCTORS
+        public UserModel(IUser user, IUserProfile profile)
+        {
+            _user = user ?? new User();
+            _userProfile = profile ?? new UserProfile();
+        }
         #endregion
     }
 }

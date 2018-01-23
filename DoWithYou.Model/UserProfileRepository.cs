@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
@@ -21,6 +23,12 @@ namespace DoWithYou.Model
         public void Delete(IUserProfile entity) =>
             base.Delete(entity as UserProfile);
 
+        public IUserProfile Get(Func<IQueryable<IUserProfile>, IUserProfile> operation) =>
+            base.Get(e => operation(e) as UserProfile);
+
+        public IEnumerable<IUserProfile> GetMany(Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>> operation) =>
+            base.GetMany(e => operation(e).Cast<UserProfile>());
+
         public void Insert(IUserProfile entity) =>
             base.Insert(entity as UserProfile);
 
@@ -33,10 +41,5 @@ namespace DoWithYou.Model
 
             base.Dispose();
         }
-
-        #region PRIVATE
-        IQueryable<IUserProfile> IRepository<IUserProfile>.GetQueryable() =>
-            base.GetQueryable();
-        #endregion
     }
 }

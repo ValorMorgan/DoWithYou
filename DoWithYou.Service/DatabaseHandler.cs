@@ -43,7 +43,7 @@ namespace DoWithYou.Service
             if (operation == default)
                 return default;
 
-            return operation(_repository.GetQueryable());
+            return _repository.Get(operation);
         }
 
         public IList<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation)
@@ -53,14 +53,14 @@ namespace DoWithYou.Service
             if (operation == default)
                 return new List<T>();
 
-            return operation(_repository.GetQueryable())
+            return _repository.GetMany(operation)
                 ?.ToList() ?? new List<T>();
         }
 
         public IList<T> GetAll()
         {
             Log.Logger.LogEventInformation(LoggerEvents.REQUEST, _templates.RequestGetDynamic, typeof(T).Name);
-            return _repository.GetQueryable()
+            return _repository.GetMany(e => e)
                 ?.ToList() ?? new List<T>();
         }
 

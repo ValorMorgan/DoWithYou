@@ -1,6 +1,8 @@
-﻿namespace DoWithYou.Interface.Model
+﻿using DoWithYou.Interface.Entity;
+
+namespace DoWithYou.Interface.Model
 {
-    public interface IUserModel : IModel
+    public interface IUserModel : IModel<IUser, IUserProfile>
     {
         string Address1 { get; set; }
 

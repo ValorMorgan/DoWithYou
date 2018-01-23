@@ -23,8 +23,9 @@ namespace DoWithYou.UnitTest.Service
                     return _queryGenerator;
 
                 IRepository<IUser> repository = Substitute.For<IRepository<IUser>>();
-
-                repository.GetQueryable().Returns(new List<User>().AsQueryable());
+                
+                repository.Get(Arg.Any<Func<IQueryable<IUser>, IUser>>()).Returns(new User());
+                repository.GetMany(Arg.Any<Func<IQueryable<IUser>, IEnumerable<IUser>>>()).Returns(new List<IUser>());
                 repository.When(x => x.Delete(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.Insert(Arg.Any<IUser>())).DoNotCallBase();
                 repository.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
@@ -39,7 +40,13 @@ namespace DoWithYou.UnitTest.Service
         [Test]
         public void Get_When_Provided_Query_Returns_Default_Or_IUser()
         {
-            Assert.That(TestingGenerator.Get(users => users.FirstOrDefault()), Is.EqualTo(default(IUser)).Or.InstanceOf<IUser>());
+            Assert.That(TestingGenerator.Get(users => users.FirstOrDefault()), Is.InstanceOf<IUser>().And.Not.Null);
+        }
+
+        [Test]
+        public void GetMany_When_Provided_Query_Returns_Default_Or_IUser()
+        {
+            Assert.That(TestingGenerator.GetMany(users => users.Where(u => u != null)), Is.InstanceOf<IList<IUser>>().And.Not.Null.And.Empty);
         }
 
         [Test]

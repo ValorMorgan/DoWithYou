@@ -3,6 +3,7 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Factories;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Model;
 using DoWithYou.Interface.Service;
 using DoWithYou.Model;
 using DoWithYou.Model.Base;
@@ -56,7 +57,7 @@ namespace DoWithYou.Service.Utilities
                 build.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
                 build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
                 build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
-                build.RegisterType<UserModelMapper>().As<IUserModelMapper>();
+                build.RegisterType<UserModelMapper>().As<IModelMapper<IUserModel, IUser, IUserProfile>>().SingleInstance();
             }
 
             void RegisterInstances(ref ContainerBuilder build)
@@ -75,6 +76,7 @@ namespace DoWithYou.Service.Utilities
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Service Layer Types to {Class}", nameof(ContainerBuilder));
 
                 build.RegisterGeneric(typeof(DatabaseHandler<>)).As(typeof(IDatabaseHandler<>)).InstancePerLifetimeScope();
+                build.RegisterGeneric(typeof(ModelRequestor<,>)).As(typeof(IModelRequestor<,>)).InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Data;
@@ -21,6 +23,12 @@ namespace DoWithYou.Model
         public void Delete(IUser entity) =>
             base.Delete(entity as User);
 
+        public IUser Get(Func<IQueryable<IUser>, IUser> operation) =>
+            base.Get(e => operation(e) as User);
+
+        public IEnumerable<IUser> GetMany(Func<IQueryable<IUser>, IEnumerable<IUser>> operation) =>
+            base.GetMany(e => operation(e).Cast<User>());
+
         public void Insert(IUser entity) =>
             base.Insert(entity as User);
 
@@ -30,13 +38,8 @@ namespace DoWithYou.Model
         public new void Dispose()
         {
             Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, templates.Dispose, nameof(UserRepository));
-            
+
             base.Dispose();
         }
-
-        #region PRIVATE
-        IQueryable<IUser> IRepository<IUser>.GetQueryable() =>
-            base.GetQueryable();
-        #endregion
     }
 }
