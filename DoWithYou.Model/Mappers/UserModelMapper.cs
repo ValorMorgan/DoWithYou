@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou;
-using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Interface.Service;
@@ -12,158 +10,70 @@ using Serilog;
 
 namespace DoWithYou.Model.Mappers
 {
-    public class UserModelMapper : IModelMapper<IUserModel, IUser, IUserProfile>
+    public class UserModelMapper : IUserModelMapper
     {
         #region VARIABLES
-        private IRepository<IUserProfile> _userProfileRepository;
-        private IRepository<IUser> _userRepository;
+        private readonly IDatabaseHandler<IUserProfile> _profileHandler;
+        private readonly IDatabaseHandler<IUser> _userHandler;
         #endregion
 
         #region CONSTRUCTORS
-        public UserModelMapper(IRepository<IUser> userRepository, IRepository<IUserProfile> userProfileRepository)
+        public UserModelMapper(IDatabaseHandler<IUser> userHandler, IDatabaseHandler<IUserProfile> profileHandler)
         {
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, "Constructing {Class}", nameof(UserModelMapper));
 
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _userProfileRepository = userProfileRepository ?? throw new ArgumentNullException(nameof(userProfileRepository));
+            _userHandler = userHandler ?? throw new ArgumentNullException(nameof(userHandler));
+            _profileHandler = profileHandler ?? throw new ArgumentNullException(nameof(profileHandler));
         }
         #endregion
 
-        public IUserModel MapEntityToModel(IUser user)
+        public IUserModel GetUserModel(IUser user, IUserProfile profile) =>
+            new UserModel
+            {
+                Address1 = profile.Address1,
+                Address2 = profile.Address2,
+                City = profile.City,
+                Email = user.Email,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                MiddleName = profile.MiddleName,
+                Phone = profile.Phone,
+                State = profile.State,
+                UserID = user.UserID,
+                Username = user.Username,
+                ZipCode = profile.ZipCode
+            };
+
+        public IUser MapUserModelToUser(IUserModel model)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUser), nameof(IUserModel));
+            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserModel), nameof(IUser));
 
-            IUserProfile profile = _userProfileRepository.Get(profiles => profiles
-                .FirstOrDefault(p => p.UserID == user.UserID));
-
-            return new UserModel(user, profile);
+            return _userHandler.Get(users => users.FirstOrDefault(u => u.UserID == ((UserModel)model).UserID));
         }
 
-        public IUserModel MapEntityToModel(IUserProfile profile)
+        public IUserProfile MapUserModelToUserProfile(IUserModel model)
+        {
+            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserModel), nameof(IUserProfile));
+
+            return _profileHandler.Get(profiles => profiles.FirstOrDefault(p => p.UserID == ((UserModel)model).UserID));
+        }
+
+        public IUserModel MapUserProfileToUserModel(IUserProfile profile)
         {
             Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUserProfile), nameof(IUserModel));
 
-            IUser user = _userRepository.Get(users => users
-                .FirstOrDefault(u => u.UserID == profile.UserID));
+            IUser user = _userHandler.Get(users => users.FirstOrDefault(u => u.UserID == profile.UserID));
 
-            return new UserModel(user, profile);
+            return GetUserModel(user, profile);
         }
 
-        public IUserModel MapEntityToModel(IUser user, IUserProfile profile)
+        public IUserModel MapUserToUserModel(IUser user)
         {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom1} & {ClassFrom2} to {ClassTo}", nameof(IUser), nameof(IUserProfile), nameof(IUserModel));
+            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo}", nameof(IUser), nameof(IUserModel));
 
-            return new UserModel(user, profile);
+            IUserProfile profile = _profileHandler.Get(profiles => profiles.FirstOrDefault(p => p.UserID == user.UserID));
+
+            return GetUserModel(user, profile);
         }
-
-        public (IUser, IUserProfile) MapModelToEntity(IUserModel model)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Mapping {ClassFrom} to {ClassTo1} & {ClassTo2}", nameof(IUserModel), nameof(IUser), nameof(IUserProfile));
-
-            IUser user = GetUserFromModel(model);
-            IUserProfile profile = GetUserProfileFromModel(model);
-
-            if (user == default(IUser))
-            {
-                InsertNewUserToRepository(model);
-                user = GetUserFromModel(model);
-            }
-
-            if (profile == default(IUserProfile))
-            {
-                InsertNewUserProfileToRepository(model, user);
-                profile = GetUserProfileFromModel(model);
-            }
-
-            return (user, profile);
-        }
-
-        public IUserModel RequestModel(Func<IQueryable<IUser>, IUser> request)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Requesting {Model} from dynamic request.", nameof(IUserModel));
-
-            IUser user = _userRepository.Get(request);
-
-            IUserProfile profile = _userProfileRepository.Get(profiles => profiles
-                .FirstOrDefault(p => p.UserID == user.UserID));
-
-            return new UserModel(user, profile);
-        }
-
-        public IUserModel RequestModel(Func<IQueryable<IUserProfile>, IUserProfile> request)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Requesting {Model} from dynamic request.", nameof(IUserModel));
-
-            IUserProfile profile = _userProfileRepository.Get(request);
-
-            IUser user = _userRepository.Get(users => users
-                .FirstOrDefault(u => u.UserID == profile.UserID));
-
-            return new UserModel(user, profile);
-        }
-
-        public IUserModel RequestModel(Func<IQueryable<IUser>, IUser> request1, Func<IQueryable<IUserProfile>, IUserProfile> request2)
-        {
-            Log.Logger.LogEventInformation(LoggerEvents.MAPPING, "Requesting {Model} from dynamic request.", nameof(IUserModel));
-
-            IUser user = _userRepository.Get(request1);
-            IUserProfile profile = _userProfileRepository.Get(request2);
-
-            return new UserModel(user, profile);
-        }
-
-        public void Dispose()
-        {
-            _userProfileRepository?.Dispose();
-            _userProfileRepository = null;
-
-            _userRepository?.Dispose();
-            _userRepository = null;
-        }
-
-        #region PRIVATE
-        private IUser GetNewUser(IUserModel model) => new User
-        {
-            Email = model.Email,
-            Password = ((UserModel)model).Password,
-            Username = model.Username
-        };
-
-        private IUserProfile GetNewUserProfile(IUserModel model, IUser user) => new UserProfile
-        {
-            Address1 = model.Address1,
-            Address2 = model.Address2,
-            City = model.City,
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            MiddleName = model.MiddleName,
-            Phone = model.Phone,
-            State = model.State,
-            UserID = user.UserID,
-            ZipCode = model.ZipCode
-        };
-
-        private IUser GetUserFromModel(IUserModel model)
-        {
-            return _userRepository.Get(users => users
-                .FirstOrDefault(p => p.UserID == ((UserModel)model).UserID));
-        }
-
-        private IUserProfile GetUserProfileFromModel(IUserModel model)
-        {
-            return _userProfileRepository.Get(profiles => profiles
-                .FirstOrDefault(p => p.UserID == ((UserModel)model).UserID));
-        }
-
-        private void InsertNewUserProfileToRepository(IUserModel model, IUser user)
-        {
-            _userProfileRepository.Insert(GetNewUserProfile(model, user));
-        }
-
-        private void InsertNewUserToRepository(IUserModel model)
-        {
-            _userRepository.Insert(GetNewUser(model));
-        }
-        #endregion
     }
 }

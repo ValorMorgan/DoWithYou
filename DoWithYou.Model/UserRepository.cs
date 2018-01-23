@@ -1,5 +1,7 @@
-﻿using DoWithYou.Data.Contexts;
+﻿using System.Linq;
+using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Model.Base;
@@ -9,7 +11,7 @@ using Serilog;
 
 namespace DoWithYou.Model
 {
-    public class UserRepository : Repository<User>
+    public class UserRepository : Repository<User>, IRepository<IUser>
     {
         #region CONSTRUCTORS
         public UserRepository(IDoWithYouContext context, ILoggerTemplates templates)
@@ -28,8 +30,13 @@ namespace DoWithYou.Model
         public new void Dispose()
         {
             Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, templates.Dispose, nameof(UserRepository));
-
+            
             base.Dispose();
         }
+
+        #region PRIVATE
+        IQueryable<IUser> IRepository<IUser>.GetQueryable() =>
+            base.GetQueryable();
+        #endregion
     }
 }
