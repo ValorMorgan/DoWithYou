@@ -3,6 +3,7 @@ using Autofac;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
+using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.Extensions.Configuration;
 using Serilog;

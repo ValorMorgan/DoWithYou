@@ -1,6 +1,7 @@
 ﻿using System;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;

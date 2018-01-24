@@ -3,6 +3,7 @@ using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -14,7 +15,7 @@ namespace DoWithYou.Data.Contexts
         public DoWithYouContext(DbContextOptions<DoWithYouContext> options)
             : base(options)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(DoWithYouContext));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(DoWithYouContext));
         }
         #endregion
 
@@ -33,7 +34,7 @@ namespace DoWithYou.Data.Contexts
         #region PRIVATE
         private static void MapTableNames(ModelBuilder builder)
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.DATA, LoggerTemplates.DataMapTables, nameof(DoWithYouContext));
+            Log.Logger.LogEventVerbose(LoggerEvents.DATA, LoggerTemplates.DATA_MAP_TABLES, nameof(DoWithYouContext));
 
             builder.Entity<User>().ToTable("User");
             builder.Entity<UserProfile>().ToTable("UserProfile");

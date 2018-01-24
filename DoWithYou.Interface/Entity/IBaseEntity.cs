@@ -6,6 +6,6 @@ namespace DoWithYou.Interface.Entity
     {
         DateTime CreationDate { get; set; }
 
-        DateTime ModifiedDate { get; set; }
+        DateTime? ModifiedDate { get; set; }
     }
 }

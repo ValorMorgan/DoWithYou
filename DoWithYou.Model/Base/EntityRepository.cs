@@ -6,12 +6,13 @@ using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace DoWithYou.Model.Base
 {
-    public abstract class Repository<T> : IRepository<T>
+    public abstract class EntityRepository<T> : IRepository<T>
         where T : BaseEntity
     {
         #region VARIABLES
@@ -20,39 +21,41 @@ namespace DoWithYou.Model.Base
         #endregion
 
         #region CONSTRUCTORS
-        protected Repository(IDoWithYouContext context)
+        protected EntityRepository(IDoWithYouContext context)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(Repository<T>));
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(EntityRepository<T>));
 
             _context = context;
             _entities = _context.Set<T>();
         }
+
+        internal EntityRepository(IDoWithYouContext context, DbSet<T> entiities)
+        {
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(EntityRepository<T>));
+
+            _context = context;
+            _entities = entiities;
+        }
         #endregion
-
-        public T Get(Func<IQueryable<T>, T> operation)
-        {
-            return operation(GetQueryable());
-        }
-
-        public IEnumerable<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation)
-        {
-            return operation(GetQueryable());
-        }
 
         public void Delete(T entity)
         {
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataDelete, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DATA_DELETE, typeof(T).Name);
 
             _entities.Remove(entity);
             SaveChanges();
         }
 
+        public T Get(Func<IQueryable<T>, T> operation) => operation(GetQueryable());
+
+        public IEnumerable<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> operation) => operation(GetQueryable());
+
         public IQueryable<T> GetQueryable()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataGetAll, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DATA_GET_ALL, typeof(T).Name);
             return _entities.AsQueryable();
         }
 
@@ -61,7 +64,7 @@ namespace DoWithYou.Model.Base
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataInsert, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DATA_INSERT, typeof(T).Name);
 
             _entities.Add(entity);
             SaveChanges();
@@ -69,7 +72,7 @@ namespace DoWithYou.Model.Base
 
         public void SaveChanges()
         {
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataSaveChanges, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DATA_SAVE_CHANGES, typeof(T).Name);
             _context.SaveChanges();
         }
 
@@ -78,7 +81,7 @@ namespace DoWithYou.Model.Base
             if (entity == null)
                 return;
 
-            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DataUpdate, typeof(T).Name);
+            Log.Logger.LogEventInformation(LoggerEvents.DATA, LoggerTemplates.DATA_UPDATE, typeof(T).Name);
 
             _entities.Update(entity);
             SaveChanges();
@@ -86,7 +89,7 @@ namespace DoWithYou.Model.Base
 
         public void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.Disposing, $"{nameof(Repository<T>)}<{typeof(T).Name}>");
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.DISPOSING, $"{nameof(EntityRepository<T>)}<{typeof(T).Name}>");
 
             _entities = null;
 

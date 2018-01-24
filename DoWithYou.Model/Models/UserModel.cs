@@ -21,7 +21,7 @@ namespace DoWithYou.Model.Models
 
         public string Address2
         {
-            get => UserProfile.Address1?.Trim() ?? string.Empty;
+            get => UserProfile.Address2?.Trim() ?? string.Empty;
             set => UserProfile.Address2 = value?.Trim();
         }
 
@@ -44,15 +44,24 @@ namespace DoWithYou.Model.Models
             set => UserProfile.FirstName = value?.Trim();
         }
 
-        public string FullAddress => $"{$"{Address1} {Address2}".Trim()}, {City}, {State}, {ZipCode}";
+        public string FullAddress =>
+            $"{$"{Address1} {Address2}".Trim()}, {City}, {State}, {ZipCode}";
 
-        public string FullName => $"{$"{FirstName} {MiddleName}".Trim()} {LastName}";
+        public string FullName =>
+            $"{$"{FirstName} {MiddleName}".Trim()} {LastName}";
+
+        public string FullNameProper =>
+            $"{LastName}, {$"{FirstName} {MiddleInitial}".Trim()}";
 
         public string LastName
         {
             get => UserProfile.LastName?.Trim() ?? string.Empty;
             set => UserProfile.LastName = value?.Trim();
         }
+
+        public string MiddleInitial => MiddleName == null ?
+            string.Empty :
+            $"{MiddleName[0]}.";
 
         public string MiddleName
         {
@@ -91,17 +100,9 @@ namespace DoWithYou.Model.Models
             set => User.Password = value?.Trim();
         }
 
-        internal long UserID
-        {
-            get => User.UserID;
-            set => User.UserID = value;
-        }
+        internal long UserID => User.UserID;
 
-        internal long UserProfileID
-        {
-            get => UserProfile.UserProfileID;
-            set => UserProfile.UserProfileID = value;
-        }
+        internal long UserProfileID => UserProfile.UserProfileID;
 
         private IUser User => _user ?? (_user = new User());
 
@@ -115,5 +116,17 @@ namespace DoWithYou.Model.Models
             _userProfile = profile ?? new UserProfile();
         }
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IUserModel))
+                return false;
+
+            return GetHashCode() == ((UserModel)obj).GetHashCode();
+        }
+
+        // Average Hash of included Entities
+        public override int GetHashCode() => 
+            (User.GetHashCode() + UserProfile.GetHashCode()) / 2;
     }
 }

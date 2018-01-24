@@ -3,7 +3,7 @@ using System.Linq;
 using Serilog;
 using Serilog.Events;
 
-namespace DoWithYou.Shared
+namespace DoWithYou.Shared.Extensions
 {
     public static class LoggerExtensions
     {

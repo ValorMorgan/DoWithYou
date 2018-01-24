@@ -5,6 +5,7 @@ using DoWithYou.Infrastructure.Middleware;
 using DoWithYou.Service.Utilities;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Factories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,7 @@ namespace DoWithYou
         {
             SetupLogger(configuration);
 
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(Startup));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(Startup));
 
             Configuration = configuration;
         }
@@ -112,7 +113,7 @@ namespace DoWithYou
 
         private void RegisterEvents(ref IApplicationLifetime applicationLifetime)
         {
-            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, LoggerTemplates.RegisterEvent, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, LoggerTemplates.REGISTER_EVENT, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
             applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
 

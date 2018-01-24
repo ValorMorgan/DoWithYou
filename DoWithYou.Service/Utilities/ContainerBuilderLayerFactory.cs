@@ -8,8 +8,8 @@ using DoWithYou.Interface.Service;
 using DoWithYou.Model;
 using DoWithYou.Model.Base;
 using DoWithYou.Model.Mappers;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Serilog;
 
 namespace DoWithYou.Service.Utilities
@@ -54,10 +54,11 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Model Layer Types to {Class}", nameof(ContainerBuilder));
 
-                build.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+                build.RegisterGeneric(typeof(EntityRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
                 build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
                 build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
                 build.RegisterType<UserModelMapper>().As<IModelMapper<IUserModel, IUser, IUserProfile>>().SingleInstance();
+                build.RegisterType<UserModelRepository>().As<IModelRepository<IUserModel, IUser, IUserProfile>>().InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)
@@ -74,9 +75,9 @@ namespace DoWithYou.Service.Utilities
             void RegisterTypes(ref ContainerBuilder build)
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Service Layer Types to {Class}", nameof(ContainerBuilder));
-
-                build.RegisterGeneric(typeof(DatabaseHandler<>)).As(typeof(IDatabaseHandler<>)).InstancePerLifetimeScope();
-                build.RegisterGeneric(typeof(ModelRequestor<,>)).As(typeof(IModelRequestor<,>)).InstancePerLifetimeScope();
+                
+                build.RegisterGeneric(typeof(ModelHandler<,>)).As(typeof(IModelHandler<,>)).InstancePerLifetimeScope();
+                build.RegisterGeneric(typeof(ModelHandler<,,>)).As(typeof(IModelHandler<,,>)).InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

@@ -3,57 +3,65 @@
     public static class LoggerTemplates
     {
         #region VARIABLES
-        public const string Configuring = "Configuring {Class}";
+        public const string CONFIGURING = "Configuring {Class}";
 
-        public const string ConnectionType = "{Class} to use {ConnectionType} with {ConnectionString} connection string";
+        public const string CONNECTION_TYPE = "{Class} to use {ConnectionType} with {ConnectionString} connection string";
 
-        public const string Constructor = "Constructing {Class}";
+        public const string CONSTRUCTOR = "Constructing {Class}";
 
-        public const string ConvertTo = "Converting {Value} to \"{Type}\"";
+        public const string CONVERT_TO = "Converting {Value} to \"{Type}\"";
 
-        public const string DataDelete = "Deleting {Type}[{EntityId}]";
+        public const string DATA_DELETE = "Deleting {Entity}[{EntityId}]";
 
-        public const string DataGet = "Getting {Type}[{EntityId}]";
+        public const string DATA_GET = "Getting {Entity}[{EntityId}]";
 
-        public const string DataGetAll = "Getting all {Type}";
+        public const string DATA_GET_ALL = "Getting all {Entity}";
 
-        public const string DataInsert = "Inserting {Type}[{EntityId}]";
+        public const string DATA_INSERT = "Inserting {Entity}[{EntityId}]";
 
-        public const string DataMap = "Mapping {Table} for {Class}";
+        public const string DATA_MAP = "Mapping {Table} for {Class}";
 
-        public const string DataMapKeys = "Mapping {Table} Keys for {Class}";
+        public const string DATA_MAP_KEYS = "Mapping {Table} Keys for {Class}";
 
-        public const string DataMapProperties = "Mapping {Table} Properties for {Class}";
+        public const string DATA_MAP_PROPERTIES = "Mapping {Table} Properties for {Class}";
 
-        public const string DataMapRelationships = "Mapping {Table} Relationships for {Class}";
+        public const string DATA_MAP_RELATIONSHIPS = "Mapping {Table} Relationships for {Class}";
 
-        public const string DataMapTables = "Mapping table names for {Class}";
+        public const string DATA_MAP_TABLES = "Mapping table names for {Class}";
 
-        public const string DataSaveChanges = "Saving Changes for {Type}";
+        public const string DATA_SAVE_CHANGES = "Saving Changes for {Entity}";
 
-        public const string DataUpdate = "Updating {Type}[{EntityId}]";
+        public const string DATA_UPDATE = "Updating {Entity}[{EntityId}]";
 
-        public const string Disposing = "Disposing {Class}";
+        public const string DISPOSING = "Disposing {Class}";
 
-        public const string MigrateDown = "Migrating Down on {Migration}";
+        public const string MAP_MODEL_TO_ENTITY_1 = "Mapping {Model} to {Entity}";
 
-        public const string MigrateUp = "Migrating Up on {Migration}";
+        public const string MAP_ENTITY_TO_MODEL_1 = "Mapping {Entity} to {Model}";
 
-        public const string RegisterEvent = "Registering {Class} to event \"{Event}\"";
+        public const string MAP_MODEL_TO_ENTITY_2 = "Mapping {Model} to {Entity1} & {Entity2}";
 
-        public const string RequestDelete = "Requested to Delete {Type}[{EntityId}]";
+        public const string MAP_ENTITY_TO_MODEL_2 = "Mapping {Entity1} & {Entity2} to {Model}";
 
-        public const string RequestGet = "Requested to Get {Type}[{EntityId}]";
+        public const string MIGRATE_DOWN = "Migrating Down on {Migration}";
 
-        public const string RequestGetDynamic = "Requested to Get {Type} via dynamic request";
+        public const string MIGRATE_UP = "Migrating Up on {Migration}";
 
-        public const string RequestInsert = "Requested to Insert {Type}[{EntityId}]";
+        public const string REGISTER_EVENT = "Registering {Class} to event \"{Event}\"";
 
-        public const string RequestSaveChanges = "Requested to SaveChanges for {Type}";
+        public const string REQUEST_DELETE = "Requested to Delete {Entity}[{EntityId}]";
 
-        public const string RequestUpdate = "Requested to Update {Type}[{EntityId}]";
+        public const string REQUEST_GET = "Requested to Get {Entity}[{EntityId}]";
 
-        public const string RequestUpdateDynamic = "Requested to Update {Type} via dynamic request";
+        public const string REQUEST_GET_DYNAMIC = "Requested to Get {Entity} via dynamic request";
+
+        public const string REQUEST_INSERT = "Requested to Insert {Entity}[{EntityId}]";
+
+        public const string REQUEST_SAVE_CHANGES = "Requested to SaveChanges for {Entity}";
+
+        public const string REQUEST_UPDATE = "Requested to Update {Entity}[{EntityId}]";
+
+        public const string REQUEST_UPDATE_DYNAMIC = "Requested to Update {Entity} via dynamic request";
         #endregion
     }
 }

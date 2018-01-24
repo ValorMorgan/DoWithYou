@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Serilog;
 
 namespace DoWithYou.Shared.Converters
@@ -14,14 +16,14 @@ namespace DoWithYou.Shared.Converters
         #region CONSTRUCTORS
         public StringConverter()
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(StringConverter));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(StringConverter));
 
             _toConvert = default;
         }
 
         internal StringConverter(string value)
         {
-            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.Constructor, nameof(StringConverter));
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(StringConverter));
 
             _toConvert = value;
         }
@@ -35,7 +37,7 @@ namespace DoWithYou.Shared.Converters
             if (_toConvert == default || type == default)
                 return default;
 
-            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, LoggerTemplates.ConvertTo, _toConvert, type.FullName);
+            Log.Logger.LogEventInformation(LoggerEvents.LIBRARY, LoggerTemplates.CONVERT_TO, _toConvert, type.FullName);
 
             // Try and let System.ComponentModel.StringConverter do the conversion
             var converter = new System.ComponentModel.StringConverter();
@@ -44,6 +46,9 @@ namespace DoWithYou.Shared.Converters
                 converter.ConvertTo(_toConvert, type) :
                 GetStringConvertedToType(type);
         }
+
+        public static int ToHash(string value) =>
+            EqualityComparer<string>.Default.GetHashCode(value?.Trim() ?? string.Empty);
 
         #region PRIVATE
         private dynamic GetStringConvertedToType(Type type)

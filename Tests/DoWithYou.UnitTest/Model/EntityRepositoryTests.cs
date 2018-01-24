@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Contexts;
-using DoWithYou.Data.Entities.DoWithYou;
-using DoWithYou.Model;
+using DoWithYou.Data.Entities.DoWithYou.Base;
+using DoWithYou.Interface.Data;
 using DoWithYou.Model.Base;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
@@ -11,9 +11,20 @@ using NUnit.Framework;
 namespace DoWithYou.UnitTest.Model
 {
     [TestFixture]
-    public class UserProfileRepositoryTests
+    public class EntityRepositoryTests
     {
-        private static readonly UserProfile[] TEST_CASES = {new UserProfile(), default, null};
+        private static readonly BaseEntity[] TEST_CASES = {new BaseEntity(), default, null};
+
+        private class BaseEntityRepository : EntityRepository<BaseEntity>, IRepository<BaseEntity>
+        {
+            #region CONSTRUCTORS
+            public BaseEntityRepository(IDoWithYouContext context)
+                : base(context) { }
+
+            public BaseEntityRepository(IDoWithYouContext context, DbSet<BaseEntity> entiities)
+                : base(context, entiities) { }
+            #endregion
+        }
 
         private IDoWithYouContext MockedContext
         {
@@ -22,33 +33,33 @@ namespace DoWithYou.UnitTest.Model
                 var sub = Substitute.For<IDoWithYouContext>();
 
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
-                //sub.When(x => x.Set<UserProfile>().Returns(MockedDbSet)).DoNotCallBase();
+                //sub.When(x => x.Set<BaseEntity>().Returns(MockedDbSet)).DoNotCallBase();
 
                 return sub;
             }
         }
 
-        private DbSet<UserProfile> MockedDbSet
+        private DbSet<BaseEntity> MockedDbSet
         {
             get
             {
-                var sub = Substitute.For<DbSet<UserProfile>, IQueryable<UserProfile>>()
+                var sub = Substitute.For<DbSet<BaseEntity>, IQueryable<BaseEntity>>()
                     .Initialize(TEST_CASES.AsQueryable());
 
-                sub.When(x => x.Add(Arg.Any<UserProfile>())).DoNotCallBase();
-                sub.When(x => x.AddRange(Arg.Any<UserProfile[]>())).DoNotCallBase();
-                sub.When(x => x.Remove(Arg.Any<UserProfile>())).DoNotCallBase();
-                sub.When(x => x.Update(Arg.Any<UserProfile>())).DoNotCallBase();
+                sub.When(x => x.Add(Arg.Any<BaseEntity>())).DoNotCallBase();
+                sub.When(x => x.AddRange(Arg.Any<BaseEntity[]>())).DoNotCallBase();
+                sub.When(x => x.Remove(Arg.Any<BaseEntity>())).DoNotCallBase();
+                sub.When(x => x.Update(Arg.Any<BaseEntity>())).DoNotCallBase();
 
                 return sub;
             }
         }
 
-        private EntityRepository<UserProfile> Repository => new UserProfileRepository(MockedContext, MockedDbSet);
+        private EntityRepository<BaseEntity> Repository => new BaseEntityRepository(MockedContext, MockedDbSet);
 
         [Test]
         [TestCaseSource(nameof(TEST_CASES))]
-        public void Delete_Throws_Nothing(UserProfile arg)
+        public void Delete_Throws_Nothing(BaseEntity arg)
         {
             Assert.That(() =>
             {
@@ -60,14 +71,14 @@ namespace DoWithYou.UnitTest.Model
         public void Get_Returns_Expected_Results()
         {
             using (var repo = Repository)
-                Assert.That(repo.Get(e => e.FirstOrDefault(i => i != null)), Is.InstanceOf<UserProfile>().And.Not.Null);
+                Assert.That(repo.Get(e => e.FirstOrDefault(i => i != null)), Is.InstanceOf<BaseEntity>().And.Not.Null);
         }
 
         [Test]
         public void GetMany_Returns_Expected_Results()
         {
             using (var repo = Repository)
-                Assert.That(repo.GetMany(e => e.Where(i => i != null)), Is.InstanceOf<IEnumerable<UserProfile>>().And.Not.Null.And.Not.Empty);
+                Assert.That(repo.GetMany(e => e.Where(i => i != null)), Is.InstanceOf<IEnumerable<BaseEntity>>().And.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -82,7 +93,7 @@ namespace DoWithYou.UnitTest.Model
 
         [Test]
         [TestCaseSource(nameof(TEST_CASES))]
-        public void Insert_Throws_Nothing(UserProfile arg)
+        public void Insert_Throws_Nothing(BaseEntity arg)
         {
             Assert.That(() =>
             {
@@ -101,7 +112,7 @@ namespace DoWithYou.UnitTest.Model
 
         [Test]
         [TestCaseSource(nameof(TEST_CASES))]
-        public void Update_Throws_Nothing(UserProfile arg)
+        public void Update_Throws_Nothing(BaseEntity arg)
         {
             Assert.That(() =>
             {

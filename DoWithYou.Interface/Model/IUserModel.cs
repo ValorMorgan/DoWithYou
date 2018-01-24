@@ -18,7 +18,11 @@ namespace DoWithYou.Interface.Model
 
         string FullName { get; }
 
+        string FullNameProper { get; }
+
         string LastName { get; set; }
+
+        string MiddleInitial { get; }
 
         string MiddleName { get; set; }
 

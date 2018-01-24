@@ -8,5 +8,5 @@
 
 @foreach (var user in Model.Users)
 {
-    <p>@user.UserID - @user.Username</p>
+    <p>@user.Username (@user.FullNameProper): @user.FullAddress</p>
 }

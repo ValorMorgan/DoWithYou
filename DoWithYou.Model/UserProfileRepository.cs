@@ -8,15 +8,20 @@ using DoWithYou.Interface.Entity;
 using DoWithYou.Model.Base;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace DoWithYou.Model
 {
-    public class UserProfileRepository : Repository<UserProfile>, IRepository<IUserProfile>
+    public class UserProfileRepository : EntityRepository<UserProfile>, IRepository<IUserProfile>
     {
         #region CONSTRUCTORS
         public UserProfileRepository(IDoWithYouContext context)
             : base(context) { }
+        
+        internal UserProfileRepository(IDoWithYouContext context, DbSet<UserProfile> entities)
+            : base(context, entities) { }
         #endregion
 
         public void Delete(IUserProfile entity) =>
@@ -36,7 +41,7 @@ namespace DoWithYou.Model
 
         public new void Dispose()
         {
-            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.Disposing, nameof(UserProfileRepository));
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.DISPOSING, nameof(UserProfileRepository));
 
             base.Dispose();
         }
