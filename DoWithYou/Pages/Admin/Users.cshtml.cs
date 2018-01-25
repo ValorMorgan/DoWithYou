@@ -25,9 +25,7 @@ namespace DoWithYou.Pages.Admin
 
             using (scope)
             {
-                Users = scope.Value.GetMany(
-                    users => users?.Where(u => u != null),
-                    profiles => profiles?.Where(p => p != null));
+                Users = scope.Value.GetMany<IUser>(users => users.Where(u => u != null));
             }
         }
         #endregion

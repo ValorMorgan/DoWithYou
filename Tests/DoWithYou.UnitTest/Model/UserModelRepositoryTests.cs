@@ -35,7 +35,7 @@ namespace DoWithYou.UnitTest.Model
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
 
                 sub.When(x => x.Get(Arg.Any<Func<IQueryable<IUser>, IUser>>()).Returns(new User()));
-                sub.When(x => x.GetMany(Arg.Any<Func<IQueryable<IUser>, IEnumerable<IUser>>>()).Returns(new List<IUser> {new User()}));
+                sub.When(x => x.GetMany(Arg.Any<Func<IQueryable<IUser>, IEnumerable<IUser>>>()).Returns(new List<IUser> { new User() }));
 
                 return sub;
             }
@@ -87,10 +87,8 @@ namespace DoWithYou.UnitTest.Model
         {
             using (var repo = Repository)
             {
-                Assert.That(repo.Get(
-                        e => e.FirstOrDefault(i => i != null),
-                        e => e.FirstOrDefault(i => i != null)),
-                    Is.InstanceOf<IUserModel>().And.Not.Null);
+                Assert.That(repo.Get<IUser>(e => e.FirstOrDefault()), Is.InstanceOf<IUserModel>().And.Not.Null);
+                Assert.That(repo.Get<IUserProfile>(e => e.FirstOrDefault()), Is.InstanceOf<IUserModel>().And.Not.Null);
             }
         }
 
@@ -99,10 +97,8 @@ namespace DoWithYou.UnitTest.Model
         {
             using (var repo = Repository)
             {
-                Assert.That(repo.GetMany(
-                        e => e.Where(i => i != null),
-                        e => e.Where(i => i != null)),
-                    Is.InstanceOf<IEnumerable<IUserModel>>().And.Not.Null.And.Not.Empty);
+                Assert.That(repo.GetMany<IUser>(e => e), Is.InstanceOf<IEnumerable<IUserModel>>().And.Not.Null.And.Not.Empty);
+                Assert.That(repo.GetMany<IUserProfile>(e => e), Is.InstanceOf<IEnumerable<IUserModel>>().And.Not.Null.And.Not.Empty);
             }
         }
 

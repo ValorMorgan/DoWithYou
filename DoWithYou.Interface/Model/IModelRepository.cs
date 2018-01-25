@@ -13,11 +13,11 @@ namespace DoWithYou.Interface.Model
 
         TModel Get(T1 entity);
 
-        TModel Get(Func<IQueryable<T1>, T1> request1);
+        TModel Get(Func<IQueryable<T1>, T1> request);
 
         IEnumerable<TModel> GetMany(IEnumerable<T1> entities);
 
-        IEnumerable<TModel> GetMany(Func<IQueryable<T1>, IEnumerable<T1>> request1);
+        IEnumerable<TModel> GetMany(Func<IQueryable<T1>, IEnumerable<T1>> request);
 
         void Insert(TModel model);
 
@@ -37,13 +37,15 @@ namespace DoWithYou.Interface.Model
 
         TModel Get(T1 entity1, T2 entity2);
 
-        TModel Get(Func<IQueryable<T1>, T1> request1, Func<IQueryable<T2>, T2> request2);
+        TModel Get<T>(Func<IQueryable<T>, T> request)
+            where T : IBaseEntity;
 
         IEnumerable<TModel> GetMany(IEnumerable<(T1, T2)> entities);
 
         IEnumerable<TModel> GetMany(IEnumerable<T1> entities1, IEnumerable<T2> entities2);
 
-        IEnumerable<TModel> GetMany(Func<IQueryable<T1>, IEnumerable<T1>> request1, Func<IQueryable<T2>, IEnumerable<T2>> request2);
+        IEnumerable<TModel> GetMany<T>(Func<IQueryable<T>, IEnumerable<T>> request)
+            where T : IBaseEntity;
 
         void Insert(TModel model);
 
