@@ -34,8 +34,11 @@ namespace DoWithYou.UnitTest.Model
                 sub.When(x => x.Update(Arg.Any<IUser>())).DoNotCallBase();
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
 
-                sub.When(x => x.Get(Arg.Any<Func<IQueryable<IUser>, IUser>>()).Returns(new User()));
-                sub.When(x => x.GetMany(Arg.Any<Func<IQueryable<IUser>, IEnumerable<IUser>>>()).Returns(new List<IUser> { new User() }));
+                var newUser = new User();
+                var newUserList = new List<IUser> {newUser};
+
+                sub.Get(Arg.Any<Func<IQueryable<IUser>, IUser>>()).Returns(newUser);
+                sub.GetMany(Arg.Any<Func<IQueryable<IUser>, IEnumerable<IUser>>>()).Returns(newUserList);
 
                 return sub;
             }
@@ -52,8 +55,11 @@ namespace DoWithYou.UnitTest.Model
                 sub.When(x => x.Update(Arg.Any<IUserProfile>())).DoNotCallBase();
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
 
-                sub.When(x => x.Get(Arg.Any<Func<IQueryable<IUserProfile>, IUserProfile>>()).Returns(new UserProfile()));
-                sub.When(x => x.GetMany(Arg.Any<Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>>()).Returns(new List<IUserProfile> { new UserProfile() }));
+                var newUserProfile = new UserProfile();
+                var newUserProfileList = new List<IUserProfile> {newUserProfile};
+
+                sub.Get(Arg.Any<Func<IQueryable<IUserProfile>, IUserProfile>>()).Returns(newUserProfile);
+                sub.GetMany(Arg.Any<Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>>()).Returns(newUserProfileList);
 
                 return sub;
             }
@@ -65,9 +71,13 @@ namespace DoWithYou.UnitTest.Model
             {
                 var sub = Substitute.For<IModelMapper<IUserModel, IUser, IUserProfile>>();
 
-                sub.When(x => x.MapEntityToModel(Arg.Any<(IUser, IUserProfile)>()).Returns(new UserModel(new User(), new UserProfile())));
-                sub.When(x => x.MapEntityToModel(Arg.Any<IUser>(), Arg.Any<IUserProfile>()).Returns(new UserModel(new User(), new UserProfile())));
-                sub.When(x => x.MapModelToEntity(Arg.Any<IUserModel>()).Returns((new User(), new UserProfile())));
+                var newUser = new User();
+                var newProfile = new UserProfile();
+                var newModel = new UserModel(newUser, newProfile);
+
+                sub.MapEntityToModel(Arg.Any<(IUser, IUserProfile)>()).Returns(newModel);
+                sub.MapEntityToModel(Arg.Any<IUser>(), Arg.Any<IUserProfile>()).Returns(newModel);
+                sub.MapModelToEntity(Arg.Any<IUserModel>()).Returns((newUser, newProfile));
 
                 return sub;
             }
@@ -82,9 +92,21 @@ namespace DoWithYou.UnitTest.Model
             Assert.That(() => Repository.Delete(arg), Throws.Nothing);
         }
 
-        [Test]
+        [Theory]
         public void Get_Returns_Expected_Results()
         {
+            using (var repo = MockedUserRepository)
+            {
+                if (repo.Get(e => e.FirstOrDefault()) == null)
+                    Assert.Inconclusive($"{nameof(MockedUserRepository)} not returning correct values.");
+            }
+
+            using (var repo = MockedUserProfileRepository)
+            {
+                if (repo.Get(e => e.FirstOrDefault()) == null)
+                    Assert.Inconclusive($"{nameof(MockedUserProfileRepository)} not returning correct values.");
+            }
+
             using (var repo = Repository)
             {
                 Assert.That(repo.Get<IUser>(e => e.FirstOrDefault()), Is.InstanceOf<IUserModel>().And.Not.Null);
@@ -92,9 +114,21 @@ namespace DoWithYou.UnitTest.Model
             }
         }
 
-        [Test]
+        [Theory]
         public void GetMany_Returns_Expected_Results()
         {
+            using (var repo = MockedUserRepository)
+            {
+                if (!repo.GetMany(e => e)?.Any() ?? true)
+                    Assert.Inconclusive($"{nameof(MockedUserRepository)} not returning correct values.");
+            }
+
+            using (var repo = MockedUserProfileRepository)
+            {
+                if (!repo.GetMany(e => e)?.Any() ?? true)
+                    Assert.Inconclusive($"{nameof(MockedUserProfileRepository)} not returning correct values.");
+            }
+
             using (var repo = Repository)
             {
                 Assert.That(repo.GetMany<IUser>(e => e), Is.InstanceOf<IEnumerable<IUserModel>>().And.Not.Null.And.Not.Empty);

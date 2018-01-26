@@ -1,5 +1,4 @@
-﻿using System;
-using DoWithYou.Data.Entities.DoWithYou;
+﻿using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Mappers;
@@ -13,7 +12,7 @@ namespace DoWithYou.UnitTest.Model
     {
         private readonly IModelMapper<IUserModel, IUser, IUserProfile> _mapper = new UserModelMapper();
 
-        private static IUser TestUser => new User()
+        private static readonly IUser _testUser = new User()
         {
             UserID = 1,
             Username = "testUser",
@@ -21,7 +20,7 @@ namespace DoWithYou.UnitTest.Model
             Email = "test@test.com"
         };
 
-        private static IUserProfile TestUserProfile => new UserProfile()
+        private static readonly IUserProfile _testUserProfile = new UserProfile()
         {
             UserProfileID = 1,
             UserID = 1,
@@ -39,8 +38,8 @@ namespace DoWithYou.UnitTest.Model
         [Test]
         public void MapEntityToModel_Returns_IUserModel_When_Given_Valid_Entities()
         {
-            IUserModel modelFromTuple = _mapper.MapEntityToModel((TestUser, TestUserProfile));
-            IUserModel modelFromParameters = _mapper.MapEntityToModel(TestUser, TestUserProfile);
+            IUserModel modelFromTuple = _mapper.MapEntityToModel((_testUser, _testUserProfile));
+            IUserModel modelFromParameters = _mapper.MapEntityToModel(_testUser, _testUserProfile);
 
             Assert.That(modelFromTuple, Is.Not.Null.And.InstanceOf<IUserModel>());
             Assert.That(modelFromParameters, Is.Not.Null.And.InstanceOf<IUserModel>());
@@ -65,16 +64,16 @@ namespace DoWithYou.UnitTest.Model
         [Test]
         public void MapModelToEntity_Returns_Tuple_Of_Entities_When_Given_Valid_Model()
         {
-            var entities = _mapper.MapModelToEntity(new UserModel(TestUser, TestUserProfile));
+            var entities = _mapper.MapModelToEntity(new UserModel(_testUser, _testUserProfile));
 
             Assert.That(entities.Item1, Is.Not.Null.And.InstanceOf<IUser>());
             Assert.That(entities.Item2, Is.Not.Null.And.InstanceOf<IUserProfile>());
 
-            Assert.AreEqual(entities.Item1, TestUser,
-                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(TestUser)}: {TestUser.GetHashCode()}");
+            Assert.AreEqual(entities.Item1, _testUser,
+                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(_testUser)}: {_testUser.GetHashCode()}");
 
-            Assert.AreEqual(entities.Item2, TestUserProfile,
-                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(TestUserProfile)}: {TestUserProfile.GetHashCode()}");
+            Assert.AreEqual(entities.Item2, _testUserProfile,
+                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(_testUserProfile)}: {_testUserProfile.GetHashCode()}");
         }
 
         [Test]
