@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
-using DoWithYou.Interface.Data;
-using DoWithYou.Model.Repository;
+using DoWithYou.Model;
+using DoWithYou.Model.Base;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -11,69 +13,100 @@ namespace DoWithYou.UnitTest.Model
     [TestFixture]
     public class UserRepositoryTests
     {
-        private IRepository<User> MockedRepository
+        private static readonly User[] TEST_CASES = {new User(), default, null};
+
+        private IDoWithYouContext MockedContext
         {
             get
             {
-                IRepository<User> substitute = Substitute.For<IRepository<User>>();
-                
-                substitute.GetAll().Returns(new List<User>());
-                substitute.When(r => r.Delete(Arg.Any<User>())).DoNotCallBase();
-                substitute.When(r => r.Insert(Arg.Any<User>())).DoNotCallBase();
-                substitute.When(r => r.Update(Arg.Any<User>())).DoNotCallBase();
-                substitute.When(r => r.SaveChanges()).DoNotCallBase();
+                var sub = Substitute.For<IDoWithYouContext>();
 
-                return substitute;
+                sub.When(x => x.SaveChanges()).DoNotCallBase();
+                //sub.When(x => x.Set<User>().Returns(MockedDbSet)).DoNotCallBase();
+
+                return sub;
             }
         }
 
-        private UserRepository TestRepository => new UserRepository(null, MockedRepository, TestSetupFactory.GetLoggerTemplates());
-
-        [Test]
-        public void GetAll_Returns_Enumerable()
+        private DbSet<User> MockedDbSet
         {
-            using (var repo = TestRepository)
-                Assert.That(repo.GetAll(), Is.Not.Null.And.InstanceOf<IEnumerable<User>>());
-        }
-
-        [Test]
-        public void Delete_Throws_Nothing()
-        {
-            using (var repo = TestRepository)
+            get
             {
-                Assert.That(() => repo.Delete(new User()), Throws.Nothing);
-                Assert.That(() => repo.Delete(default(User)), Throws.Nothing);
-                Assert.That(() => repo.Delete(null), Throws.Nothing);
+                var sub = Substitute.For<DbSet<User>, IQueryable<User>>()
+                    .Initialize(TEST_CASES.AsQueryable());
+
+                sub.When(x => x.Add(Arg.Any<User>())).DoNotCallBase();
+                sub.When(x => x.AddRange(Arg.Any<User[]>())).DoNotCallBase();
+                sub.When(x => x.Remove(Arg.Any<User>())).DoNotCallBase();
+                sub.When(x => x.Update(Arg.Any<User>())).DoNotCallBase();
+
+                return sub;
+            }
+        }
+
+        private EntityRepository<User> Repository => new UserRepository(MockedContext, MockedDbSet);
+
+        [Test]
+        [TestCaseSource(nameof(TEST_CASES))]
+        public void Delete_Throws_Nothing(User arg)
+        {
+            Assert.That(() =>
+            {
+                using (var repo = Repository) repo.Delete(arg);
+            }, Throws.Nothing);
+        }
+
+        [Test]
+        public void Get_Returns_Expected_Results()
+        {
+            using (var repo = Repository)
+                Assert.That(repo.Get(e => e.FirstOrDefault(i => i != null)), Is.InstanceOf<User>().And.Not.Null);
+        }
+
+        [Test]
+        public void GetMany_Returns_Expected_Results()
+        {
+            using (var repo = Repository)
+                Assert.That(repo.GetMany(e => e.Where(i => i != null)), Is.InstanceOf<IEnumerable<User>>().And.Not.Null.And.Not.Empty);
+        }
+
+        [Test]
+        public void GetQueryable_Returns_Not_Null()
+        {
+            using (var repo = Repository)
+            {
+                Assert.That(repo.GetQueryable(), Is.Not.Null);
+                Assert.That(() => repo.GetQueryable().ToList(), Throws.Nothing);
             }
         }
 
         [Test]
-        public void Insert_Throws_Nothing()
+        [TestCaseSource(nameof(TEST_CASES))]
+        public void Insert_Throws_Nothing(User arg)
         {
-            using (var repo = TestRepository)
+            Assert.That(() =>
             {
-                Assert.That(() => repo.Insert(new User()), Throws.Nothing);
-                Assert.That(() => repo.Insert(default(User)), Throws.Nothing);
-                Assert.That(() => repo.Insert(null), Throws.Nothing);
-            }
-        }
-
-        [Test]
-        public void Update_Throws_Nothing()
-        {
-            using (var repo = TestRepository)
-            {
-                Assert.That(() => repo.Update(new User()), Throws.Nothing);
-                Assert.That(() => repo.Update(default(User)), Throws.Nothing);
-                Assert.That(() => repo.Update(null), Throws.Nothing);
-            }
+                using (var repo = Repository) repo.Insert(arg);
+            }, Throws.Nothing);
         }
 
         [Test]
         public void SaveChanges_Throws_Nothing()
         {
-            using (var repo = TestRepository)
-                Assert.That(() => repo.SaveChanges(), Throws.Nothing);
+            Assert.That(() =>
+            {
+                using (var repo = Repository) repo.SaveChanges();
+            }, Throws.Nothing);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TEST_CASES))]
+        public void Update_Throws_Nothing(User arg)
+        {
+            Assert.That(() =>
+            {
+                using (var repo = Repository) repo.Update(arg);
+            }, Throws.Nothing);
         }
     }
 }

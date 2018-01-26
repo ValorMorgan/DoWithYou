@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using Serilog.Events;

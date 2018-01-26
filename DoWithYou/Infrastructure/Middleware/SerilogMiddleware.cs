@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using DoWithYou.Utilities;
 using Microsoft.AspNetCore.Http;
 using Serilog;

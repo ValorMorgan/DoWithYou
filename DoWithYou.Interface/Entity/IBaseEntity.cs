@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace DoWithYou.Interface.Data.Entity
+namespace DoWithYou.Interface.Entity
 {
     public interface IBaseEntity
     {
         DateTime CreationDate { get; set; }
 
-        DateTime ModifiedDate { get; set; }
+        DateTime? ModifiedDate { get; set; }
     }
 }

@@ -14,19 +14,17 @@ namespace DoWithYou.Model.Repository
     public class UserRepository : IRepository<IUser>
     {
         #region VARIABLES
-        private IDoWithYouContext _context;
         private IRepository<User> _repository;
         private readonly ILoggerTemplates _templates;
         #endregion
 
         #region CONSTRUCTORS
-        public UserRepository(IDoWithYouContext context, ILoggerTemplates templates)
+        public UserRepository(ILoggerTemplates templates)
         {
             _templates = templates;
 
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, _templates.Constructor, nameof(UserRepository));
-
-            _context = context;
+            
             _repository = new Repository<User>(_context, templates);
         }
 

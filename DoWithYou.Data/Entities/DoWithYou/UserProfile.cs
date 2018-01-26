@@ -1,5 +1,7 @@
 ﻿using DoWithYou.Data.Entities.DoWithYou.Base;
-using DoWithYou.Interface.Data.Entity;
+using DoWithYou.Interface.Entity;
+using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Converters;
 
 namespace DoWithYou.Data.Entities.DoWithYou
 {
@@ -28,5 +30,31 @@ namespace DoWithYou.Data.Entities.DoWithYou
         public string ZipCode { get; set; }
 
         public virtual User User { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IUserProfile))
+                return false;
+
+            return GetHashCode() == ((UserProfile)obj).GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 61574393;
+            hashCode = hashCode * HashConstants.MULTIPLIER + base.GetHashCode();
+            hashCode = hashCode * HashConstants.MULTIPLIER + UserProfileID.GetHashCode();
+            hashCode = hashCode * HashConstants.MULTIPLIER + UserID.GetHashCode();
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(FirstName);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(MiddleName);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(LastName);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Phone);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Address1);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Address2);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(City);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(State);
+            hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(ZipCode);
+            return hashCode;
+        }
     }
 }

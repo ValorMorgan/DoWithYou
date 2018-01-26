@@ -3,7 +3,7 @@ using Autofac;
 using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
-using DoWithYou.Shared.Repositories;
+using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -49,7 +49,6 @@ namespace DoWithYou.Shared.Factories
 
             // Alphabetical order on Class name
             builder.RegisterType<LoggerFactory>()?.As<ILoggerFactory>();
-            builder.RegisterType<LoggerTemplates>()?.As<ILoggerTemplates>();
             builder.RegisterType<StringConverter>()?.As<IStringConverter>();
         }
         #endregion

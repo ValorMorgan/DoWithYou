@@ -1,5 +1,4 @@
-﻿using System;
-using DoWithYou.Interface.Shared;
+﻿using DoWithYou.Interface.Shared;
 using DoWithYou.Shared.Converters;
 using NUnit.Framework;
 
@@ -8,15 +7,17 @@ namespace DoWithYou.UnitTest.Shared
     [TestFixture]
     public class StringConverterTests
     {
-        private readonly IStringConverter _converter = new StringConverter(TestSetupFactory.GetLoggerTemplates());
+        private static string[] TEST_CASES = { NOT_EMPTY_STRING, string.Empty, default, null };
+
+        private const string NOT_EMPTY_STRING = "Test String";
+
+        private readonly IStringConverter _converter = new StringConverter();
 
         [Test]
-        public void Convert_Should_Return_IStringConverter()
+        [TestCaseSource(nameof(TEST_CASES))]
+        public void Convert_Should_Return_IStringConverter(string arg)
         {
-            Assert.That(_converter.Convert("Not Empty"), Is.Not.Null.And.InstanceOf<IStringConverter>());
-            Assert.That(_converter.Convert(string.Empty), Is.Not.Null.And.InstanceOf<IStringConverter>());
-            Assert.That(_converter.Convert(default), Is.Not.Null.And.InstanceOf<IStringConverter>());
-            Assert.That(_converter.Convert(null), Is.Not.Null.And.InstanceOf<IStringConverter>());
+            Assert.That(_converter.Convert(arg), Is.Not.Null.And.InstanceOf<IStringConverter>());
         }
 
         [Test]
@@ -80,6 +81,13 @@ namespace DoWithYou.UnitTest.Shared
             IStringConverter newConverter = _converter.Convert(testString);
             Assert.That(_converter.To<int>(), Is.TypeOf<int>().And.EqualTo(default(int)));
             Assert.That(newConverter.To<int>(), Is.TypeOf<int>().And.EqualTo(testResult));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(TEST_CASES))]
+        public void ToHash_Throws_Nothing(string arg)
+        {
+            Assert.That(() => StringConverter.ToHash(arg), Throws.Nothing);
         }
     }
 }

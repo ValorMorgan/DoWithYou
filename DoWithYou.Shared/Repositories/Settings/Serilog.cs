@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace DoWithYou.Shared.Repositories.Settings
+﻿namespace DoWithYou.Shared.Repositories.Settings
 {
     public class Serilog
     {
@@ -9,12 +7,8 @@ namespace DoWithYou.Shared.Repositories.Settings
 
         public MinimumLevel MinimumLevel { get; set; }
 
-        public Template[] Templates { get; set; }
-
         public WriteTo[] WriteTo { get; set; }
         #endregion
-
-        public string FindTemplate(string name) => Templates.First(t => t.Name == name).Format;
     }
 
     public class MinimumLevel
@@ -50,15 +44,6 @@ namespace DoWithYou.Shared.Repositories.Settings
         public string OutputTemplate { get; set; }
 
         public string PathFormat { get; set; }
-        #endregion
-    }
-
-    public class Template
-    {
-        #region PROPERTIES
-        public string Format { get; set; }
-
-        public string Name { get; set; }
         #endregion
     }
 }
