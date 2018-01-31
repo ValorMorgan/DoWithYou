@@ -14,6 +14,8 @@ namespace DoWithYou.Shared.Core.Extensions
     {
         public static IContainer BuildApplicationContainer(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddAutofac();
+
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Generating {Class}", nameof(ContainerBuilder));
             IContainerBuilderFactory builderFactory = new ContainerBuilderFactory();
             var builder = builderFactory.GetBuilder(configuration);

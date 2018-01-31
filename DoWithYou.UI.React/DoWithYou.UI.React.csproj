@@ -22,6 +22,37 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="ClientApp\css\scss\site.scss" />
+    <None Remove="ClientApp\css\scss\_class.scss" />
+    <None Remove="ClientApp\css\scss\_color.scss" />
+    <None Remove="ClientApp\css\scss\_id.scss" />
+    <None Remove="ClientApp\css\scss\_includes.scss" />
+    <None Remove="ClientApp\css\scss\_list.scss" />
+    <None Remove="ClientApp\css\scss\_parameters.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\css\scss\site.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_class.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_color.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_id.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_includes.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_list.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="ClientApp\css\scss\_parameters.scss">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

@@ -1,0 +1,25 @@
+﻿$font-stack: Arial, Helvetica, sans-serif;
+
+@import 'parameters';
+@import 'includes';
+
+// Universal styles
+html {
+    font: 100% $font-stack;
+    background-color: white;
+
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+
+        @include border-radius(10px);
+    }
+}
+
+// Other styles
+@import 'list';
+@import 'class';
+@import 'id';
+
+@import 'mediaSmall';
+@import 'mediaMedium';

@@ -9,6 +9,9 @@ namespace DoWithYou.Shared.Factories
 {
     public class LoggerFactory : ILoggerFactory
     {
+        public void SetupSerilogLogger(IConfiguration configuration) =>
+            Log.Logger = GetLoggerFromConfiguration(configuration);
+
         public Logger GetLogger()
         {
             string filePath = Path.Combine(AppContext.BaseDirectory, "Logs");

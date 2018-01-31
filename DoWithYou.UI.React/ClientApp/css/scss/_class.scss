@@ -1,0 +1,40 @@
+﻿@import 'parameters';
+@import 'includes';
+
+// NAVIGATION =================================================
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    li {
+        .glyphicon {
+            margin-right: 10px;
+        }
+
+        a.active, a.active:hover, a.active:focus {
+            background-color: #4189C7;
+            color: white;
+        }
+    }
+}
+
+// CLOCK =================================================
+.clock-digital {
+    width: 60%;
+    padding: 10px 5px;
+    margin: 10px auto;
+    clear: both;
+    background-color: $color-primary;
+    border-color: $color-secondary;
+    @include border-radius(5px);
+
+    .clock-digital-time {
+        font-size: 24px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+}

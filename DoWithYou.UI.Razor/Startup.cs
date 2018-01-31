@@ -25,7 +25,8 @@ namespace DoWithYou.UI.Razor
         #region CONSTRUCTORS
         public Startup(IConfiguration configuration)
         {
-            SetupLogger(configuration);
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.SetupSerilogLogger(configuration);
 
             Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(Startup));
 
@@ -46,7 +47,6 @@ namespace DoWithYou.UI.Razor
         {
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Adding Services to {Interface}", nameof(IServiceCollection));
             services.AddMvc().AddControllersAsServices();
-            services.AddAutofac();
 
             ApplicationContainer = services.BuildApplicationContainer(Configuration);
 
@@ -55,6 +55,8 @@ namespace DoWithYou.UI.Razor
 
         public void Dispose()
         {
+            Log.Logger.LogEventDebug(LoggerEvents.DISPOSE, LoggerTemplates.DISPOSING, nameof(Startup));
+
             ApplicationContainer?.Dispose();
             ApplicationContainer = null;
         }
@@ -95,12 +97,6 @@ namespace DoWithYou.UI.Razor
         {
             Log.Logger.LogEventDebug(LoggerEvents.STARTUP, LoggerTemplates.REGISTER_EVENT, nameof(ApplicationContainer), nameof(applicationLifetime.ApplicationStopped));
             applicationLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
-        }
-
-        private static void SetupLogger(IConfiguration configuration)
-        {
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            Log.Logger = loggerFactory.GetLoggerFromConfiguration(configuration);
         }
         #endregion
     }
