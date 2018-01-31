@@ -1,8 +1,8 @@
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using DoWithYou.Service.Utilities;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Core.Extensions;
 using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Factories;
 using DoWithYou.UI.Razor.Infrastructure.Middleware;
@@ -48,7 +48,7 @@ namespace DoWithYou.UI.Razor
             services.AddMvc().AddControllersAsServices();
             services.AddAutofac();
 
-            ConfigureApplicationContainer(services);
+            ApplicationContainer = services.BuildApplicationContainer(Configuration);
 
             return new AutofacServiceProvider(ApplicationContainer);
         }
@@ -60,25 +60,6 @@ namespace DoWithYou.UI.Razor
         }
 
         #region PRIVATE
-        private void ConfigureApplicationContainer(IServiceCollection services)
-        {
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Generating {Class}", nameof(ContainerBuilder));
-            IContainerBuilderFactory builderFactory = new ContainerBuilderFactory();
-            var builder = builderFactory.GetBuilder(Configuration);
-
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Registering layer types to {Class}", nameof(ContainerBuilder));
-            IContainerBuilderLayerFactory builderRegistry = new ContainerBuilderLayerFactory();
-            builderRegistry.RegisterBuilderLayerTypes(ref builder);
-
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Registering UI Instances to {Class}", nameof(ContainerBuilder));
-            builder.RegisterInstance(Configuration);
-
-            Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Populating services in {Class}", nameof(ContainerBuilder));
-            builder.Populate(services);
-
-            ApplicationContainer = builder.Build();
-        }
-
         private static void ConfigureForEnvironment(ref IApplicationBuilder app, IHostingEnvironment env)
         {
             Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Environment: {Environment}", env.EnvironmentName);
