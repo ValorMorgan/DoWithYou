@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="ClientApp\components\Image.tsx" />
     <None Remove="ClientApp\css\deps\site.scss" />
     <None Remove="ClientApp\css\deps\_class.scss" />
     <None Remove="ClientApp\css\deps\_color.scss" />
@@ -53,6 +54,10 @@
     <Content Include="ClientApp\css\deps\_parameters.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Image.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

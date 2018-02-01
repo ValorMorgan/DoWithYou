@@ -15,3 +15,8 @@
     -moz-box-shadow: $type;
     box-shadow: $type;
 }
+
+@mixin equalSize($size) {
+    width: $size;
+    height: $size;
+}

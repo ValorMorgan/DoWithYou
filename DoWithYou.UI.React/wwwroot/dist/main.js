@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d166bb5a2778328636f1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c68bee42c85f35d12d4c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1296,7 +1296,7 @@ exports = module.exports = __webpack_require__(66)(undefined);
 
 
 // module
-exports.push([module.i, "html {\n  font: 100% Arial, Helvetica, sans-serif;\n  background-color: white; }\n  html body {\n    padding-top: 50px;\n    padding-bottom: 20px;\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px; }\n\nul li {\n  list-style: circle; }\n\nol li {\n  list-style: decimal-leading-zero; }\n\nul a, ol a {\n  text-decoration: none;\n  color: #119221; }\n\nul span, ol span {\n  color: #6b6b6b; }\n\n.main-nav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n  .main-nav li .glyphicon {\n    margin-right: 10px; }\n  .main-nav li a.active, .main-nav li a.active:hover, .main-nav li a.active:focus {\n    background-color: #4189C7;\n    color: white; }\n\n.clock-digital {\n  width: 60%;\n  min-width: 150px;\n  padding: 10px 5px;\n  margin: 10px auto;\n  clear: both;\n  background-color: black;\n  border: 2px solid #119221;\n  -webkit-border-radius: 5px;\n  -moz-border-radius: 5px;\n  border-radius: 5px;\n  -webkit-box-shadow: 5px 5px 5px 0 black;\n  -moz-box-shadow: 5px 5px 5px 0 black;\n  box-shadow: 5px 5px 5px 0 black; }\n  .clock-digital .clock-digital-time {\n    font-size: 24px;\n    text-align: center;\n    color: white;\n    margin: 0;\n    padding: 0; }\n\n#qrCode {\n  margin: 15px; }\n\n@media (max-width: 767px) {\n  body {\n    padding-top: 50px; } }\n\n@media (min-width: 768px) {\n  /* On small screens, convert the nav menu to a vertical sidebar */\n  .main-nav {\n    height: 100%;\n    width: calc(25% - 20px); }\n    .main-nav .navbar {\n      border-radius: 0px;\n      border-width: 0px;\n      height: 100%; }\n      .main-nav .navbar ul {\n        float: none; }\n      .main-nav .navbar li {\n        float: none;\n        font-size: 15px;\n        margin: 6px; }\n        .main-nav .navbar li a {\n          padding: 10px 16px;\n          border-radius: 4px; }\n      .main-nav .navbar a {\n        width: 100%;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n    .main-nav .navbar-header {\n      float: none; }\n    .main-nav .navbar-collapse {\n      border-top: 1px solid #444;\n      padding: 0px; } }\n", ""]);
+exports.push([module.i, "html {\n  font: 100% Arial, Helvetica, sans-serif;\n  background-color: white; }\n  html body {\n    padding-top: 50px;\n    padding-bottom: 20px;\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px; }\n\nul li {\n  list-style: circle; }\n\nol li {\n  list-style: decimal-leading-zero; }\n\nul a, ol a {\n  text-decoration: none;\n  color: #119221; }\n\nul span, ol span {\n  color: #6b6b6b; }\n\n.main-nav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n  .main-nav li .glyphicon {\n    margin-right: 10px; }\n  .main-nav li a.active, .main-nav li a.active:hover, .main-nav li a.active:focus {\n    background-color: #4189C7;\n    color: white; }\n\n.clock-digital {\n  width: 60%;\n  min-width: 160px;\n  padding: 10px 5px;\n  margin: 10px auto;\n  clear: both;\n  background-color: black;\n  border: 2px solid #119221;\n  -webkit-border-radius: 5px;\n  -moz-border-radius: 5px;\n  border-radius: 5px;\n  -webkit-box-shadow: 5px 5px 5px 0 black;\n  -moz-box-shadow: 5px 5px 5px 0 black;\n  box-shadow: 5px 5px 5px 0 black; }\n  .clock-digital .clock-digital-time {\n    font-size: 24px;\n    text-align: center;\n    color: white;\n    margin: 0;\n    padding: 0; }\n\n.image {\n  width: 120px;\n  height: 120px;\n  text-align: center;\n  line-height: 120px; }\n\n.image-container {\n  width: 120px;\n  border: 1px solid #6b6b6b;\n  overflow: hidden;\n  display: block; }\n\n#qrCode {\n  margin: 15px; }\n\n@media (max-width: 767px) {\n  body {\n    padding-top: 50px; } }\n\n@media (min-width: 768px) {\n  /* On small screens, convert the nav menu to a vertical sidebar */\n  .main-nav {\n    height: 100%;\n    width: calc(25% - 20px); }\n    .main-nav .navbar {\n      border-radius: 0px;\n      border-width: 0px;\n      height: 100%; }\n      .main-nav .navbar ul {\n        float: none; }\n      .main-nav .navbar li {\n        float: none;\n        font-size: 15px;\n        margin: 6px; }\n        .main-nav .navbar li a {\n          padding: 10px 16px;\n          border-radius: 4px; }\n      .main-nav .navbar a {\n        width: 100%;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n    .main-nav .navbar-header {\n      float: none; }\n    .main-nav .navbar-collapse {\n      border-top: 1px solid #444;\n      padding: 0px; } }\n", ""]);
 
 // exports
 
@@ -7952,6 +7952,7 @@ var FetchData = (function (_super) {
 /* WEBPACK VAR INJECTION */(function(process, module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Home; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Image__ = __webpack_require__(210);
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -7963,6 +7964,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 
+
 var Home = (function (_super) {
     __extends(Home, _super);
     function Home() {
@@ -7970,56 +7972,10 @@ var Home = (function (_super) {
     }
     Home.prototype.render = function () {
         return (__WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", null,
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("h1", null, "Hello, world!"),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null, "Welcome to your new single-page application, built with:"),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("ul", null,
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'https://get.asp.net/' }, "ASP.NET Core"),
-                    " and ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx' }, "C#"),
-                    " for cross-platform server-side code"),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'https://facebook.github.io/react/' }, "React"),
-                    " and ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'http://www.typescriptlang.org/' }, "TypeScript"),
-                    " for client-side code"),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'https://webpack.github.io/' }, "Webpack"),
-                    " for building and bundling client-side resources"),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("a", { href: 'http://getbootstrap.com/' }, "Bootstrap"),
-                    " for layout and styling")),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null, "To help you get started, we've also set up:"),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("ul", null,
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("strong", null, "Client-side navigation"),
-                    ". For example, click ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("em", null, "Counter"),
-                    " then ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("em", null, "Back"),
-                    " to return here."),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("strong", null, "Webpack dev middleware"),
-                    ". In development mode, there's no need to run the ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("code", null, "webpack"),
-                    " build tool. Your client-side resources are dynamically built on demand. Updates are available as soon as you modify any file."),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("strong", null, "Hot module replacement"),
-                    ". In development mode, you don't even need to reload the page after making most changes. Within seconds of saving changes to files, rebuilt React components will be injected directly into your running application, preserving its live state."),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("strong", null, "Efficient production builds"),
-                    ". In production mode, development-time features are disabled, and the ",
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("code", null, "webpack"),
-                    " build tool produces minified static CSS and JavaScript files.")),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("h4", null, "Going further"),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null,
-                "For larger applications, or for server-side prerendering (i.e., for ",
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("em", null, "isomorphic"),
-                " or ",
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("em", null, "universal"),
-                " applications), you should consider using a Flux/Redux-like architecture. You can generate an ASP.NET Core application with React and Redux using ",
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("code", null, "dotnet new reactredux"),
-                " instead of using this template.")));
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("h1", { className: "homepage-title" }, "Do With You"),
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("p", null, "ToDo app with interactive progress! "),
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1__Image__["a" /* Image */], { classes: "", src: "", alt: "Logo" }),
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1__Image__["b" /* CircleImage */], { classes: "", src: "", alt: "Logo" })));
     };
     return Home;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]));
@@ -8107,10 +8063,11 @@ var NavMenu = (function (_super) {
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' }),
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' }),
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' })),
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["Link"], { className: 'navbar-brand', to: '/' }, "DoWithYou.UI.React")),
+                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["Link"], { className: 'navbar-brand', to: '/' }, "DoWithYou")),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: 'clearfix' }),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: 'navbar-collapse collapse' },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_2__Clock__["a" /* DigitalClock */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: 'clearfix' }),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("ul", { className: 'nav navbar-nav' },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
                             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["NavLink"], { to: '/', exact: true, activeClassName: 'active' },
@@ -13067,6 +13024,69 @@ __webpack_require__(63);
 __webpack_require__(62);
 module.exports = __webpack_require__(61);
 
+
+/***/ }),
+/* 210 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Image; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CircleImage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var BaseImage = (function (_super) {
+    __extends(BaseImage, _super);
+    function BaseImage(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { placeholder: '' };
+        return _this;
+    }
+    BaseImage.prototype.render = function () {
+        return (__WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("img", { className: "image", src: this.props.src, alt: this.props.alt, placeholder: this.state.placeholder }));
+    };
+    return BaseImage;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]));
+var Image = (function (_super) {
+    __extends(Image, _super);
+    function Image(props) {
+        var _this = _super.call(this, props) || this;
+        props.classes = "image-container " + props.classes;
+        return _this;
+    }
+    Image.prototype.render = function () {
+        return (__WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: this.props.classes }, _super.prototype.render.call(this)));
+    };
+    return Image;
+}(BaseImage));
+
+var CircleImage = (function (_super) {
+    __extends(CircleImage, _super);
+    function CircleImage(props) {
+        var _this = _super.call(this, props) || this;
+        props.classes = "image-container img-circle " + props.classes;
+        return _this;
+    }
+    CircleImage.prototype.render = function () {
+        return (__WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: this.props.classes }, _super.prototype.render.call(this)));
+    };
+    return CircleImage;
+}(BaseImage));
+
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "E:\\git\\source\\repos\\DoWithYou\\DoWithYou.UI.React\\ClientApp\\components\\Image.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "E:\\git\\source\\repos\\DoWithYou\\DoWithYou.UI.React\\ClientApp\\components\\Image.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1), __webpack_require__(5)(module)))
 
 /***/ })
 /******/ ]);

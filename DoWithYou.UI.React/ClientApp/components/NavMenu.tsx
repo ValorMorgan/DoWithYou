@@ -14,11 +14,12 @@ export class NavMenu extends React.Component<{}, {}> {
                             <span className='icon-bar'></span>
                             <span className='icon-bar'></span>
                         </button>
-                        <Link className='navbar-brand' to={'/'}>DoWithYou.UI.React</Link>
+                        <Link className='navbar-brand' to={'/'}>DoWithYou</Link>
                     </div>
                     <div className='clearfix'></div>
                     <div className='navbar-collapse collapse'>
-                        <DigitalClock/>
+                        <DigitalClock />
+                        <div className='clearfix'></div>
                         <ul className='nav navbar-nav'>
                             <li>
                                 <NavLink to={ '/' } exact activeClassName='active'>
