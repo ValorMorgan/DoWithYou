@@ -24,16 +24,19 @@
 // CLOCK =================================================
 .clock-digital {
     width: 60%;
+    min-width: 150px;
     padding: 10px 5px;
     margin: 10px auto;
     clear: both;
-    background-color: $color-primary;
-    border-color: $color-secondary;
+    background-color: black;
+    border: 2px solid $color-primary;
     @include border-radius(5px);
+    @include box-shadow();
 
     .clock-digital-time {
         font-size: 24px;
         text-align: center;
+        color: white;
         margin: 0;
         padding: 0;
     }

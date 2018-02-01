@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3d6ff1d311724ad13d98"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d166bb5a2778328636f1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1296,7 +1296,7 @@ exports = module.exports = __webpack_require__(66)(undefined);
 
 
 // module
-exports.push([module.i, ".main-nav li .glyphicon {\r\n    margin-right: 10px;\r\n}\r\n\r\n/* Highlighting rules for nav menu items */\r\n.main-nav li a.active,\r\n.main-nav li a.active:hover,\r\n.main-nav li a.active:focus {\r\n    background-color: #4189C7;\r\n    color: white;\r\n}\r\n\r\n/* Keep the nav menu independent of scrolling and on top of other items */\r\n.main-nav {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n}\r\n\r\n.clock-digital {\r\n    width: 60%;\r\n    padding: 10px 5px;\r\n    margin: 10px auto;\r\n    background-color: white;\r\n    clear: both;\r\n\r\n    border-radius: 5px;\r\n}\r\n\r\n.clock-digital-time {\r\n    font-size: 24px;\r\n    text-align: center;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n@media (max-width: 767px) {\r\n    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */\r\n    body {\r\n        padding-top: 50px;\r\n    }\r\n}\r\n\r\n@media (min-width: 768px) {\r\n    /* On small screens, convert the nav menu to a vertical sidebar */\r\n    .main-nav {\r\n        height: 100%;\r\n        width: calc(25% - 20px);\r\n    }\r\n    .main-nav .navbar {\r\n        border-radius: 0px;\r\n        border-width: 0px;\r\n        height: 100%;\r\n    }\r\n    .main-nav .navbar-header {\r\n        float: none;\r\n    }\r\n    .main-nav .navbar-collapse {\r\n        border-top: 1px solid #444;\r\n        padding: 0px;\r\n    }\r\n    .main-nav .navbar ul {\r\n        float: none;\r\n    }\r\n    .main-nav .navbar li {\r\n        float: none;\r\n        font-size: 15px;\r\n        margin: 6px;\r\n    }\r\n    .main-nav .navbar li a {\r\n        padding: 10px 16px;\r\n        border-radius: 4px;\r\n    }\r\n    .main-nav .navbar a {\r\n        /* If a menu item's text is too long, truncate it */\r\n        width: 100%;\r\n        white-space: nowrap;\r\n        overflow: hidden;\r\n        text-overflow: ellipsis;\r\n    }\r\n}\r\n", ""]);
+exports.push([module.i, "html {\n  font: 100% Arial, Helvetica, sans-serif;\n  background-color: white; }\n  html body {\n    padding-top: 50px;\n    padding-bottom: 20px;\n    -webkit-border-radius: 10px;\n    -moz-border-radius: 10px;\n    border-radius: 10px; }\n\nul li {\n  list-style: circle; }\n\nol li {\n  list-style: decimal-leading-zero; }\n\nul a, ol a {\n  text-decoration: none;\n  color: #119221; }\n\nul span, ol span {\n  color: #6b6b6b; }\n\n.main-nav {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n  .main-nav li .glyphicon {\n    margin-right: 10px; }\n  .main-nav li a.active, .main-nav li a.active:hover, .main-nav li a.active:focus {\n    background-color: #4189C7;\n    color: white; }\n\n.clock-digital {\n  width: 60%;\n  min-width: 150px;\n  padding: 10px 5px;\n  margin: 10px auto;\n  clear: both;\n  background-color: black;\n  border: 2px solid #119221;\n  -webkit-border-radius: 5px;\n  -moz-border-radius: 5px;\n  border-radius: 5px;\n  -webkit-box-shadow: 5px 5px 5px 0 black;\n  -moz-box-shadow: 5px 5px 5px 0 black;\n  box-shadow: 5px 5px 5px 0 black; }\n  .clock-digital .clock-digital-time {\n    font-size: 24px;\n    text-align: center;\n    color: white;\n    margin: 0;\n    padding: 0; }\n\n#qrCode {\n  margin: 15px; }\n\n@media (max-width: 767px) {\n  body {\n    padding-top: 50px; } }\n\n@media (min-width: 768px) {\n  /* On small screens, convert the nav menu to a vertical sidebar */\n  .main-nav {\n    height: 100%;\n    width: calc(25% - 20px); }\n    .main-nav .navbar {\n      border-radius: 0px;\n      border-width: 0px;\n      height: 100%; }\n      .main-nav .navbar ul {\n        float: none; }\n      .main-nav .navbar li {\n        float: none;\n        font-size: 15px;\n        margin: 6px; }\n        .main-nav .navbar li a {\n          padding: 10px 16px;\n          border-radius: 4px; }\n      .main-nav .navbar a {\n        width: 100%;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis; }\n    .main-nav .navbar-header {\n      float: none; }\n    .main-nav .navbar-collapse {\n      border-top: 1px solid #444;\n      padding: 0px; } }\n", ""]);
 
 // exports
 
@@ -2556,8 +2556,8 @@ module.exports = __webpack_require__(181);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(process, module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__css_site_css__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__css_site_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__css_site_css__);
+/* WEBPACK VAR INJECTION */(function(process, module) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__css_site_scss__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__css_site_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__css_site_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_bootstrap__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(0);
@@ -8107,10 +8107,10 @@ var NavMenu = (function (_super) {
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' }),
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' }),
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { className: 'icon-bar' })),
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["Link"], { className: 'navbar-brand', to: '/' }, "DoWithYou.UI.React"),
-                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_2__Clock__["a" /* DigitalClock */], null)),
+                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["Link"], { className: 'navbar-brand', to: '/' }, "DoWithYou.UI.React")),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: 'clearfix' }),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: 'navbar-collapse collapse' },
+                    __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_2__Clock__["a" /* DigitalClock */], null),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("ul", { className: 'nav navbar-nav' },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("li", null,
                             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"](__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["NavLink"], { to: '/', exact: true, activeClassName: 'active' },

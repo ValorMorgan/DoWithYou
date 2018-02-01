@@ -22,35 +22,35 @@
 
   <ItemGroup>
     <None Remove=".gitignore" />
-    <None Remove="ClientApp\css\scss\site.scss" />
-    <None Remove="ClientApp\css\scss\_class.scss" />
-    <None Remove="ClientApp\css\scss\_color.scss" />
-    <None Remove="ClientApp\css\scss\_id.scss" />
-    <None Remove="ClientApp\css\scss\_includes.scss" />
-    <None Remove="ClientApp\css\scss\_list.scss" />
-    <None Remove="ClientApp\css\scss\_parameters.scss" />
+    <None Remove="ClientApp\css\deps\site.scss" />
+    <None Remove="ClientApp\css\deps\_class.scss" />
+    <None Remove="ClientApp\css\deps\_color.scss" />
+    <None Remove="ClientApp\css\deps\_id.scss" />
+    <None Remove="ClientApp\css\deps\_includes.scss" />
+    <None Remove="ClientApp\css\deps\_list.scss" />
+    <None Remove="ClientApp\css\deps\_parameters.scss" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientApp\css\scss\site.scss">
+    <Content Include="ClientApp\css\site.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_class.scss">
+    <Content Include="ClientApp\css\deps\_class.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_color.scss">
+    <Content Include="ClientApp\css\deps\_color.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_id.scss">
+    <Content Include="ClientApp\css\deps\_id.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_includes.scss">
+    <Content Include="ClientApp\css\deps\_includes.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_list.scss">
+    <Content Include="ClientApp\css\deps\_list.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\scss\_parameters.scss">
+    <Content Include="ClientApp\css\deps\_parameters.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
