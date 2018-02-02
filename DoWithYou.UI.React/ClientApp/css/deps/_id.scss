@@ -3,3 +3,11 @@
 #qrCode {
     margin: 15px;
 }
+
+#title-nav {
+    $size: 18px;
+
+    margin: 0;
+    font-size: $size;
+    line-height: $size;
+}

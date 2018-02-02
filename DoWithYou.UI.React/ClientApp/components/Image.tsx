@@ -1,9 +1,9 @@
 ﻿import * as React from 'react'
 
 interface IImageProps {
+    id?: string;
     src: string;
-    alt: string;
-    classes: string;
+    alt?: string;
 }
 
 interface IImageState {
@@ -13,7 +13,7 @@ interface IImageState {
 class BaseImage extends React.Component<IImageProps, IImageState> {
     constructor(props: IImageProps) {
         super(props);
-        this.state = { placeholder: '' };
+        this.state = { placeholder: '' }; // TODO: Setup BaseImage placeholder
     }
 
     render() {
@@ -23,30 +23,36 @@ class BaseImage extends React.Component<IImageProps, IImageState> {
     }
 }
 
+// IMAGE ==============================================================================
+const containerClass = "image-container";
+
 export class Image extends BaseImage {
     constructor(props: IImageProps) {
         super(props);
-        props.classes = "image-container " + props.classes;
     }
 
     render() {
+        const className = containerClass;
+
         return (
-            <div className={this.props.classes}>
+            <div id={this.props.id} className={className}>
                 {super.render()}
             </div>
         );
     }
 }
 
+// CIRCLE IMAGE ==============================================================================
 export class CircleImage extends BaseImage {
     constructor(props: IImageProps) {
         super(props);
-        props.classes = "image-container img-circle " + props.classes;
     }
 
     render() {
+        const className = containerClass + ' img-circle';
+
         return (
-            <div className={this.props.classes}>
+            <div id={this.props.id} className={className}>
                 {super.render()}
             </div>
         );

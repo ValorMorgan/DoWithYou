@@ -23,6 +23,7 @@
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="ClientApp\components\Image.tsx" />
+    <None Remove="ClientApp\components\Title.tsx" />
     <None Remove="ClientApp\css\deps\site.scss" />
     <None Remove="ClientApp\css\deps\_class.scss" />
     <None Remove="ClientApp\css\deps\_color.scss" />
@@ -58,6 +59,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Image.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Title.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

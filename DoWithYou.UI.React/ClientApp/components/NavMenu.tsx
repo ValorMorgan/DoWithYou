@@ -1,6 +1,20 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { DigitalClock } from './Clock';
+import { Title } from './Title'
+
+export class NavBarButton extends React.Component<{}, {}> {
+    render() {
+        return (
+            <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+                <span className='sr-only'>Toggle navigation</span>
+                <span className='icon-bar'></span>
+                <span className='icon-bar'></span>
+                <span className='icon-bar'></span>
+            </button>
+        );
+    }
+}
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
@@ -8,13 +22,10 @@ export class NavMenu extends React.Component<{}, {}> {
             <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
                     <div className='navbar-header'>
-                        <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                            <span className='sr-only'>Toggle navigation</span>
-                            <span className='icon-bar'></span>
-                            <span className='icon-bar'></span>
-                            <span className='icon-bar'></span>
-                        </button>
-                        <Link className='navbar-brand' to={'/'}>DoWithYou</Link>
+                        <NavBarButton />
+                        <Link className='navbar-brand' to={'/'}>
+                            <Title id='title-nav'>Do With You</Title>
+                        </Link>
                     </div>
                     <div className='clearfix'></div>
                     <div className='navbar-collapse collapse'>
