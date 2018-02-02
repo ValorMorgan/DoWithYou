@@ -1,7 +1,4 @@
-﻿$font-stack: Arial, Helvetica, sans-serif;
-
-@import 'deps/_parameters.scss';
-@import 'deps/_includes.scss';
+﻿@import 'deps/_parameters.scss';
 
 // Universal styles
 html {
@@ -9,8 +6,7 @@ html {
     background-color: white;
 
     body {
-        padding-top: 50px;
-        padding-bottom: 20px;
+        padding-top: 120px;
 
         @include border-radius(10px);
     }

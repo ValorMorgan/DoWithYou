@@ -1,9 +1,37 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import * as Utilities from './Utilities';
+import { Link, NavLink, NavLinkProps } from 'react-router-dom';
 import { DigitalClock } from './Clock';
-import { Title } from './Title'
+import { Title } from './Title';
 
-export class NavBarButton extends React.Component<{}, {}> {
+export class NavMenu extends React.Component<{}, {}> {
+    public render() {
+        return (
+            <div className='main-nav'>
+                <div className='navbar navbar-inverse'>
+                    <NavBarHeader/>
+                    <Utilities.ClearFix/>
+                    <NavBarCollapse/>
+                </div>
+            </div>
+        );
+    }
+}
+
+class NavBarHeader extends React.PureComponent<{}, {}> {
+    render() {
+        return (
+            <div className='navbar-header'>
+                <NavBarButton/>
+                <Link className='navbar-brand' to={'/'}>
+                    <Title id='title-nav'>Do With You</Title>
+                </Link>
+            </div>
+        );
+    }
+}
+
+class NavBarButton extends React.PureComponent<{}, {}> {
     render() {
         return (
             <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
@@ -16,41 +44,46 @@ export class NavBarButton extends React.Component<{}, {}> {
     }
 }
 
-export class NavMenu extends React.Component<{}, {}> {
-    public render() {
+class NavBarCollapse extends React.Component<{}, {}> {
+    render() {
         return (
-            <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                    <div className='navbar-header'>
-                        <NavBarButton />
-                        <Link className='navbar-brand' to={'/'}>
-                            <Title id='title-nav'>Do With You</Title>
-                        </Link>
-                    </div>
-                    <div className='clearfix'></div>
-                    <div className='navbar-collapse collapse'>
-                        <DigitalClock />
-                        <div className='clearfix'></div>
-                        <ul className='nav navbar-nav'>
-                            <li>
-                                <NavLink to={ '/' } exact activeClassName='active'>
-                                    <span className='glyphicon glyphicon-home'></span> Home
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ '/counter' } activeClassName='active'>
-                                    <span className='glyphicon glyphicon-education'></span> Counter
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={ '/fetchdata' } activeClassName='active'>
-                                    <span className='glyphicon glyphicon-th-list'></span> Fetch data
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div className='navbar-collapse collapse'>
+                <DigitalClock/>
+                <Utilities.ClearFix />
+                <NavBarLinkList/>
             </div>
+        );
+    }
+}
+
+class NavBarLinkList extends React.Component<{}, {}> {
+    render() {
+        return (
+            <ul className='nav navbar-nav'>
+                <li><NavBarLink to={'/'} exact icon='glyphicon-home'>Home</NavBarLink></li>
+                <li><NavBarLink to={'/counter'} icon='glyphicon-education'>Counter</NavBarLink></li>
+                <li><NavBarLink to={'/fetchdata'} icon='glyphicon-th-list'>Fetch data</NavBarLink></li>
+            </ul>
+        );
+    }
+}
+
+interface INavBarLinkProps extends NavLinkProps {
+    icon: string;
+}
+
+class NavBarLink extends React.Component<INavBarLinkProps, {}> {
+    constructor(props: INavBarLinkProps) {
+        super(props);
+    }
+
+    render() {
+        const { icon, ...other } = this.props;
+
+        return (
+            <NavLink {...other} activeClassName="active">
+                <Utilities.Icon icon={this.props.icon} /> {this.props.children}
+            </NavLink>
         );
     }
 }

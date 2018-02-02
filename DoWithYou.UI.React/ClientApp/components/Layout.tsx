@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
 
-export interface LayoutProps {
+export interface ILayoutProps {
     children?: React.ReactNode;
 }
 
-export class Layout extends React.Component<LayoutProps, {}> {
+export class Layout extends React.Component<ILayoutProps, {}> {
     public render() {
         return (
             <div className='container-fluid'>
@@ -14,7 +14,12 @@ export class Layout extends React.Component<LayoutProps, {}> {
                         <NavMenu/>
                     </div>
                     <div className='col-sm-9'>
-                        { this.props.children }
+                        <div className='row'>
+
+                        </div>
+                        <div className='row'>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 ﻿@import 'parameters';
-@import 'includes';
 
 // NAVIGATION =================================================
 .main-nav {
@@ -9,14 +8,24 @@
     right: 0;
     z-index: 1;
 
+    .navbar {
+        background-color: $color-dark-1;
+    }
+
     li {
         .glyphicon {
             margin-right: 10px;
+            color: $color-light-1;
         }
 
         a.active, a.active:hover, a.active:focus {
-            background-color: #4189C7;
-            color: white;
+            background-color: $color-primary;
+            color: $color-dark-1;
+            @include box-shadow();
+
+            .glyphicon {
+                color: $color-dark-1;
+            }
         }
     }
 }
@@ -28,15 +37,15 @@
     padding: 10px 5px;
     margin: 10px auto;
     clear: both;
-    background-color: black;
-    border: 2px solid $color-primary;
+    background-color: $color-dark-2;
+    border: 2px solid $color-light-1;
     @include border-radius(5px);
     @include box-shadow();
 
     .clock-digital-time {
         font-size: 24px;
         text-align: center;
-        color: white;
+        color: $color-light-1;
         margin: 0;
         padding: 0;
     }
@@ -54,7 +63,34 @@ $image-size: 120px;
 
 .image-container {
     width: $image-size;
-    border: 1px solid $color-secondary;
+    border: 2px solid $color-dark-1;
     overflow: hidden;
     display: block;
+}
+
+// TITLE =================================================
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    color: $color-primary;
+}
+
+%title-shared {
+    text-decoration: none;
+
+    .title {
+        color: $color-dark-2;
+    }
+}
+
+.title-link:hover {
+    @extend %title-shared;
+}
+
+.title-link:active {
+    @extend %title-shared;
+}
+
+.title-link:focus {
+    text-decoration: none;
 }

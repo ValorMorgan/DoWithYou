@@ -1,10 +1,12 @@
-﻿@mixin border-radius($radius) {
+﻿@import 'color';
+
+@mixin border-radius($radius) {
     -webkit-border-radius: $radius;
     -moz-border-radius: $radius;
     border-radius: $radius;
 }
 
-@mixin box-shadow($h-offset: 5px, $v-offset: 5px, $blur: 5px, $spread: 0, $color: black) {
+@mixin box-shadow($h-offset: 5px, $v-offset: 5px, $blur: 5px, $spread: 0, $color: $color-shadow) {
     -webkit-box-shadow: $h-offset $v-offset $blur $spread $color;
     -moz-box-shadow: $h-offset $v-offset $blur $spread $color;
     box-shadow: $h-offset $v-offset $blur $spread $color;
