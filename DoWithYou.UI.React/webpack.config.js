@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const tsLoader = require('awesome-typescript-loader');
 const bundleOutputDir = './wwwroot/dist';
 
 module.exports = (env) => {
@@ -35,7 +35,7 @@ module.exports = (env) => {
             ]
         },
         plugins: [
-            new CheckerPlugin(),
+            new tsLoader.CheckerPlugin(),
             new webpack.DllReferencePlugin({
                 context: __dirname,
                 manifest: require('./wwwroot/dist/vendor-manifest.json')

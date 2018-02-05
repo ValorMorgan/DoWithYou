@@ -1,29 +1,15 @@
 ﻿import * as React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
+import { ICommonProps } from './Utilities';
 
-interface ITitleProps {
-    id?: string;
-    className?: string;
-}
-
-interface ITitleState extends ITitleProps {
-
-}
-
-// TITLE ==============================================================================
-export class Title extends React.Component<ITitleProps, ITitleState> {
-    constructor(props: ITitleProps) {
+export class Title extends React.PureComponent<ICommonProps, {}> {
+    constructor(props: ICommonProps) {
         super(props);
-        
-        this.state = {
-            id: this.props.id,
-            className: this.props.className ? `title ${this.props.className}` : 'title'
-        };
     }
 
     render() {
         return (
-            <h1 {...this.state}>
+            <h1 {...this.props} className={`title ${this.props.className}`.trim()}>
                 {this.props.children}
             </h1>
         );

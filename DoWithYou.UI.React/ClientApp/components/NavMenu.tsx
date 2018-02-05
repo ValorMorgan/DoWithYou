@@ -10,7 +10,7 @@ export class NavMenu extends React.Component<{}, {}> {
             <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
                     <NavBarHeader/>
-                    <Utilities.ClearFix/>
+                    <Utilities.ClearFix />
                     <NavBarCollapse/>
                 </div>
             </div>
@@ -82,7 +82,7 @@ class NavBarLink extends React.Component<INavBarLinkProps, {}> {
 
         return (
             <NavLink {...other} activeClassName="active">
-                <Utilities.Icon icon={this.props.icon} /> {this.props.children}
+                <Utilities.Icon {...icon} /> {this.props.children}
             </NavLink>
         );
     }

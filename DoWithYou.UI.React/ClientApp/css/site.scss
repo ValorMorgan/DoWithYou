@@ -6,8 +6,6 @@ html {
     background-color: white;
 
     body {
-        padding-top: 120px;
-
         @include border-radius(10px);
     }
 }

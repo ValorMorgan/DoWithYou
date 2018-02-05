@@ -11,3 +11,27 @@
     font-size: $size;
     line-height: $size;
 }
+
+#header {
+    height: 65px;
+    width: 100%;
+    padding: 10px;
+    background-color: $color-dark-1 - #111;
+
+    .button {
+        float: right;
+        margin: 0 5px;
+    }
+}
+
+#button-login {
+    background-color: $color-dark-1;
+    color: $color-light-1;
+    border-color: $color-light-1;
+}
+
+#button-register {
+    background-color: $color-primary;
+    color: $color-dark-2;
+    border-color: $color-primary;
+}

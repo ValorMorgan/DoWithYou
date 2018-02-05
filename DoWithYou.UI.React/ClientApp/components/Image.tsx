@@ -1,60 +1,16 @@
-﻿import * as React from 'react'
+﻿import * as React from 'react';
+import { ICommonProps } from './Utilities';
 
-interface IImageProps {
-    id?: string;
+interface IImageProps extends ICommonProps {
     src: string;
     alt?: string;
 }
 
-interface IImageState {
-    placeholder: string;
-}
+// TODO: Image placeholder
+const placeHolder = '';
 
-class BaseImage extends React.Component<IImageProps, IImageState> {
-    constructor(props: IImageProps) {
-        super(props);
-        this.state = { placeholder: '' }; // TODO: Setup BaseImage placeholder
-    }
+export const Image = (props: IImageProps) =>
+    <img {...props} className={`image ${props.className}`.trim()} placeholder={placeHolder} />;
 
-    render() {
-        return (
-            <img className="image" src={this.props.src} alt={this.props.alt} placeholder={this.state.placeholder} />
-        );
-    }
-}
-
-// IMAGE ==============================================================================
-const containerClass = "image-container";
-
-export class Image extends BaseImage {
-    constructor(props: IImageProps) {
-        super(props);
-    }
-
-    render() {
-        const className = containerClass;
-
-        return (
-            <div id={this.props.id} className={className}>
-                {super.render()}
-            </div>
-        );
-    }
-}
-
-// CIRCLE IMAGE ==============================================================================
-export class CircleImage extends BaseImage {
-    constructor(props: IImageProps) {
-        super(props);
-    }
-
-    render() {
-        const className = containerClass + ' img-circle';
-
-        return (
-            <div id={this.props.id} className={className}>
-                {super.render()}
-            </div>
-        );
-    }
-}
+export const CircleImage = (props: IImageProps) =>
+    <img {...props} className={`image img-circle ${props.className}`.trim()} placeholder={placeHolder} />;

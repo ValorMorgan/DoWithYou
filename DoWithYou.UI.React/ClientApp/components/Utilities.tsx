@@ -1,19 +1,13 @@
 ﻿import * as React from 'react'
 
-export class ClearFix extends React.PureComponent<{}, {}> {
-    public render() {
-        return (
-            <div className="clearFix"></div>
-        );
-    }
+export interface ICommonProps {
+    id?: string;
+    className?: string;
+    onClick?: (string | any);
 }
 
-export class Icon extends React.PureComponent<{icon: string}, {}> {
-    public render() {
-        const className = `glyphicon ${this.props.icon}`;
+export const ClearFix = () =>
+    <div className="clearFix"></div>;
 
-        return (
-            <span className={className}></span>
-        );
-    }
-}
+export const Icon = (icon: string) =>
+    <span className={`glyphicon ${icon}`.trim()}></span>;
