@@ -13,17 +13,27 @@ module.exports = (env) => {
         module: {
             rules: [
                 { test: /\.(png|woff|woff2|eot|ttf|svg)(\?|$)/, use: 'url-loader?limit=100000' },
-                { test: /\.css(\?|$)/, use: extractCSS.extract([isDevBuild ? 'css-loader' : 'css-loader?minimize']) }
-            ],
+                { test: /\.css(\?|$)/, use: extractCSS.extract([isDevBuild ? 'css-loader' : 'css-loader?minimize']) },
+                { test: /\.js(\?|$)/, use: ['source-map-loader'], enforce: 'pre' }
+            ]
         },
         entry: {
-            vendor: ['bootstrap', 'bootstrap/dist/css/bootstrap.css', 'event-source-polyfill', 'isomorphic-fetch', 'react-dom', 'react-router-dom', 'jquery'],
+            vendor: [
+                'bootstrap',
+                'bootstrap/dist/css/bootstrap.css',
+                'event-source-polyfill',
+                'isomorphic-fetch',
+                'popper.js',
+                'react-dom',
+                'react-router-dom',
+                'jquery'
+            ]
         },
         output: {
             path: path.join(__dirname, 'wwwroot', 'dist'),
             publicPath: 'dist/',
             filename: '[name].js',
-            library: '[name]_[hash]',
+            library: '[name]_[hash]'
         },
         plugins: [
             extractCSS,
@@ -31,7 +41,8 @@ module.exports = (env) => {
                 $: 'jquery',
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery',
-                Popper: ['popper.js', 'default']
+                Popper: ['popper.js', 'default'],
+                'window.Popper': ['popper.js', 'default']
             }),
             new webpack.DllPlugin({
                 path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),

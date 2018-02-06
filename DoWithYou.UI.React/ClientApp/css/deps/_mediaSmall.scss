@@ -1,4 +1,6 @@
-﻿@media (max-width: 767px) {
+﻿@import '../lib/bootstrap-grid.scss';
+
+@include media-breakpoint-down(sm) {
     body {
         padding-top: 50px;
     }

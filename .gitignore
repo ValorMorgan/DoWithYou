@@ -288,3 +288,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /DoWithYou/wwwroot/lib
+/DoWithYou/wwwroot/dist
+/DoWithYou.UI.React/ClientApp/css/lib

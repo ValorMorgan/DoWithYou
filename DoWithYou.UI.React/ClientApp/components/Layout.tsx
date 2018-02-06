@@ -10,7 +10,7 @@ export class Layout extends React.Component<ILayoutProps, {}> {
     public render() {
         return (
             <div className='container-fluid'>
-                <div className='row no-gutters'>
+                <div className='row'>
                     <div className='col-sm-3'>
                         <NavMenu />
                     </div>

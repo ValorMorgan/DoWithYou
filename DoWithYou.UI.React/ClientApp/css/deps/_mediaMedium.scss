@@ -1,6 +1,8 @@
-﻿@media (min-width: 768px) {
+﻿@import '../lib/bootstrap-grid.scss';
+
+@include media-breakpoint-up(md) {
     /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-nav {
+    .nav {
         height: 100%;
         width: calc(25% - 20px);
 

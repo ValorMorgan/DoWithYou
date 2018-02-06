@@ -7,8 +7,8 @@ import { Title } from './Utilities/Title';
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
         return (
-            <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
+            <div className='nav'>
+                <div className='navbar'>
                     <NavBarHeader/>
                     <Misc.ClearFix />
                     <NavBarCollapse/>
@@ -34,7 +34,7 @@ class NavBarHeader extends React.PureComponent<{}, {}> {
 class NavBarButton extends React.PureComponent<{}, {}> {
     render() {
         return (
-            <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+            <button type='button' className='navbar-toggler' data-toggle='collapse' data-target='.navbar-collapse'>
                 <span className='sr-only'>Toggle navigation</span>
                 <span className='icon-bar'></span>
                 <span className='icon-bar'></span>
@@ -59,10 +59,10 @@ class NavBarCollapse extends React.Component<{}, {}> {
 class NavBarLinkList extends React.Component<{}, {}> {
     render() {
         return (
-            <ul className='nav navbar-nav'>
-                <li><NavBarLink to={'/'} exact icon='glyphicon-home'>Home</NavBarLink></li>
-                <li><NavBarLink to={'/counter'} icon='glyphicon-education'>Counter</NavBarLink></li>
-                <li><NavBarLink to={'/fetchdata'} icon='glyphicon-th-list'>Fetch data</NavBarLink></li>
+            <ul className='navbar-nav'>
+                <li className='nav-item'><NavBarLink to={'/'} exact icon='glyphicon-home'>Home</NavBarLink></li>
+                <li className='nav-item'><NavBarLink to={'/counter'} icon='glyphicon-education'>Counter</NavBarLink></li>
+                <li className='nav-item'><NavBarLink to={'/fetchdata'} icon='glyphicon-th-list'>Fetch data</NavBarLink></li>
             </ul>
         );
     }
@@ -81,7 +81,7 @@ class NavBarLink extends React.Component<INavBarLinkProps, {}> {
         const { icon, ...other } = this.props;
 
         return (
-            <NavLink {...other} activeClassName="active">
+            <NavLink {...other} className={`nav-link ${this.props.className ? this.props.className : ''}`.trim()} activeClassName="active">
                 <Misc.Icon {...icon} /> {this.props.children}
             </NavLink>
         );
