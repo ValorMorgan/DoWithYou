@@ -10,4 +10,4 @@ export const ClearFix = () =>
     <div className="clearFix"></div>;
 
 export const Icon = (icon: string) =>
-    <span className={`glyphicon ${icon}`.trim()}></span>;
+    <span className={`glyphicon ${icon ? icon : ''}`.trim()}></span>;

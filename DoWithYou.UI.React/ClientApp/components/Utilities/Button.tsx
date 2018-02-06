@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import { ICommonProps } from './Utilities';
+import { ICommonProps } from './Misc';
 
 export class Button extends React.PureComponent<ICommonProps, {}> {
     constructor(props: ICommonProps) {
@@ -20,7 +20,7 @@ export class LoginButton extends React.PureComponent<ICommonProps, {}> {
 
     render() {
         return (
-            <Button {...this.props} id={`button-login ${this.props.id ? this.props.id : ''}`.trim()}>Log In</Button>
+            <Button {...this.props} className={`button-login ${this.props.className ? this.props.className : ''}`.trim()}>Log In</Button>
         );
     }
 }
@@ -32,7 +32,7 @@ export class RegisterButton extends React.PureComponent<ICommonProps, {}> {
 
     render() {
         return (
-            <Button {...this.props} id={`button-register ${this.props.id ? this.props.id : ''}`.trim()}>Register</Button>
+            <Button {...this.props} className={`button-register ${this.props.className ? this.props.className : ''}`.trim()}>Register</Button>
         );
     }
 }

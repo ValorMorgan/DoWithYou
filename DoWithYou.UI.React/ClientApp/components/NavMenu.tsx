@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as Utilities from './Utilities';
+import * as Misc from './Utilities/Misc';
 import { Link, NavLink, NavLinkProps } from 'react-router-dom';
-import { DigitalClock } from './Clock';
-import { Title } from './Title';
+import { DigitalClock } from './Utilities/Clock';
+import { Title } from './Utilities/Title';
 
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
@@ -10,7 +10,7 @@ export class NavMenu extends React.Component<{}, {}> {
             <div className='main-nav'>
                 <div className='navbar navbar-inverse'>
                     <NavBarHeader/>
-                    <Utilities.ClearFix />
+                    <Misc.ClearFix />
                     <NavBarCollapse/>
                 </div>
             </div>
@@ -49,7 +49,7 @@ class NavBarCollapse extends React.Component<{}, {}> {
         return (
             <div className='navbar-collapse collapse'>
                 <DigitalClock/>
-                <Utilities.ClearFix />
+                <Misc.ClearFix />
                 <NavBarLinkList/>
             </div>
         );
@@ -82,7 +82,7 @@ class NavBarLink extends React.Component<INavBarLinkProps, {}> {
 
         return (
             <NavLink {...other} activeClassName="active">
-                <Utilities.Icon {...icon} /> {this.props.children}
+                <Misc.Icon {...icon} /> {this.props.children}
             </NavLink>
         );
     }

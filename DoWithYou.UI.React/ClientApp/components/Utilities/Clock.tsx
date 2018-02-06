@@ -1,18 +1,16 @@
 ﻿import * as React from 'react';
-
-interface IClockProps {
-}
+import { ICommonProps } from './Misc';
 
 interface IClockState {
     date: Date;
 }
 
-abstract class Clock extends React.Component<IClockProps, IClockState> {
+export class DigitalClock extends React.Component<ICommonProps, IClockState> {
     timerID: number;
     interval: number = 1000;
     
-    constructor() {
-        super();
+    constructor(props: ICommonProps) {
+        super(props);
 
         this.state = { date: new Date() };
     }
@@ -33,12 +31,6 @@ abstract class Clock extends React.Component<IClockProps, IClockState> {
             date: new Date()
         });
     }
-}
-
-export class DigitalClock extends Clock {
-    constructor() {
-        super();
-    }
 
     render() {
         return (
@@ -46,13 +38,5 @@ export class DigitalClock extends Clock {
                 <p className="clock-digital-time">{this.state.date.toLocaleTimeString()}</p>
             </div>
         );
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
-    }
-
-    componentWillUnmount() {
-        super.componentWillUnmount();
     }
 }

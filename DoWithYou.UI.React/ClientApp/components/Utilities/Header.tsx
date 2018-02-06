@@ -1,14 +1,16 @@
 ﻿import * as React from 'react';
-import * as Utilities from './Utilities';
+import * as Misc from './Misc';
 import { LoginButton, RegisterButton } from './Button';
 
 export class Header extends React.Component<{}, {}> {
     public render() {
         return (
             <div id='header'>
-                <LoginButton />
-                <RegisterButton />
-                <Utilities.ClearFix />
+                <div>
+                    <LoginButton />
+                    <RegisterButton />
+                </div>
+                <Misc.ClearFix />
             </div>
         );
     }

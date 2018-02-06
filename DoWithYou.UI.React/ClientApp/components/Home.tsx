@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom'
-import { Image, CircleImage } from './Image';
-import { Title } from './Title';
+import { Image, CircleImage } from './Utilities/Image';
+import { Title } from './Utilities/Title';
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
