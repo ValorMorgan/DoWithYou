@@ -1,0 +1,8 @@
+﻿@import '../lib/bootstrap-grid.scss';
+@import 'parameters';
+
+@include media-breakpoint-up(md) {
+    .nav {
+        height: 100%;
+    }
+}

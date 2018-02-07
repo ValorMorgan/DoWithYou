@@ -1,12 +1,16 @@
 ﻿@import '../lib/bootstrap-grid.scss';
+@import 'parameters';
 
 @include media-breakpoint-down(sm) {
+    $nav-height: 50px;
+
     body {
-        padding-top: 50px;
+        padding-top: $nav-height;
     }
     
     .nav {
         right: 0;
+        height: $nav-height;
 
         .navbar {
             padding-bottom: 14px;

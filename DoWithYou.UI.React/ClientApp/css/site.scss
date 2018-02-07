@@ -1,6 +1,18 @@
 ﻿@import 'deps/_parameters.scss';
 
-// Universal styles
+// Specific
+@import 'deps/_class.scss';
+@import 'deps/_id.scss';
+
+// Media
+@import 'deps/_mediaXL.scss';
+@import 'deps//_mediaLG.scss';
+@import 'deps/_mediaMD.scss';
+@import 'deps/_mediaSM.scss';
+
+// Universal
+@import 'deps/_list.scss';
+
 html {
     font: 100% $font-stack;
     background-color: white;
@@ -10,11 +22,3 @@ html {
         @include equalSize(100%);
     }
 }
-
-// Other styles
-@import 'deps/_list.scss';
-@import 'deps/_class.scss';
-@import 'deps/_id.scss';
-
-@import 'deps/_mediaSmall.scss';
-@import 'deps/_mediaMedium.scss';

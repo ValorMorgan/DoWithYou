@@ -1,0 +1,10 @@
+﻿@import '../lib/bootstrap-grid.scss';
+@import 'parameters';
+
+@include media-breakpoint-down(lg) {
+    .nav {
+        .navbar-toggler {
+            display: block;
+        }
+    }
+}
