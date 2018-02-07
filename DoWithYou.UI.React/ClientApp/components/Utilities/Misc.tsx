@@ -7,7 +7,7 @@ export interface ICommonProps {
 }
 
 export const ClearFix = () =>
-    <div className="clearFix"></div>;
+    <div className="clearfix"></div>;
 
 export const Icon = (icon: string) =>
     <span className={`glyphicon ${icon ? icon : ''}`.trim()}></span>;

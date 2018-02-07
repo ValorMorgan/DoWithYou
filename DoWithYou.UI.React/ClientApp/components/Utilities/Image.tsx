@@ -6,15 +6,11 @@ interface IImageProps extends ICommonProps {
     alt?: string;
 }
 
-// TODO: Image placeholder
-const imageClass = 'image';
-const placeHolder = '';
-
 const PlaceholderImage = () =>
-    <img className={imageClass} placeholder={placeHolder} />;
+    <img className="image" alt="placeholder"/>;
 
 export const Image = (props: IImageProps) => props ?
-    <img {...props} className={`${imageClass} ${props.className ? props.className : ''}`.trim()} placeholder={placeHolder} /> :
+    <img className={`image ${props.className ? props.className : ''}`.trim()} /> :
     <PlaceholderImage />;
 
 export const CircleImage = (props: IImageProps) => props ?

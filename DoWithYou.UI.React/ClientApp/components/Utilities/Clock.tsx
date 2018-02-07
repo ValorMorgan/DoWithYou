@@ -6,7 +6,7 @@ interface IClockState {
 }
 
 export class DigitalClock extends React.Component<ICommonProps, IClockState> {
-    timerID: number;
+    timerID: number = -1;
     interval: number = 1000;
     
     constructor(props: ICommonProps) {

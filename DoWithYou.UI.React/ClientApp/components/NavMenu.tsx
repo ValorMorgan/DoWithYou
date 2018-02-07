@@ -21,12 +21,12 @@ export class NavMenu extends React.Component<{}, {}> {
 class NavBarHeader extends React.PureComponent<{}, {}> {
     render() {
         return (
-            <div className='navbar-header'>
+            <React.Fragment>
                 <NavBarButton/>
                 <Link className='navbar-brand' to={'/'}>
                     <Title id='title-nav'>Do With You</Title>
                 </Link>
-            </div>
+            </React.Fragment>
         );
     }
 }
