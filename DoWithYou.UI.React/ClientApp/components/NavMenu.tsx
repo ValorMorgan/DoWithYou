@@ -9,9 +9,9 @@ export class NavMenu extends React.Component<{}, {}> {
         return (
             <div className='nav'>
                 <div className='navbar'>
-                    <NavBarHeader/>
+                    <NavBarHeader />
                     <Misc.ClearFix />
-                    <NavBarCollapse/>
+                    <NavBarContent/>
                 </div>
             </div>
         );
@@ -21,12 +21,12 @@ export class NavMenu extends React.Component<{}, {}> {
 class NavBarHeader extends React.PureComponent<{}, {}> {
     render() {
         return (
-            <React.Fragment>
-                <NavBarButton/>
+            <div className='navbar-header'>
                 <Link className='navbar-brand' to={'/'}>
                     <Title id='title-nav'>Do With You</Title>
                 </Link>
-            </React.Fragment>
+                <NavBarButton/>
+            </div>
         );
     }
 }
@@ -35,16 +35,13 @@ class NavBarButton extends React.PureComponent<{}, {}> {
     render() {
         return (
             <button type='button' className='navbar-toggler' data-toggle='collapse' data-target='.navbar-collapse'>
-                <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
-                <span className='icon-bar'></span>
+                <Misc.Icon icon="list"></Misc.Icon>
             </button>
         );
     }
 }
 
-class NavBarCollapse extends React.Component<{}, {}> {
+class NavBarContent extends React.Component<{}, {}> {
     render() {
         return (
             <div className='navbar-collapse collapse'>
@@ -59,11 +56,11 @@ class NavBarCollapse extends React.Component<{}, {}> {
 class NavBarLinkList extends React.Component<{}, {}> {
     render() {
         return (
-            <ul className='navbar-nav'>
-                <li className='nav-item'><NavBarLink to={'/'} exact icon='glyphicon-home'>Home</NavBarLink></li>
-                <li className='nav-item'><NavBarLink to={'/counter'} icon='glyphicon-education'>Counter</NavBarLink></li>
-                <li className='nav-item'><NavBarLink to={'/fetchdata'} icon='glyphicon-th-list'>Fetch data</NavBarLink></li>
-            </ul>
+            <div className='navbar-nav'>
+                <NavBarLink to={'/'} exact icon='home'>Home</NavBarLink>
+                <NavBarLink to={'/counter'} icon='school'>Counter</NavBarLink>
+                <NavBarLink to={'/fetchdata'} icon='computer'>Fetch data</NavBarLink>
+            </div>
         );
     }
 }
@@ -81,8 +78,9 @@ class NavBarLink extends React.Component<INavBarLinkProps, {}> {
         const { icon, ...other } = this.props;
 
         return (
-            <NavLink {...other} className={`nav-link ${this.props.className ? this.props.className : ''}`.trim()} activeClassName="active">
-                <Misc.Icon {...icon} /> {this.props.children}
+            <NavLink {...other} className={`nav-item nav-link ${this.props.className ? this.props.className : ''}`.trim()} activeClassName="active">
+                <Misc.Icon icon={icon} />
+                <p className="nav-link-content">{this.props.children}</p>
             </NavLink>
         );
     }

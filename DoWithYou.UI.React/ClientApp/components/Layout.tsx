@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Misc from './Utilities/Misc';
 import { NavMenu } from './NavMenu';
 import { Header } from './Utilities/Header';
 
@@ -14,6 +15,7 @@ export class Layout extends React.Component<ILayoutProps, {}> {
                     <div className='col-sm-3'>
                         <NavMenu />
                     </div>
+                    <Misc.ClearFix />
                     <div className='col-sm-9'>
                         <Header />
                         {this.props.children}

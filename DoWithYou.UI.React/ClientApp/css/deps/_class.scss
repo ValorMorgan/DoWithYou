@@ -5,29 +5,67 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
     z-index: 1;
-
-    //TODO: Add box-shadow properly
-    /*@include box-shadow();*/
 
     .navbar {
         background-color: $color-dark-1;
-    }
+        width: 100%;
+        align-content: flex-start;
 
-    li {
-        .glyphicon {
-            margin-right: 10px;
-            color: $color-light-1;
+        .navbar-header {
+            height: 30px;
+            width: 100%;
+
+            .navbar-toggler {
+                background-color: $color-dark-2;
+                border: 1px solid $color-light-1;
+                color: $color-light-1;
+                @include box-shadow();
+                float: right;
+            }
+
+            .navbar-brand {
+                float: left;
+            }
         }
 
-        a.active, a.active:hover, a.active:focus {
-            background-color: $color-primary;
-            color: $color-dark-1;
-            @include box-shadow();
+        .navbar-collapse, .collapse {
+            margin-top: 10px;
+            border-top: 1px solid $color-light-1;
 
-            .glyphicon {
-                color: $color-dark-1;
+            .navbar-nav {
+                .icon {
+                    padding-right: 10px;
+                    color: $color-primary;
+                    float: left;
+                }
+
+                .nav-item {
+                    padding: 10px;
+                    color: $color-primary;
+                    font-weight: bold;
+
+                    .nav-link-content, .icon {
+                        $size: 20px;
+
+                        margin: 0;
+                        font-size: $size;
+                        line-height: $size;
+                        float: left;
+                    }
+                }
+
+                .active, .active:hover, .active:focus {
+                    padding: 10px;
+                    background-color: $color-primary;
+                    color: $color-dark-1;
+                    @include box-shadow();
+                    @include border-radius(5px);
+
+                    .icon {
+                        color: $color-dark-1;
+                    }
+                }
             }
         }
     }

@@ -9,5 +9,14 @@ export interface ICommonProps {
 export const ClearFix = () =>
     <div className="clearfix"></div>;
 
-export const Icon = (icon: string) =>
-    <span className={`glyphicon ${icon ? icon : ''}`.trim()}></span>;
+export class Icon extends React.PureComponent<{icon: string}, {}> {
+    constructor(props: {icon: string}) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <i className="icon material-icons">{this.props.icon}</i>
+        );
+    }
+}

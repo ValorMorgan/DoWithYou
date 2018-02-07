@@ -1,5 +1,12 @@
 ﻿@import 'parameters';
 
+#react-app {
+    @include equalSize(100%);
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
 #qrCode {
     margin: 15px;
 }
