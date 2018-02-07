@@ -6,31 +6,33 @@
     top: 0;
     left: 0;
     z-index: 1;
+    @include box-shadow();
 
     .navbar {
         background-color: $color-dark-1;
         width: 100%;
+        padding: 0;
         align-content: flex-start;
 
         .navbar-header {
-            height: 30px;
             width: 100%;
+            padding: 10px;
 
             .navbar-toggler {
                 background-color: $color-dark-2;
                 border: 1px solid $color-light-1;
                 color: $color-light-1;
-                @include box-shadow();
                 float: right;
             }
 
             .navbar-brand {
+                margin: 0;
+                padding: 0;
                 float: left;
             }
         }
 
         .navbar-collapse, .collapse {
-            margin-top: 10px;
             border-top: 1px solid $color-light-1;
 
             .navbar-nav {
@@ -60,7 +62,7 @@
                     background-color: $color-primary;
                     color: $color-dark-1;
                     @include box-shadow();
-                    @include border-radius(5px);
+                    @include border-radius-right(5px);
 
                     .icon {
                         color: $color-dark-1;

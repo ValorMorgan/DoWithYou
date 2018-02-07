@@ -8,17 +8,19 @@ export interface ILayoutProps {
 }
 
 export class Layout extends React.Component<ILayoutProps, {}> {
-    public render() {
+    render() {
         return (
-            <div className='container-fluid'>
+            <div id='layout' className='container-fluid'>
                 <div className='row'>
-                    <div className='col-sm-2'>
+                    <div id='layout-left' className='col-md-4'>
                         <NavMenu />
                     </div>
                     <Misc.ClearFix />
-                    <div className='col-sm-10'>
+                    <div id='layout-right' className='col-md-8'>
                         <Header />
-                        {this.props.children}
+                        <div id='body'>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
             </div>

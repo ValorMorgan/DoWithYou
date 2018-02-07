@@ -4,5 +4,7 @@
 @include media-breakpoint-up(md) {
     .nav {
         height: 100%;
+        max-width: 320px;
+        @include box-shadow(5px, 0);
     }
 }

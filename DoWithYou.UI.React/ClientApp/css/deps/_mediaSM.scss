@@ -11,10 +11,7 @@
     .nav {
         right: 0;
         height: $nav-height;
-
-        .navbar {
-            padding-bottom: 14px;
-        }
+        @include box-shadow(0, 5px);
     }
 
     #header {
