@@ -1,0 +1,152 @@
+﻿@import 'functions';
+@import 'color';
+@import 'globals';
+
+// MEDIA QUERY ==================================================================
+@mixin media-above($size) {
+    @media (max-width: #{media($size) + 1}) {
+        @content;
+    }
+}
+
+@mixin media-up($size) {
+    @media (min-width: #{media($size)}) {
+        @content;
+    }
+}
+
+@mixin media-down($size) {
+    @media (max-width: #{media($size)}) {
+        @content;
+    }
+}
+
+@mixin media-below($size) {
+    @media (min-width: #{media($size) - 1}) {
+        @content;
+    }
+}
+
+@mixin media-only($size) {
+    @media (width: #{media($size)}) {
+        @content;
+    }
+}
+
+@mixin media-between($size1, $size2) {
+    @if ($size1 + 1) < ($size2 - 1) {
+        @media (min-width: #{media($size1) + 1}) and (max-width: #{media($size2) - 1}) {
+            @content;
+        }
+    } @else if ($size2 + 1) < ($size1 - 1) {
+        @media (min-width: #{media($size2) + 1}) and (max-width: #{media($size1) - 1}) {
+            @content;
+        }
+    } @else {
+        @include media-inclusive($size1, $size2) {
+            @content;
+        }
+    }
+}
+
+@mixin media-inclusive($size1, $size2) {
+    @if $size1 < $size2 {
+        @media (min-width: #{media($size1)}) and (max-width: #{media($size2)}) {
+            @content;
+        }
+    }
+    @else if $size2 < $size1 {
+        @media (min-width: #{media($size2)}) and (max-width: #{media($size1)}) {
+            @content;
+        }
+    }
+    @else {
+        @include media-only($size1) {
+            @content;
+        }
+    }
+}
+
+@mixin media-exclusive($size1, $size2) {
+    @if ($size1 - 1) < ($size2 + 1) {
+        @media (max-width: #{media($size1) - 1}) or (min-width: #{media($size2) + 1}) {
+            @content;
+        }
+    }
+    @else if ($size2 - 1) < ($size1 + 1) {
+        @media (max-width: #{media($size2) - 1}) or (min-width: #{media($size1) + 1}) {
+            @content;
+        }
+    }
+    @else {
+        @media (mmax-width: #{media($size1) - 1}) or (mmin-width: #{media($size1) + 1}) {
+            @content;
+        }
+    }
+}
+
+// BORDER RADIUS ================================================================
+$default-border-radius: 5px;
+
+@mixin border-radius($radius: $default-border-radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin border-radius-top-left($radius: $default-border-radius) {
+    -webkit-border-top-left-radius: $radius;
+    -moz-border-radius-topleft: $radius;
+    border-top-left-radius: $radius;
+}
+@mixin border-radius-top-right($radius: $default-border-radius) {
+    -webkit-border-top-right-radius: $radius;
+    -moz-border-radius-topright: $radius;
+    border-top-right-radius: $radius;
+}
+@mixin border-radius-bottom-left($radius: $default-border-radius) {
+    -webkit-border-bottom-left-radius: $radius;
+    -moz-border-radius-bottomleft: $radius;
+    border-bottom-left-radius: $radius;
+}
+@mixin border-radius-bottom-right($radius: $default-border-radius) {
+    -webkit-border-bottom-right-radius: $radius;
+    -moz-border-radius-bottomright: $radius;
+    border-bottom-right-radius: $radius;
+}
+
+@mixin border-radius-top($radius: $default-border-radius) {
+    @include border-radius-top-left($radius);
+    @include border-radius-top-right($radius);
+}
+@mixin border-radius-right($radius: $default-border-radius) {
+    @include border-radius-top-right($radius);
+    @include border-radius-bottom-right($radius);
+}
+@mixin border-radius-bottom($radius: $default-border-radius) {
+    @include border-radius-bottom-right($radius);
+    @include border-radius-bottom-left($radius);
+}
+@mixin border-radius-left($radius: $default-border-radius) {
+    @include border-radius-bottom-left($radius);
+    @include border-radius-top-left($radius);
+}
+
+// BOX SHADOW ================================================================
+@mixin box-shadow($h-offset: 5px, $v-offset: 5px, $blur: 5px, $spread: 0, $color: $color-shadow) {
+    -webkit-box-shadow: $h-offset $v-offset $blur $spread $color;
+    -moz-box-shadow: $h-offset $v-offset $blur $spread $color;
+    box-shadow: $h-offset $v-offset $blur $spread $color;
+}
+
+@mixin box-shadow-type($type: none) {
+    -webkit-box-shadow: $type;
+    -moz-box-shadow: $type;
+    box-shadow: $type;
+}
+
+// HEIGHT / WIDTH ================================================================
+@mixin equalSize($size) {
+    width: $size;
+    height: $size;
+}

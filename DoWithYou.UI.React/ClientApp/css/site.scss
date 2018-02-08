@@ -1,24 +1,53 @@
-﻿@import 'deps/_parameters.scss';
+﻿@import 'deps/_dependencies.scss';
 
-// Specific
-@import 'deps/_class.scss';
-@import 'deps/_id.scss';
-
-// Media
-@import 'deps/_mediaXL.scss';
-@import 'deps//_mediaLG.scss';
-@import 'deps/_mediaMD.scss';
-@import 'deps/_mediaSM.scss';
-
-// Universal
-@import 'deps/_list.scss';
-
+// GLOBAL ======================================================================
 html {
     font: 100% $font-stack;
     background-color: white;
 
     body {
+        margin: 0;
+        border: 0;
+        padding: 0;
         @include border-radius(10px);
         @include equalSize(100%);
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            li {
+                list-style: $ul-li-style;
+            }
+        }
+
+        ol {
+            li {
+                list-style: $ol-li-style;
+            }
+        }
+
+        ul, ol {
+            a {
+                text-decoration: $link-decoration;
+                color: $color-primary;
+            }
+
+            span {
+                color: $color-light-1;
+            }
+        }
     }
 }
+
+// SPECIFIC ====================================================================
+@import 'element';
+
+// MEDIA =======================================================================
+@import 'mediaBelow';
+@import 'mediaXStoSM';
+@import 'mediaSMtoMD';
+@import 'mediaMDtoLG';
+@import 'mediaLGtoXL';
+@import 'mediaAbove';

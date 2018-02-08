@@ -1,7 +1,8 @@
-﻿@import '../lib/bootstrap-grid.scss';
-@import 'parameters';
+﻿// MEDIA MD -> LG
 
-@include media-breakpoint-up(md) {
+@import 'deps/_dependencies.scss';
+
+@include media-inclusive(md, lg) {
     .nav {
         height: 100%;
         max-width: 320px;

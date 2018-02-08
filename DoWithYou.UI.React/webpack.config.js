@@ -24,9 +24,32 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.(s*)css$/,
-                    use: isDevBuild ?
-                        ['style-loader', 'css-loader', 'sass-loader'] :
-                        ExtractTextPlugin.extract({ use: ['css-loader?minimize', 'sass-loader'] })
+                    use: isDevBuild ? [
+                        'style-loader',
+                        { loader: 'css-loader', options: { modules: false, importLoaders: 2 } },
+                        { loader: 'postcss-loader', options: {
+                            ident: 'postcss',
+                            plugins: (loader) => [
+                                require('postcss-import')({ root: loader.resourcePath }),
+                                require('stylelint')({ fix: true }), 
+                                require('postcss-reporter')
+                            ]
+                        } },
+                        'sass-loader'
+                    ] : ExtractTextPlugin.extract({
+                        use: [
+                            { loader: 'css-loader?minimize', options: { modules: false, importLoaders: 2 } },
+                            { loader: 'postcss-loader', options: {
+                                ident: 'postcss',
+                                plugins: (loader) => [
+                                    require('postcss-import')({ root: loader.resourcePath }),
+                                    require('stylelint')({ fix: true }), 
+                                    require('postcss-reporter')
+                                ]
+                            } },
+                            'sass-loader'
+                        ]
+                    })
                 },
                 {
                     test: /\.(png|jpg|jpeg|gif|svg)$/,

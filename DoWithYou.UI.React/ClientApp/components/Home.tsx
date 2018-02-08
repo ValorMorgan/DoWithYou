@@ -5,9 +5,9 @@ import { Image, CircleImage } from './Utilities/Image';
 import { Title } from './Utilities/Title';
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
-    public render() {
+    render() {
         return (
-            <div>
+            <React.Fragment>
                 <Link to={'/'} className='title-link'>
                     <Title id='title-homepage'>Do With You</Title>
                 </Link>
@@ -22,7 +22,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <li>First</li>
                     <li><span>Second</span></li>
                 </ol>
-            </div>
+            </React.Fragment>
         );
     }
 }

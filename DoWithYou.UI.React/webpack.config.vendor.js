@@ -19,11 +19,8 @@ module.exports = (env) => {
         },
         entry: {
             vendor: [
-                'bootstrap',
-                'bootstrap/dist/css/bootstrap.css',
                 'event-source-polyfill',
                 'isomorphic-fetch',
-                'popper.js',
                 'react-dom',
                 'react-router-dom',
                 'jquery'
@@ -40,9 +37,7 @@ module.exports = (env) => {
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
-                'window.jQuery': 'jquery',
-                Popper: ['popper.js', 'default'],
-                'window.Popper': ['popper.js', 'default']
+                'window.jQuery': 'jquery'
             }),
             new webpack.DllPlugin({
                 path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),

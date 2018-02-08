@@ -1,18 +1,18 @@
 import * as React from 'react';
+import * as $ from 'jquery';
 import * as Misc from './Utilities/Misc';
 import { Link, NavLink, NavLinkProps } from 'react-router-dom';
 import { DigitalClock } from './Utilities/Clock';
 import { Title } from './Utilities/Title';
+import { Button } from './Utilities/Button';
 
 export class NavMenu extends React.Component<{}, {}> {
-    public render() {
+    render() {
         return (
-            <div className='nav'>
-                <div className='navbar'>
-                    <NavBarHeader />
-                    <Misc.ClearFix />
-                    <NavBarContent/>
-                </div>
+            <div id='nav'>
+                <NavBarHeader />
+                <Misc.ClearFix />
+                <NavBarContent/>
             </div>
         );
     }
@@ -21,9 +21,9 @@ export class NavMenu extends React.Component<{}, {}> {
 class NavBarHeader extends React.PureComponent<{}, {}> {
     render() {
         return (
-            <div className='navbar-header'>
-                <Link className='navbar-brand' to={'/'}>
-                    <Title id='title-nav'>Do With You</Title>
+            <div className='nav-header'>
+                <Link to={'/'}>
+                    <Title>Do With You</Title>
                 </Link>
                 <NavBarButton/>
             </div>
@@ -34,9 +34,9 @@ class NavBarHeader extends React.PureComponent<{}, {}> {
 class NavBarButton extends React.PureComponent<{}, {}> {
     render() {
         return (
-            <button type='button' className='navbar-toggler' data-toggle='collapse' data-target='.navbar-collapse'>
+            <Button className='nav-toggler' onClick={() => $('.nav-collapse').slideToggle()}>
                 <Misc.Icon icon="list"></Misc.Icon>
-            </button>
+            </Button>
         );
     }
 }
@@ -44,7 +44,7 @@ class NavBarButton extends React.PureComponent<{}, {}> {
 class NavBarContent extends React.Component<{}, {}> {
     render() {
         return (
-            <div className='navbar-collapse collapse'>
+            <div className='nav-collapse'>
                 <DigitalClock/>
                 <Misc.ClearFix />
                 <NavBarLinkList/>
@@ -56,11 +56,11 @@ class NavBarContent extends React.Component<{}, {}> {
 class NavBarLinkList extends React.Component<{}, {}> {
     render() {
         return (
-            <div className='navbar-nav'>
+            <React.Fragment>
                 <NavBarLink to={'/'} exact icon='home'>Home</NavBarLink>
                 <NavBarLink to={'/counter'} icon='school'>Counter</NavBarLink>
                 <NavBarLink to={'/fetchdata'} icon='computer'>Fetch data</NavBarLink>
-            </div>
+            </React.Fragment>
         );
     }
 }
@@ -78,7 +78,7 @@ class NavBarLink extends React.Component<INavBarLinkProps, {}> {
         const { icon, ...other } = this.props;
 
         return (
-            <NavLink {...other} className={`nav-item nav-link ${this.props.className ? this.props.className : ''}`.trim()} activeClassName="active">
+            <NavLink {...other} className={`nav-link ${this.props.className ? this.props.className : ''}`.trim()} activeClassName="active">
                 <Misc.Icon icon={icon} />
                 <p className="nav-link-content">{this.props.children}</p>
             </NavLink>

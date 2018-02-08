@@ -1,13 +1,14 @@
-﻿@import '../lib/bootstrap-grid.scss';
-@import 'parameters';
+﻿// MEDIA SM -> MD
 
-@include media-breakpoint-down(sm) {
+@import 'deps/_dependencies.scss';
+
+@include media-inclusive(sm, md) {
     $nav-height: 50px;
 
     body {
         padding-top: $nav-height;
     }
-    
+
     .nav {
         right: 0;
         height: $nav-height;

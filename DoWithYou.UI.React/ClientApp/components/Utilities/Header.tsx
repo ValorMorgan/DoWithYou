@@ -3,7 +3,7 @@ import * as Misc from './Misc';
 import { LoginButton, RegisterButton } from './Button';
 
 export class Header extends React.Component<{}, {}> {
-    public render() {
+    render() {
         return (
             <div id='header'>
                 <div>
