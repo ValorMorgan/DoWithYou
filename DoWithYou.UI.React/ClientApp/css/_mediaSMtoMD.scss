@@ -3,21 +3,5 @@
 @import 'deps/_dependencies.scss';
 
 @include media-inclusive(sm, md) {
-    $nav-height: 50px;
 
-    body {
-        padding-top: $nav-height;
-    }
-
-    .nav {
-        right: 0;
-        height: $nav-height;
-        @include box-shadow(0, 5px);
-    }
-
-    #header {
-        .button {
-            width: 47%;
-        }
-    }
 }

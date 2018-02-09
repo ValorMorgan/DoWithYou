@@ -34,7 +34,7 @@ export class DigitalClock extends React.Component<ICommonProps, IClockState> {
 
     render() {
         return (
-            <div className="clock-digital">
+            <div className="clock clock-digital">
                 <p className="clock-digital-time">{this.state.date.toLocaleTimeString()}</p>
             </div>
         );

@@ -3,9 +3,5 @@
 @import 'deps/_dependencies.scss';
 
 @include media-inclusive(lg, xl) {
-    .nav {
-        .navbar-toggler {
-            display: block;
-        }
-    }
+
 }

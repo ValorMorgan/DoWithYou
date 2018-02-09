@@ -1,0 +1,73 @@
+﻿@import '../_functions.scss';
+
+@mixin media-above($size) {
+    @media (min-width: media-size($size) + 1) {
+        @content;
+    }
+}
+
+@mixin media-up($size) {
+    @media (min-width: media-size($size)) {
+        @content;
+    }
+}
+
+@mixin media-down($size) {
+    @media (max-width: media-size($size)) {
+        @content;
+    }
+}
+
+@mixin media-below($size) {
+    @media (max-width: media-size($size) - 1) {
+        @content;
+    }
+}
+
+@mixin media-only($size) {
+    @media (width: media-size($size)) {
+        @content;
+    }
+}
+
+@mixin media-between($size1, $size2) {
+    $m_size1: media-size($size1);
+    $m_size2: media-size($size2);
+
+    @if ($m_size1 + 1) < ($m_size2 - 1) {
+        @media (min-width: $m_size1 + 1) and (max-width: $m_size2 - 1) {
+            @content;
+        }
+    }
+    @else if ($m_size2 + 1) < ($m_size1 - 1) {
+        @media (min-width: $m_size2 + 1) and (max-width: $m_size1 - 1) {
+            @content;
+        }
+    }
+    @else {
+        @include media-inclusive($size1, $size2) {
+            @content;
+        }
+    }
+}
+
+@mixin media-inclusive($size1, $size2) {
+    $m_size1: media-size($size1);
+    $m_size2: media-size($size2);
+
+    @if $m_size1 < $m_size2 {
+        @media (min-width: $m_size1) and (max-width: $m_size2) {
+            @content;
+        }
+    }
+    @else if $m_size2 < $m_size1 {
+        @media (min-width: $m_size2) and (max-width: $m_size1) {
+            @content;
+        }
+    }
+    @else {
+        @include media-only($size1) {
+            @content;
+        }
+    }
+}

@@ -1,11 +1,13 @@
-﻿$font-stack: Arial, Helvetica, sans-serif;
+﻿@import 'color';
+
+$font-stack: Arial, Helvetica, sans-serif;
 
 $gap-space: 10px;
 
 $media-breakpoint: (
-    xs: 250px,
+    xs: 300px,
     sm: 500px,
-    md: 750px,
+    md: 700px,
     lg: 1000px,
     xl: 1250px
 );

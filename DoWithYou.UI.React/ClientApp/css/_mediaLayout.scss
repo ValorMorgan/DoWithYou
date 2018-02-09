@@ -1,0 +1,51 @@
+﻿@import 'deps/_dependencies.scss';
+
+@include media-below(md) {
+    #layout {
+        grid-gap: 0;
+        grid-template: 
+            "nav nav nav" 50px 
+            "header header header" 50px 
+            ". body ." auto 
+            "footer footer footer" 20% 
+            / 3% auto 3%;
+    }
+
+    #nav {
+        z-index: 1;
+        grid-area: nav;
+        @include box-shadow(0);
+
+        .nav-header {
+            .nav-toggler {
+                display: block;
+            }
+        }
+
+        .nav-collapse {
+            width: calc(100% + #{$gap-space} * 2);
+            display: none;
+            margin-left: -$gap-space;
+            margin-top: $gap-space / 2;
+            padding-top: $gap-space;
+            background-color: $color-dark-1;
+            @include border-radius-bottom();
+            @include box-shadow(0);
+
+            .clock {
+                display: none;
+            }
+
+            .active {
+                margin-left: 0;
+                padding-left: $gap-space;
+            }
+        }
+    }
+
+    #header {
+        display: flex;
+        flex-flow: column;
+        padding-top: $gap-space;
+    }
+}

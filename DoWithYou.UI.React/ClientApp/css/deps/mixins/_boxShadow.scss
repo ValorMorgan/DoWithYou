@@ -1,0 +1,13 @@
+﻿@import '../_color.scss';
+
+@mixin box-shadow($h-offset: 5px, $v-offset: 5px, $blur: 5px, $spread: 0, $color: $color-shadow) {
+    -webkit-box-shadow: $h-offset $v-offset $blur $spread $color;
+    -moz-box-shadow: $h-offset $v-offset $blur $spread $color;
+    box-shadow: $h-offset $v-offset $blur $spread $color;
+}
+
+@mixin box-shadow-type($type: none) {
+    -webkit-box-shadow: $type;
+    -moz-box-shadow: $type;
+    box-shadow: $type;
+}
