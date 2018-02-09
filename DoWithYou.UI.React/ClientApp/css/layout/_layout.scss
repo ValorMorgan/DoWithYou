@@ -1,18 +1,4 @@
-﻿@import 'deps/_dependencies.scss';
-
-.grid {
-    display: grid;
-    grid-row-gap: $gap-space;
-    @include equalSize(100%);
-}
-
-#layout {
-    grid-template:
-        "nav header header header" 50px
-        "nav . body ." auto
-        "nav footer footer footer" 20%
-        / 300px 2% auto 2%;
-}
+﻿@import '../deps/_dependencies.scss';
 
 #react-app {
     position: absolute;
@@ -23,18 +9,36 @@
     z-index: 0;
 }
 
+.grid {
+    display: grid;
+    @include equalSize(100%);
+}
+
+#layout {
+    grid-template:
+        "nav nav nav" $button-min-size + $gap-space * 2
+        "header header header" $button-min-size + $gap-space * 2
+        ". body ." auto
+        "footer footer footer" auto
+        / 2% auto 2%;
+}
+
 #nav {
     grid-area: nav;
+    z-index: 3;
 }
 
 #header {
     grid-area: header;
+    z-index: 2;
 }
 
 #body {
     grid-area: body;
+    z-index: 1;
 }
 
 #footer {
     grid-area: footer;
+    z-index: 2;
 }

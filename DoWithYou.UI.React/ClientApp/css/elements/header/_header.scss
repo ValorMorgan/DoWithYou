@@ -1,15 +1,15 @@
 ﻿@import '../../deps/_dependencies.scss';
 
 #header {
-    padding: 5px;
-    background-color: $color-dark-1 - #111;
-
-    div {
-        display: block;
-    }
+    display: flex;
+    padding: $gap-space;
+    background-color: darken($color-dark-1, $color-shade-step);
+    @include box-shadow(0);
 
     .button {
-        float: right;
-        margin: 0 5px;
+        flex: 1;
+        margin: 0 $gap-space;
+        font-size: 18px;
+        font-weight: bold;
     }
 }

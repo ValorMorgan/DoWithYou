@@ -3,24 +3,25 @@
 #nav {
     padding: $gap-space;
     background-color: $color-dark-1;
-    @include box-shadow();
+    @include box-shadow(0);
 
     .nav-header {
         display: flex;
 
         .title {
-            $size: 24px;
+            $size: 28px;
 
-            margin: $gap-space 0 0 0;
             font-size: $size;
             line-height: $size;
+            margin: 0;
+            padding-top: $button-min-size - $size;
         }
 
         .nav-toggler {
             margin-left: auto;
-            padding: 0 $gap-space;
-            background-color: $color-dark-2;
+            @include equalSize(44px);
             border: 1px solid $color-light-1;
+            background-color: $color-dark-2;
             color: $color-light-1;
             @include border-radius();
             @include box-shadow();
@@ -28,8 +29,19 @@
     }
 
     .nav-collapse {
+        display: none;
+        width: 100%;
+        margin-left: -$gap-space;
         margin-top: $gap-space;
+        padding: $gap-space;
         border-top: 1px solid $color-light-1;
+        background-color: $color-dark-1;
+        @include border-radius-bottom();
+        @include box-shadow(0);
+
+        .clock {
+            display: none;
+        }
 
         .icon {
             padding-right: $gap-space;
@@ -43,7 +55,7 @@
             font-weight: bold;
 
             .nav-link-content, .icon {
-                $size: 20px;
+                $size: 24px;
 
                 margin: 0;
                 font-size: $size;
@@ -52,14 +64,12 @@
         }
 
         .active, .active:hover, .active:focus {
-            width: calc(100% + #{$default-border-radius});
+            width: 100%;
             margin-left: -$gap-space;
             padding-left: $gap-space * 2;
-            padding-right: 0;
             background-color: $color-primary;
             color: $color-dark-1;
             @include box-shadow();
-            @include border-radius-right();
 
             .icon {
                 color: $color-dark-1;

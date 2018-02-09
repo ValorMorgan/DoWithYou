@@ -6,11 +6,8 @@ export class Header extends React.Component<{}, {}> {
     render() {
         return (
             <div id='header'>
-                <div>
-                    <LoginButton />
-                    <RegisterButton />
-                </div>
-                <Misc.ClearFix />
+                <LoginButton />
+                <RegisterButton />
             </div>
         );
     }

@@ -1,51 +1,37 @@
-﻿@import 'deps/_dependencies.scss';
+﻿@import '../deps/_dependencies.scss';
 
-@include media-below(md) {
+@include media-up(md) {
     #layout {
-        grid-gap: 0;
+        $nav-width: $button-min-size + $gap-space * 2;
         grid-template: 
-            "nav nav nav" 50px 
-            "header header header" 50px 
-            ". body ." auto 
-            "footer footer footer" 20% 
-            / 3% auto 3%;
+            "nav header header header" $button-min-size + $gap-space * 2 
+            "nav . body ." auto 
+            "nav footer footer footer" auto 
+            / $nav-width 2% auto 2%;
     }
 
     #nav {
-        z-index: 1;
-        grid-area: nav;
-        @include box-shadow(0);
+        width: 300px;
+        @include box-shadow(3px, 0);
 
         .nav-header {
-            .nav-toggler {
+            .title {
                 display: block;
             }
         }
 
         .nav-collapse {
-            width: calc(100% + #{$gap-space} * 2);
-            display: none;
-            margin-left: -$gap-space;
-            margin-top: $gap-space / 2;
-            padding-top: $gap-space;
-            background-color: $color-dark-1;
-            @include border-radius-bottom();
-            @include box-shadow(0);
-
-            .clock {
-                display: none;
-            }
-
-            .active {
-                margin-left: 0;
-                padding-left: $gap-space;
-            }
+            width: 300px;
+            @include box-shadow(0, 0, 0);
         }
     }
 
     #header {
         display: flex;
-        flex-flow: column;
-        padding-top: $gap-space;
+        justify-content: flex-end;
+
+        .button {
+            flex: none;
+        }
     }
 }
