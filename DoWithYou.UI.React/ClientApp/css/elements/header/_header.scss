@@ -1,0 +1,15 @@
+﻿@import '../../deps/_dependencies.scss';
+
+#header {
+    padding: 5px;
+    background-color: $color-dark-1 - #111;
+
+    div {
+        display: block;
+    }
+
+    .button {
+        float: right;
+        margin: 0 5px;
+    }
+}

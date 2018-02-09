@@ -1,0 +1,27 @@
+﻿@import '../../deps/_dependencies.scss';
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    color: $color-primary;
+}
+
+%title-shared {
+    text-decoration: none;
+
+    .title {
+        color: $color-dark-2;
+    }
+}
+
+.title-link:hover {
+    @extend %title-shared;
+}
+
+.title-link:active {
+    @extend %title-shared;
+}
+
+.title-link:focus {
+    text-decoration: none;
+}

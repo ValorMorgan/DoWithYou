@@ -1,0 +1,21 @@
+﻿@import '../../deps/_dependencies.scss';
+
+.clock-digital {
+    width: 60%;
+    min-width: 160px;
+    padding: 10px 5px;
+    margin: 10px auto;
+    clear: both;
+    background-color: $color-dark-2;
+    border: 2px solid $color-light-1;
+    @include border-radius(5px);
+    @include box-shadow();
+
+    .clock-digital-time {
+        font-size: 24px;
+        text-align: center;
+        color: $color-light-1;
+        margin: 0;
+        padding: 0;
+    }
+}

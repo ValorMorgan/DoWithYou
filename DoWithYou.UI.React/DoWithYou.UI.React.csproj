@@ -42,7 +42,7 @@
     <Content Include="ClientApp\css\site.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="ClientApp\css\_element.scss">
+    <Content Include="ClientApp\css\layout\_layout.scss">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="ClientApp\css\deps\_color.scss">

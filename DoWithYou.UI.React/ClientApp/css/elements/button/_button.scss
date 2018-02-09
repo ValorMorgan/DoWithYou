@@ -1,0 +1,25 @@
+﻿@import '../../deps/_dependencies.scss';
+
+.button {
+    cursor: pointer;
+    border: 2px solid;
+    padding: $gap-space;
+    @include border-radius();
+    @include box-shadow();
+}
+
+.button-login {
+    min-width: 120px;
+    font-weight: bold;
+    background-color: $color-dark-1;
+    color: $color-light-1;
+    border-color: $color-light-1;
+}
+
+.button-register {
+    min-width: 120px;
+    font-weight: bold;
+    background-color: $color-primary;
+    color: $color-dark-2;
+    border-color: $color-primary;
+}

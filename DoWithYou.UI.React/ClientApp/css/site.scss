@@ -41,14 +41,21 @@ html {
     }
 }
 
-// SPECIFIC ====================================================================
-@import 'element';
+// DEFAULT =====================================================================
+@import 'layout/_layout.scss';
+@import 'elements/button/_button.scss';
+@import 'elements/clock/_clock.scss';
+@import 'elements/header/_header.scss';
+@import 'elements/image/_image.scss';
+@import 'elements/misc/_misc.scss';
+@import 'elements/nav/_nav.scss';
+@import 'elements/title/_title.scss';
 
 // MEDIA =======================================================================
-@import 'mediaLayout';
-@import 'mediaBelow';
-@import 'mediaXStoSM';
-@import 'mediaSMtoMD';
-@import 'mediaMDtoLG';
-@import 'mediaLGtoXL';
-@import 'mediaAbove';
+@import 'layout/_mediaLayout.scss';
+@import 'media/_mediaBelow.scss';
+@import 'media/_mediaXStoSM.scss';
+@import 'media/_mediaSMtoMD.scss';
+@import 'media/_mediaMDtoLG.scss';
+@import 'media/_mediaLGtoXL.scss';
+@import 'media/_mediaAbove.scss';

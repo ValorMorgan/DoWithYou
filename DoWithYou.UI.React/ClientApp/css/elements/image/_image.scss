@@ -1,0 +1,16 @@
+﻿@import '../../deps/_dependencies.scss';
+
+$image-size: 120px;
+
+.image {
+    @include equalSize($image-size);
+    text-align: center;
+    line-height: $image-size;
+}
+
+.image-container {
+    width: $image-size;
+    border: 2px solid $color-dark-1;
+    overflow: hidden;
+    display: block;
+}

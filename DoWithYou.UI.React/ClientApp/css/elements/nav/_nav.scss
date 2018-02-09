@@ -1,0 +1,69 @@
+﻿@import '../../deps/_dependencies.scss';
+
+#nav {
+    padding: $gap-space;
+    background-color: $color-dark-1;
+    @include box-shadow();
+
+    .nav-header {
+        display: flex;
+
+        .title {
+            $size: 24px;
+
+            margin: $gap-space 0 0 0;
+            font-size: $size;
+            line-height: $size;
+        }
+
+        .nav-toggler {
+            margin-left: auto;
+            padding: 0 $gap-space;
+            background-color: $color-dark-2;
+            border: 1px solid $color-light-1;
+            color: $color-light-1;
+            @include border-radius();
+            @include box-shadow();
+        }
+    }
+
+    .nav-collapse {
+        margin-top: $gap-space;
+        border-top: 1px solid $color-light-1;
+
+        .icon {
+            padding-right: $gap-space;
+            color: $color-primary;
+        }
+
+        .nav-link {
+            display: flex;
+            padding: $gap-space;
+            color: $color-primary;
+            font-weight: bold;
+
+            .nav-link-content, .icon {
+                $size: 20px;
+
+                margin: 0;
+                font-size: $size;
+                line-height: $size;
+            }
+        }
+
+        .active, .active:hover, .active:focus {
+            width: calc(100% + #{$default-border-radius});
+            margin-left: -$gap-space;
+            padding-left: $gap-space * 2;
+            padding-right: 0;
+            background-color: $color-primary;
+            color: $color-dark-1;
+            @include box-shadow();
+            @include border-radius-right();
+
+            .icon {
+                color: $color-dark-1;
+            }
+        }
+    }
+}

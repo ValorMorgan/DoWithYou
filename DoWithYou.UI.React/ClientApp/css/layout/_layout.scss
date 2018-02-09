@@ -1,0 +1,40 @@
+﻿@import 'deps/_dependencies.scss';
+
+.grid {
+    display: grid;
+    grid-row-gap: $gap-space;
+    @include equalSize(100%);
+}
+
+#layout {
+    grid-template:
+        "nav header header header" 50px
+        "nav . body ." auto
+        "nav footer footer footer" 20%
+        / 300px 2% auto 2%;
+}
+
+#react-app {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
+
+#nav {
+    grid-area: nav;
+}
+
+#header {
+    grid-area: header;
+}
+
+#body {
+    grid-area: body;
+}
+
+#footer {
+    grid-area: footer;
+}
