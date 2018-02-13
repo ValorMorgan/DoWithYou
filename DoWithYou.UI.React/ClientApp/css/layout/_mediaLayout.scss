@@ -1,28 +1,50 @@
 ﻿@import '../deps/_dependencies.scss';
 
 @include media-up(md) {
+    $button-gap-size: $button-min-size + $gap-space * 2;
+    $nav-width-expanded: 300px;
+
     #layout {
-        $nav-width: $button-min-size + $gap-space * 2;
-        grid-template: 
-            "nav header header header" $button-min-size + $gap-space * 2 
-            "nav . body ." auto 
+        grid-template:
+            "nav header header header" $button-gap-size
+            "nav . body ." auto
             "nav footer footer footer" auto 
-            / $nav-width 2% auto 2%;
+            / $button-gap-size 2% auto 2%;
     }
 
     #nav {
-        width: 300px;
-        @include box-shadow(3px, 0);
+        transition: width $transition-speed;
+        width: $button-min-size;
 
-        .nav-header {
+        @include box-shadow(3px, $button-gap-size);
+
+        #nav__header {
             .title {
-                display: block;
+                transition: margin-left $transition-speed;
+                margin-left: -400px;
             }
         }
 
-        .nav-collapse {
-            width: 300px;
+        #nav__content {
+            transition: margin-left $transition-speed;
+            margin-left: -400px;
+            display: block;
+            width: $nav-width-expanded;
             @include box-shadow(0, 0, 0);
+        }
+    }
+
+    #nav.nav--expanded {
+        width: $nav-width-expanded;
+
+        #nav__header {
+            .title {
+                margin-left: 0px;
+            }
+        }
+
+        #nav__content {
+            margin-left: -$gap-space;
         }
     }
 

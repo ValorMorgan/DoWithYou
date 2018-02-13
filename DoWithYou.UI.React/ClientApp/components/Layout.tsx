@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavMenu } from './NavMenu';
-import { Header } from './Utilities/Header';
+import { Header } from './Header';
 
 export interface ILayoutProps {
     children?: React.ReactNode;

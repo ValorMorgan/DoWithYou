@@ -61,7 +61,8 @@
       "unit-no-unknown": true,
       "unit-whitelist": [
         "px",
-        "%"
+        "%",
+        "s"
       ]
     }
   }

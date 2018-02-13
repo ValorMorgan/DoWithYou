@@ -4,11 +4,17 @@
 
 @include media-above(xl) {
     #nav {
-        .nav-toggler {
+        #nav__header {
+            .title {
+                display: block;
+            }
+        }
+
+        #nav__toggler {
             display: none;
         }
 
-        .nav-collapse {
+        #nav__content {
             display: block !important;
         }
     }

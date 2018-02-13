@@ -27,7 +27,6 @@
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="ClientApp\components\Button.tsx" />
-    <None Remove="ClientApp\components\Header.tsx" />
     <None Remove="ClientApp\components\Image.tsx" />
     <None Remove="ClientApp\components\Title.tsx" />
     <None Remove="ClientApp\components\Utilities.tsx" />
@@ -58,7 +57,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Utilities\Button.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Utilities\Header.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Header.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Image.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Title.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Misc.tsx" />

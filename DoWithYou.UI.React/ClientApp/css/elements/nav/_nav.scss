@@ -5,7 +5,7 @@
     background-color: $color-dark-1;
     @include box-shadow(0);
 
-    .nav-header {
+    #nav__header {
         display: flex;
 
         .title {
@@ -17,7 +17,7 @@
             padding-top: $button-min-size - $size;
         }
 
-        .nav-toggler {
+        #nav__toggler {
             margin-left: auto;
             @include equalSize(44px);
             border: 1px solid $color-light-1;
@@ -28,7 +28,7 @@
         }
     }
 
-    .nav-collapse {
+    #nav__content {
         display: none;
         width: 100%;
         margin-left: -$gap-space;
@@ -48,13 +48,13 @@
             color: $color-primary;
         }
 
-        .nav-link {
+        .nav__link {
             display: flex;
             padding: $gap-space;
             color: $color-primary;
             font-weight: bold;
 
-            .nav-link-content, .icon {
+            .nav__link-content, .icon {
                 $size: 24px;
 
                 margin: 0;

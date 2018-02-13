@@ -1,6 +1,5 @@
 ﻿import * as React from 'react';
-import * as Misc from './Misc';
-import { LoginButton, RegisterButton } from './Button';
+import { LoginButton, RegisterButton } from './Utilities/Button';
 
 export class Header extends React.Component<{}, {}> {
     render() {
