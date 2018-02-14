@@ -29,13 +29,12 @@
     }
 
     #nav__content {
-        display: none;
+        max-height: 0;
         width: 100%;
-        margin-left: -$gap-space;
-        margin-top: $gap-space;
-        padding: $gap-space;
-        border-top: 1px solid $color-light-1;
+        border: 0;
+        padding: 0 $gap-space;
         background-color: $color-dark-1;
+        overflow: hidden;
         @include border-radius-bottom();
         @include box-shadow(0);
 
@@ -60,6 +59,7 @@
                 margin: 0;
                 font-size: $size;
                 line-height: $size;
+                font-weight: bold;
             }
         }
 
@@ -75,5 +75,15 @@
                 color: $color-dark-1;
             }
         }
+    }
+}
+
+#nav.nav--expanded {
+    #nav__content {
+        max-height: 800px;
+        margin-left: -$gap-space;
+        margin-top: $gap-space;
+        border-top: 1px solid $color-light-1;
+        padding: $gap-space;
     }
 }

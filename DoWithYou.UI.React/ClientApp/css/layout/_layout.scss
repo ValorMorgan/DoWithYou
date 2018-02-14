@@ -26,6 +26,10 @@
 #nav {
     grid-area: nav;
     z-index: 3;
+
+    #nav__content {
+        transition: max-height $transition-speed, border $transition-speed, padding $transition-speed;
+    }
 }
 
 #header {
