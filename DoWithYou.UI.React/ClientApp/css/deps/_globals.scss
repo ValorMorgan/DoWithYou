@@ -4,6 +4,7 @@ $font-stack: Arial, Helvetica, sans-serif;
 
 $button-min-size: 44px;
 $gap-space: 10px;
+$button-with-gap-size: $button-min-size + $gap-space * 2;
 
 $media-breakpoint: (
     // PHONE

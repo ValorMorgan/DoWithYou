@@ -1,22 +1,21 @@
 ﻿@import '../deps/_dependencies.scss';
 
 @include media-up(md) {
-    $button-gap-size: $button-min-size + $gap-space * 2;
     $nav-width-expanded: 300px;
 
     #layout {
         grid-template:
-            "nav header header header" $button-gap-size
+            "nav header header header" $button-with-gap-size
             "nav . body ." auto
             "nav footer footer footer" auto 
-            / $button-gap-size 2% auto 2%;
+            / $button-with-gap-size 2% auto 2%;
     }
 
     #nav {
         transition: width $transition-speed;
         width: $button-min-size;
 
-        @include box-shadow(3px, $button-gap-size);
+        @include box-shadow(3px, $button-with-gap-size);
 
         #nav__header {
             .title {
@@ -26,11 +25,16 @@
         }
 
         #nav__content {
-            transition: margin-left $transition-speed;
-            margin-left: -400px;
-            display: block;
+            transition: border-top $transition-speed, margin-left $transition-speed;
             width: $nav-width-expanded;
+            margin-left: -400px;
+            padding-top: $gap-space;
+            overflow: visible;
             @include box-shadow(0, 0, 0);
+
+            .active {
+                @include border-radius-right();
+            }
         }
     }
 
@@ -39,12 +43,14 @@
 
         #nav__header {
             .title {
-                margin-left: 0px;
+                margin-left: 0;
             }
         }
 
         #nav__content {
             margin-left: -$gap-space;
+            padding:  $gap-space;
+            border-top: 1px solid $color-light-1;
         }
     }
 
@@ -54,6 +60,36 @@
 
         .button {
             flex: none;
+        }
+    }
+}
+
+@include media-above(lg) {
+    #layout {
+        grid-template:
+            "nav header header header" $button-with-gap-size
+            "nav . body ." auto
+            "nav footer footer footer" auto 
+            / 20% 3% auto 3%;
+    }
+
+    #nav, #nav.nav--expanded {
+        width: 100%;
+
+        #nav__header {
+            .title {
+                margin-left: 0;
+            }
+        }
+
+        #nav__content {
+            width: 100%;
+            margin-left: -$gap-space;
+            border-top: 1px solid $color-light-1;
+
+            .active {
+                padding-right: $gap-space / 2;
+            }
         }
     }
 }

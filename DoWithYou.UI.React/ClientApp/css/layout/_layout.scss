@@ -28,7 +28,7 @@
     z-index: 3;
 
     #nav__content {
-        transition: max-height $transition-speed, border $transition-speed, padding $transition-speed;
+        transition: max-height $transition-speed, border $transition-speed, padding-top $transition-speed, padding-bottom $transition-speed;
     }
 }
 

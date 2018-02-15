@@ -31,7 +31,9 @@
     #nav__content {
         max-height: 0;
         width: 100%;
-        border: 0;
+        margin-top: $gap-space;
+        margin-left: -$gap-space;
+        border-top: 0 solid $color-light-1;
         padding: 0 $gap-space;
         background-color: $color-dark-1;
         overflow: hidden;
@@ -81,8 +83,6 @@
 #nav.nav--expanded {
     #nav__content {
         max-height: 800px;
-        margin-left: -$gap-space;
-        margin-top: $gap-space;
         border-top: 1px solid $color-light-1;
         padding: $gap-space;
     }

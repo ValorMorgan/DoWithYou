@@ -4,18 +4,8 @@
 
 @include media-above(xl) {
     #nav {
-        #nav__header {
-            .title {
-                display: block;
-            }
-        }
-
         #nav__toggler {
             display: none;
         }
-
-        #nav__content {
-            display: block !important;
-        }
     }
-}
+};
