@@ -13,8 +13,8 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
                     <Title id='title-homepage'>Do With You</Title>
                 </Link>
                 <p>ToDo app with interactive progress! </p>
-                <Image src="" alt="Logo" />
-                <CircleImage src="" />
+                <Image src="" alt="Super long alt name for some reason we could never know why" />
+                <CircleImage src="" alt="Super long alt name for some reason we could never know why" />
                 <ul>
                     <li>First</li>
                     <li><span>Second</span></li>

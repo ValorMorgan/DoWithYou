@@ -2,16 +2,21 @@
 
 $image-size: 120px;
 
-.image {
+%image-shared {
     @include equalSize($image-size);
 
     display: block;
     text-align: center;
-    line-height: $image-size;
-    border: 1px solid $color-dark-1;
+    border: 1px solid $color-dark-1;    
+}
+
+.image {
+    @extend %image-shared;
 }
 
 .image--circle {
+    @extend %image-shared;
+    
     @include border-radius(50%);
     overflow: hidden;
 }
