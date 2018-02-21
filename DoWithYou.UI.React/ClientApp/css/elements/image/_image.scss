@@ -1,16 +1,17 @@
-﻿@import '../../deps/_dependencies.scss';
+﻿@import "../../deps/_dependencies.scss";
 
 $image-size: 120px;
 
 .image {
     @include equalSize($image-size);
+
+    display: block;
     text-align: center;
     line-height: $image-size;
+    border: 1px solid $color-dark-1;
 }
 
-.image-container {
-    width: $image-size;
-    border: 2px solid $color-dark-1;
+.image--circle {
+    @include border-radius(50%);
     overflow: hidden;
-    display: block;
 }

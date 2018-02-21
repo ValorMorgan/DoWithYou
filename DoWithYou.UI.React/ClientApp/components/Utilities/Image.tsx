@@ -14,5 +14,5 @@ export const Image = (props: IImageProps) => props ?
     <PlaceholderImage />;
 
 export const CircleImage = (props: IImageProps) => props ?
-    <Image {...props} className={`img-circle ${props.className ? props.className : ''}`.trim()} /> :
+    <Image {...props} className={`image--circle ${props.className ? props.className : ''}`.trim()} /> :
     <PlaceholderImage />;

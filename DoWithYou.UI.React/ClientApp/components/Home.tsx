@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom'
 import { Image, CircleImage } from './Utilities/Image';
 import { Title } from './Utilities/Title';
+import { DigitalClock } from './Utilities/Clock';
 
 export class Home extends React.Component<RouteComponentProps<{}>, {}> {
     render() {
