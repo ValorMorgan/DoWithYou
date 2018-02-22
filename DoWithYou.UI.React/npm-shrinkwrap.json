@@ -678,7 +678,7 @@
     "base64-js": {
       "version": "1.2.1",
       "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.2.1.tgz",
-      "integrity": "sha512-dwVUVIXsBZXwTuwnXI9RK8sBmgq09NDHzyR9SAph9eqk76gKK2JSQmZARC2zRC81JC2QTtxD0ARU5qTS25gIGw==",
+      "integrity": "sha1-qRlH2h9KUW6jjltOwOw3c2deCIY=",
       "dev": true
     },
     "bcrypt-pbkdf": {
@@ -2055,7 +2055,7 @@
     },
     "exports-loader": {
       "version": "https://registry.npmjs.org/exports-loader/-/exports-loader-0.7.0.tgz",
-      "integrity": "sha1-hIgceE3qYDa44c0drD2ptkCeIaU=",
+      "integrity": "sha512-RKwCrO4A6IiKm0pG3c9V46JxIHcDplwwGJn6+JJ1RcVnh/WSGJa0xkmk5cRVtgOPzCAtTMGj2F7nluh9L0vpSA==",
       "requires": {
         "loader-utils": "https://registry.npmjs.org/loader-utils/-/loader-utils-1.1.0.tgz",
         "source-map": "https://registry.npmjs.org/source-map/-/source-map-0.5.0.tgz"
@@ -7018,7 +7018,7 @@
     "sax": {
       "version": "1.2.4",
       "resolved": "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz",
-      "integrity": "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==",
+      "integrity": "sha1-KBYjTiN4vdxOU1T6tcqold9xANk=",
       "dev": true
     },
     "schema-utils": {
@@ -7267,7 +7267,7 @@
     "snapdragon-node": {
       "version": "2.1.1",
       "resolved": "https://registry.npmjs.org/snapdragon-node/-/snapdragon-node-2.1.1.tgz",
-      "integrity": "sha512-O27l4xaMYt/RSQ5TR3vpWCAB5Kb/czIcqUFOM/C4fYcLnbZUc1PkjTAMjof2pBWaSTwOUd6qUHcFGVGj7aIwnw==",
+      "integrity": "sha1-bBdfhv8UvbByRWPo88GwIaKGhTs=",
       "dev": true,
       "requires": {
         "define-property": "1.0.0",
@@ -7286,7 +7286,7 @@
     "snapdragon-util": {
       "version": "3.0.1",
       "resolved": "https://registry.npmjs.org/snapdragon-util/-/snapdragon-util-3.0.1.tgz",
-      "integrity": "sha512-mbKkMdQKsjX4BAL4bRYTj21edOf8cN7XHdYUJEe+Zn99hVEYcMvKPct1IqNe7+AZPirn8BCDOQBHQZknqmKlZQ==",
+      "integrity": "sha1-+VZHlIbyrNeXAGk/b3uAXkWrVuI=",
       "dev": true,
       "requires": {
         "kind-of": "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz"
