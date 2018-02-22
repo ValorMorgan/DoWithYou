@@ -21,7 +21,18 @@
 }
 
 .clock-sun {
-    width: 100%;
+    width: 90%;
     height: 100px;
-    background: radial-gradient(farthest-side at 50% 100%, yellow 10%, #49a, #2af, white);
+    border: 5px solid grey;
+    border-top: 0;
+    background: linear-gradient(black, #222 20%, #22f 50%, cyan);
+    @include border-radius-bottom(500px);
+    overflow: hidden;
+
+    .sun {
+        height: 80%;
+        width: 80px;
+        margin: 10px 0;
+        background-color: yellow; // HACK: Take this out
+    }
 }

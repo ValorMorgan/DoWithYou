@@ -1,0 +1,11 @@
+@import '../../deps/_dependencies.scss';
+
+#dayNight {
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+
+    .clock-sun {
+        align-self: center;
+    }
+}

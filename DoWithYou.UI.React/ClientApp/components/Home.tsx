@@ -9,7 +9,10 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
     render() {
         return (
             <React.Fragment>
-                <SunClock />
+                <div id="dayNight">
+                    <SunClock />
+                </div>
+                <DigitalClock />
                 <Link to={'/'} className='title-link'>
                     <Title id='title-homepage'>Do With You</Title>
                 </Link>
