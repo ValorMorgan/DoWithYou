@@ -7,5 +7,9 @@
 
     .clock-sun {
         align-self: center;
+
+        .clock-sun__timer {
+            transition: margin-left $transition-speed, margin-top $transition-speed;
+        }
     }
 }

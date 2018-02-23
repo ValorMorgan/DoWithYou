@@ -3,6 +3,7 @@
 export interface ICommonProps {
     id?: string;
     className?: string;
+    style?: React.CSSProperties;
     onClick?: (string | any);
 }
 

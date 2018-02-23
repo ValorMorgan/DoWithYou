@@ -10,7 +10,7 @@ export class Home extends React.Component<RouteComponentProps<{}>, {}> {
         return (
             <React.Fragment>
                 <div id="dayNight">
-                    <SunClock />
+                    <SunClock dayStart={6} dayEnd={18} />
                 </div>
                 <DigitalClock />
                 <Link to={'/'} className='title-link'>

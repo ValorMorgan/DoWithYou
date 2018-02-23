@@ -15,7 +15,7 @@ html {
         @include border-radius(10px);
         @include equalSize(100%);
 
-        a {
+        a, a:active, a:visited {
             text-decoration: none;
         }
 
