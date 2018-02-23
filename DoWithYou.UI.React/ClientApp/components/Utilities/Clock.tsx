@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-import * as $ from 'jquery';
 import { Image } from './Image';
 import { ICommonProps } from './Misc';
 
@@ -45,13 +44,14 @@ export class DigitalClock extends React.Component<ICommonProps, IClockState> {
 }
 
 interface IClockSunProps extends ICommonProps {
-    dayStart: number,
-    dayEnd: number
+    dayStart: number;
+    dayEnd: number;
 }
 
 interface IClockSunState extends IClockState {
     isDay: boolean;
     position: number;
+    arc: number;
 }
 
 export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
@@ -63,18 +63,22 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
         this.state = {
             date: new Date(),
             isDay: true,
-            position: 100
+            position: 100, // %
+            arc: 1 // %
         };
     }
 
     render() {
         let style: React.CSSProperties = {
-            marginLeft: `${this.state.position}%`
+            marginLeft: this.state.position+'%',
+            marginTop: this.state.arc+'%'
         }
 
         return (
             <div className="clock clock-sun">
-                {this.state.isDay ? <Image src="" className="clock-sun__timer sun" style={style}/> : <Image src="" className="clock-sun__timer moon" />}
+                {this.state.isDay ?
+                    <Image src="" className="clock-sun__timer sun" style={style} /> :
+                    <Image src="" className="clock-sun__timer moon" style={style} />}
             </div>
         );
     }
@@ -102,14 +106,9 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
         
         this.setState({
             isDay: this.isDay(time),
-            position: this.getPosition(time)
+            position: this.getPosition(time),
+            arc: this.getArc()
         });
-        
-        // Arc
-        if (this.state.position < 25 || this.state.position > 75)
-            $('.clock-sun__timer').css('margin-top', `${this.getArc()}%`);
-        else
-            $('.clock-sun__timer').css('margin-top', '');
     }
 
     isDay = (time: number): boolean => {
@@ -117,14 +116,19 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
     }
 
     getPosition = (time: number): number => {
+        let dayTime: number = this.props.dayEnd-this.props.dayStart;
+        let nightTime: number = 24-dayTime;
+
         return this.isDay(time) ?
-            /* Day */   100 - (((time-this.props.dayStart) / (this.props.dayEnd-this.props.dayStart)) * 100) :
-            /* Night */ 0;
+            /* Day */   100 - (((time - this.props.dayStart) / dayTime) * 100) :
+            /* Night */ 100 - ((Math.abs(time - this.props.dayEnd) / nightTime) * 100);
     }
 
     getArc = (): number => {
         return this.state.position < 25 ?
                 17 * (1 - (this.state.position / 25)) :
-                17 * ((this.state.position - 74) / 25) ;
+            this.state.position > 75 ?
+                17 * ((this.state.position - 74) / 25) :
+                1; // 1%
     }
 }
