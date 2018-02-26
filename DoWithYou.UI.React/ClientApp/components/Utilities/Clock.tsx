@@ -46,9 +46,10 @@ export class DigitalClock extends React.Component<ICommonProps, IClockState> {
 interface IClockSunProps extends ICommonProps {
     dayStart: number;
     dayEnd: number;
+    UpdateShadowOffset: (position: number, arc: number) => void;
 }
 
-interface IClockSunState extends IClockState {
+interface IClockSunState {
     isDay: boolean;
     position: number;
     arc: number;
@@ -61,7 +62,6 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
         super(props);
 
         this.state = {
-            date: new Date(),
             isDay: true,
             position: 100, // %
             arc: 1 // %
@@ -74,6 +74,7 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
             marginTop: this.state.arc+'%'
         }
 
+        // TODO: Image source for Sun / Moon
         return (
             <div className="clock clock-sun">
                 {this.state.isDay ?
@@ -95,11 +96,8 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
     }
 
     tick() {
-        this.setState({
-            date: new Date()
-        });
-
-        let time = this.state.date.getHours() + (this.state.date.getMinutes() / 60);
+        const date = new Date();
+        let time = date.getHours() + (date.getMinutes() / 60);
         if (!time) {
             return;
         }
@@ -109,6 +107,8 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
             position: this.getPosition(time),
             arc: this.getArc()
         });
+
+        this.props.UpdateShadowOffset(this.state.position, this.state.arc);
     }
 
     isDay = (time: number): boolean => {
@@ -116,12 +116,17 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
     }
 
     getPosition = (time: number): number => {
-        let dayTime: number = this.props.dayEnd-this.props.dayStart;
-        let nightTime: number = 24-dayTime;
+        let dayTime: number = this.props.dayEnd - this.props.dayStart;
+        let nightTime: number = 24 - dayTime; // 24 = hours in a day
 
+        let timeInDay: number = time - this.props.dayStart;
+        let timeInNight: number = Math.abs(time - this.props.dayEnd);
+
+        // 100% - <percent through the day>
+        // TODO: Calc position for left edge to be -margin of sun/moon size
         return this.isDay(time) ?
-            /* Day */   100 - (((time - this.props.dayStart) / dayTime) * 100) :
-            /* Night */ 100 - ((Math.abs(time - this.props.dayEnd) / nightTime) * 100);
+            /* Day */   100 - ((timeInDay / dayTime) * 100) :
+            /* Night */ 100 - ((timeInNight / nightTime) * 100);
     }
 
     getArc = (): number => {
@@ -129,6 +134,6 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
                 17 * (1 - (this.state.position / 25)) :
             this.state.position > 75 ?
                 17 * ((this.state.position - 74) / 25) :
-                1; // 1%
+                1; // 1% // TODO: Make this value defined by the CSS; not here
     }
 }

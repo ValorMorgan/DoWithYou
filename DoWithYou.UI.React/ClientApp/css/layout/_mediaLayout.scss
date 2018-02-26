@@ -15,7 +15,7 @@
         transition: width $transition-speed;
         width: $button-min-size;
 
-        @include box-shadow(3px, $button-with-gap-size);
+        @include box-shadow(3px, $button-with-gap-size, 8px, 0);
 
         #nav__header {
             .title {
@@ -30,7 +30,7 @@
             margin-left: -400px;
             padding-top: $gap-space;
             overflow: visible;
-            @include box-shadow(0, 0, 0);
+            @include box-shadow(0, 0, 0, 0);
 
             .active {
                 @include border-radius-right();

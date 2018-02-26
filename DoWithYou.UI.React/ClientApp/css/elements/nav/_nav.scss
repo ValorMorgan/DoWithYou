@@ -3,7 +3,7 @@
 #nav {
     padding: $gap-space;
     background-color: $color-dark-1;
-    @include box-shadow(0);
+    @include box-shadow(0, 3px, 8px, 0);
 
     #nav__header {
         display: flex;
@@ -24,7 +24,7 @@
             background-color: $color-dark-2;
             color: $color-light-1;
             @include border-radius();
-            @include box-shadow();
+            @include box-shadow(0, 0);
         }
     }
 
@@ -38,7 +38,6 @@
         background-color: $color-dark-1;
         overflow: hidden;
         @include border-radius-bottom();
-        @include box-shadow(0);
 
         .clock {
             display: none;
@@ -71,7 +70,7 @@
             padding-left: $gap-space * 2;
             background-color: $color-primary;
             color: $color-dark-1;
-            @include box-shadow();
+            @include box-shadow(3px, 3px, 8px, 0);
 
             .icon {
                 color: $color-dark-1;
