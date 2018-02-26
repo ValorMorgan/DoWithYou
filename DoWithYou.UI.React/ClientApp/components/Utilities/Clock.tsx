@@ -122,7 +122,7 @@ export class SunClock extends React.Component<IClockSunProps, IClockSunState> {
         let timeInDay: number = time - this.props.dayStart;
         let timeInNight: number = Math.abs(time - this.props.dayEnd);
 
-        // 100% - <percent through the day>
+        // 100% - <percent through the day/night>
         // TODO: Calc position for left edge to be -margin of sun/moon size
         return this.isDay(time) ?
             /* Day */   100 - ((timeInDay / dayTime) * 100) :

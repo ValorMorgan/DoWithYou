@@ -34,6 +34,7 @@
         margin-top: 1%;
         margin-left: 100%; // Push off-stage and let clock bring in
         border: 0;
+        @include box-shadow(0, 0);
     }
 
     .sun {
