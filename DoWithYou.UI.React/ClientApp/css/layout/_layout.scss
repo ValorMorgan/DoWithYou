@@ -1,0 +1,48 @@
+﻿@import '../deps/_dependencies.scss';
+
+#react-app {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.grid {
+    display: grid;
+    @include equalSize(100%);
+}
+
+#layout {
+    grid-template:
+        "nav nav nav" $button-min-size + $gap-space * 2
+        "header header header" $button-min-size + $gap-space * 2
+        ". body ." auto
+        "footer footer footer" auto
+        / 2% auto 2%;
+}
+
+#nav {
+    grid-area: nav;
+    z-index: 3;
+
+    #nav__content {
+        transition: max-height $transition-speed, border $transition-speed, padding-top $transition-speed, padding-bottom $transition-speed;
+    }
+}
+
+#header {
+    grid-area: header;
+    z-index: 2;
+}
+
+#body {
+    grid-area: body;
+    z-index: 1;
+}
+
+#footer {
+    grid-area: footer;
+    z-index: 2;
+}

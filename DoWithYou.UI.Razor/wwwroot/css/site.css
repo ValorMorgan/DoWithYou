@@ -1,0 +1,41 @@
+html {
+  font: 100% Arial, Helvetica, sans-serif;
+  background-color: white; }
+  html body {
+    background-color: #119221;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px; }
+
+ul li {
+  list-style: circle; }
+
+ol li {
+  list-style: decimal-leading-zero; }
+
+ul a, ol a {
+  text-decoration: none;
+  color: #119221; }
+
+ul span, ol span {
+  color: #6b6b6b; }
+
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.carousel-caption p {
+  font-size: 20px;
+  line-height: 1.4; }
+
+.carousel-inner .item img[src$=".svg"] {
+  width: 100%; }
+
+@media screen and (max-width: 767px) {
+  .carousel-caption {
+    display: none; } }
+
+#qrCode {
+  margin: 15px; }

@@ -7,5 +7,6 @@ namespace DoWithYou.Shared.Factories
     {
         Logger GetLogger();
         Logger GetLoggerFromConfiguration(IConfiguration config);
+        void SetupSerilogLogger(IConfiguration configuration);
     }
 }

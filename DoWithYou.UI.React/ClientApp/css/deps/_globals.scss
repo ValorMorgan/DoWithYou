@@ -1,0 +1,25 @@
+﻿@import 'color';
+
+$font-stack: Arial, Helvetica, sans-serif;
+
+$button-min-size: 44px;
+$gap-space: 10px;
+$button-with-gap-size: $button-min-size + $gap-space * 2;
+
+$media-breakpoint: (
+    // PHONE
+    xs: 320px,
+    sm: 480px,
+    // TABLET
+    md: 768px,
+    // DESKTOP+
+    lg: 1224px,
+    xl: 1824px
+);
+
+$link-decoration: none;
+
+$ul-li-style: circle;
+$ol-li-style: decimal-leading-zero;
+
+$transition-speed: 0.5s;

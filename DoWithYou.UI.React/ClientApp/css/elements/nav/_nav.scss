@@ -1,0 +1,88 @@
+﻿@import '../../deps/_dependencies.scss';
+
+#nav {
+    padding: $gap-space;
+    background-color: $color-dark-1;
+    @include box-shadow(0, 3px, 8px, 0);
+
+    #nav__header {
+        display: flex;
+
+        .title {
+            $size: 28px;
+
+            font-size: $size;
+            line-height: $size;
+            margin: 0;
+            padding-top: $button-min-size - $size;
+        }
+
+        #nav__toggler {
+            margin-left: auto;
+            @include equalSize(44px);
+            border: 1px solid $color-light-1;
+            background-color: $color-dark-2;
+            color: $color-light-1;
+            @include border-radius();
+            @include box-shadow(0, 0);
+        }
+    }
+
+    #nav__content {
+        max-height: 0;
+        width: 100%;
+        margin-top: $gap-space;
+        margin-left: -$gap-space;
+        border-top: 0 solid $color-light-1;
+        padding: 0 $gap-space;
+        background-color: $color-dark-1;
+        overflow: hidden;
+        @include border-radius-bottom();
+
+        .clock {
+            display: none;
+        }
+
+        .icon {
+            padding-right: $gap-space;
+            color: $color-primary;
+        }
+
+        .nav__link {
+            display: flex;
+            padding: $gap-space;
+            color: $color-primary;
+            font-weight: bold;
+
+            .nav__link-content, .icon {
+                $size: 24px;
+
+                margin: 0;
+                font-size: $size;
+                line-height: $size;
+                font-weight: bold;
+            }
+        }
+
+        .active, .active:hover, .active:focus {
+            width: 100%;
+            margin-left: -$gap-space;
+            padding-left: $gap-space * 2;
+            background-color: $color-primary;
+            color: $color-dark-1;
+            @include box-shadow(3px, 3px, 8px, 0);
+
+            .icon {
+                color: $color-dark-1;
+            }
+        }
+    }
+}
+
+#nav.nav--expanded {
+    #nav__content {
+        max-height: 800px;
+        border-top: 1px solid $color-light-1;
+        padding: $gap-space;
+    }
+}

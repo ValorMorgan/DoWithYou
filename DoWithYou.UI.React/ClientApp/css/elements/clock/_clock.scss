@@ -1,0 +1,47 @@
+﻿@import '../../deps/_dependencies.scss';
+
+.clock-digital {
+    width: 60%;
+    min-width: 160px;
+    padding: 10px 5px;
+    margin: 10px auto;
+    clear: both;
+    background-color: $color-dark-2;
+    border: 2px solid $color-light-1;
+    @include border-radius(5px);
+    @include box-shadow();
+
+    .clock-digital__time {
+        font-size: 24px;
+        text-align: center;
+        color: $color-light-1;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.clock-sun {
+    width: 60%;
+    height: 100px;
+    border: 5px solid grey;
+    border-top: 0;
+    background: linear-gradient(black, #222 20%, #22f 50%, cyan);
+    @include border-radius-bottom(500px);
+    overflow: hidden;
+
+    .clock-sun__timer {
+        @include equalSize(100px);
+        margin-top: 1%;
+        margin-left: 100%; // Push off-stage and let clock bring in
+        border: 0;
+        @include box-shadow(0, 0);
+    }
+
+    .sun {
+        background-color: yellow; // HACK: Take this out        
+    }
+
+    .moon {
+        background-color: grey; // HACK: Take this out        
+    }
+}

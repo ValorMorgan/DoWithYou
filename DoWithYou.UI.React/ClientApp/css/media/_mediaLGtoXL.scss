@@ -1,0 +1,11 @@
+﻿// MEDIA LG -> XL
+
+@import 'deps/_dependencies.scss';
+
+@include media-inclusive(lg, xl) {
+    #nav {
+        #nav__toggler {
+            display: none;
+        }
+    }
+}

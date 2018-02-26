@@ -1,0 +1,11 @@
+﻿// MEDIA ABOVE
+
+@import 'deps/_dependencies.scss';
+
+@include media-above(xl) {
+    #nav {
+        #nav__toggler {
+            display: none;
+        }
+    }
+};

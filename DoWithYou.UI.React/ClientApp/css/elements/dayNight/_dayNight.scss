@@ -1,0 +1,15 @@
+@import '../../deps/_dependencies.scss';
+
+#dayNight {
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+
+    .clock-sun {
+        align-self: center;
+
+        .clock-sun__timer {
+            transition: margin-left $transition-speed, margin-top $transition-speed;
+        }
+    }
+}

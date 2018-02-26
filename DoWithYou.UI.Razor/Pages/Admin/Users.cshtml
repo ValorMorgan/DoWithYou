@@ -1,0 +1,12 @@
+﻿@page
+@model DoWithYou.UI.Razor.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Admin - View Users";
+}
+
+<h2>Users</h2>
+
+@foreach (var user in Model.Users)
+{
+    <p>@user.Username (@user.FullNameProper): @user.FullAddress</p>
+}

@@ -1,0 +1,20 @@
+﻿@import '../_color.scss';
+
+:root {
+    --box-shadow-h-offset: 6px;
+    --box-shadow-v-offset: 3px;
+    --box-shadow-blur: 8px;
+    --box-shadow-spread: -4px;
+}
+
+@mixin box-shadow($h-offset: var(--box-shadow-h-offset), $v-offset: var(--box-shadow-v-offset), $blur: var(--box-shadow-blur), $spread: var(--box-shadow-spread), $color: $color-shadow) {
+    -webkit-box-shadow: $h-offset $v-offset $blur $spread $color;
+    -moz-box-shadow: $h-offset $v-offset $blur $spread $color;
+    box-shadow: $h-offset $v-offset $blur $spread $color;
+}
+
+@mixin box-shadow-type($type: none) {
+    -webkit-box-shadow: $type;
+    -moz-box-shadow: $type;
+    box-shadow: $type;
+}

@@ -1,0 +1,24 @@
+﻿@import "../../deps/_dependencies.scss";
+
+$image-size: 120px;
+
+%image-shared {
+    @include equalSize($image-size);
+
+    display: block;
+    margin: $gap-space 0;
+    text-align: center;
+    border: 1px solid $color-dark-1;
+    @include box-shadow();
+}
+
+.image {
+    @extend %image-shared;
+}
+
+.image--circle {
+    @extend %image-shared;
+    
+    @include border-radius(50%);
+    overflow: hidden;
+}
