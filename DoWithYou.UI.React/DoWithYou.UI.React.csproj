@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,11 +57,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DoWithYou.Shared.Core\DoWithYou.Shared.Core.csproj" />
+    <ProjectReference Include="..\DoWithYou.Shared\DoWithYou.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Utilities\Button.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Header.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Image.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Title.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Utilities\Misc.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

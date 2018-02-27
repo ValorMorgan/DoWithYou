@@ -1,50 +1,33 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Core;
+using DoWithYou.Shared.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace DoWithYou.UI.React
 {
-    public class Startup
+    public class Startup : DoWithYouStartupBase, IStartup
     {
-        public Startup(IConfiguration configuration)
+        #region CONSTRUCTORS
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+            : base(configuration, env)
         {
-            Configuration = configuration;
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(Startup));
         }
+        #endregion
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public new void Configure(IApplicationBuilder app)
         {
-            services.AddMvc();
-        }
+            base.Configure(app);
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true
-                });
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            ConfigureForEnvironment(ref app);
 
-            app.UseStaticFiles();
-
-            app.UseMvc(routes =>
+            ConfigureMvc(ref app, routes =>
             {
                 routes.MapRoute(
                     name: "default",
@@ -52,8 +35,51 @@ namespace DoWithYou.UI.React
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                    defaults: new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    });
             });
         }
+
+        public new IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc().AddControllersAsServices();
+
+            return base.ConfigureServices(services);
+        }
+
+        #region PRIVATE
+        private void ConfigureForEnvironment(ref IApplicationBuilder app)
+        {
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Environment: {Environment}", HostingEnvironment.EnvironmentName);
+
+            // Every environment
+            app.UseStaticFiles();
+            
+            if (HostingEnvironment.IsDevelopment())
+                SetupAppForDevelopment(ref app);
+            else if (HostingEnvironment.IsProduction())
+                SetupAppForProduction(ref app);
+        }
+
+        private void SetupAppForDevelopment(ref IApplicationBuilder app)
+        {
+            SetExceptionHandler(ref app);
+
+            app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true,
+                    ReactHotModuleReplacement = true
+                }
+            );
+        }
+
+        private void SetupAppForProduction(ref IApplicationBuilder app)
+        {
+            SetExceptionHandler(ref app, "/Home/Error");
+        }
+        #endregion
     }
 }
