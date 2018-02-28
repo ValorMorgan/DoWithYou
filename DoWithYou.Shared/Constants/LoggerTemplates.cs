@@ -35,6 +35,8 @@
 
         public const string DISPOSING = "Disposing {Class}";
 
+        public const string LOG_WEB_REQUEST = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}ms";
+
         public const string MAP_MODEL_TO_ENTITY_1 = "Mapping {Model} to {Entity}";
 
         public const string MAP_ENTITY_TO_MODEL_1 = "Mapping {Entity} to {Model}";

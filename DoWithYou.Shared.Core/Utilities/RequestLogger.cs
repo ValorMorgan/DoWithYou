@@ -13,19 +13,15 @@ namespace DoWithYou.Shared.Core.Utilities
     {
         #region VARIABLES
         private static readonly ILogger _log = Log.ForContext<RequestLogger>();
-
-        // TODO: Move to Logger Template repository
-        private const string MESSAGE_TEMPLATE =
-            "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
         #endregion
 
         public void LogRequest(HttpContext httpContext, double elapsedTime = 0)
         {
             try
             {
-                int? statusCode = httpContext.Response?.StatusCode;
+                int statusCode = httpContext.Response?.StatusCode ?? StatusCodes.Status400BadRequest;
 
-                LogEventLevel level = statusCode > 499 ?
+                LogEventLevel level = statusCode >= StatusCodes.Status500InternalServerError ?
                     LogEventLevel.Error :
                     LogEventLevel.Information;
 
@@ -33,7 +29,7 @@ namespace DoWithYou.Shared.Core.Utilities
                     GetLoggerForErrorContext(httpContext) :
                     _log;
 
-                log.LogEvent(level, LoggerEvents.REQUEST, MESSAGE_TEMPLATE, httpContext.Request.Method, httpContext.Request.Path, statusCode, elapsedTime);
+                log.LogEvent(level, LoggerEvents.REQUEST, LoggerTemplates.LOG_WEB_REQUEST, httpContext.Request.Method, httpContext.Request.Path, statusCode, elapsedTime);
             }
             catch (Exception ex)
             {
@@ -71,7 +67,7 @@ namespace DoWithYou.Shared.Core.Utilities
             try
             {
                 GetLoggerForErrorContext(httpContext)
-                    .LogEventError(ex, LoggerEvents.REQUEST, MESSAGE_TEMPLATE, httpContext.Request.Method, httpContext.Request.Path, 500, elapsedTime);
+                    .LogEventError(ex, LoggerEvents.REQUEST, LoggerTemplates.LOG_WEB_REQUEST, httpContext.Request.Method, httpContext.Request.Path, 500, elapsedTime);
             }
             catch
             {
