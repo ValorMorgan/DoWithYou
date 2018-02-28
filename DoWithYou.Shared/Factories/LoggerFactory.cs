@@ -11,7 +11,8 @@ namespace DoWithYou.Shared.Factories
     {
         public void SetupSerilogLogger(IConfiguration configuration) =>
             Log.Logger = GetLoggerFromConfiguration(configuration);
-
+        
+        // NOTE: GetLogger is a hard-coded setup of the Logger.  Prefer the Logger from Configuration.
         public Logger GetLogger()
         {
             string filePath = Path.Combine(AppContext.BaseDirectory, "Logs");
@@ -34,6 +35,6 @@ namespace DoWithYou.Shared.Factories
             GetLogger() :
             new LoggerConfiguration()
                 .ReadFrom.Configuration(config)
-                ?.CreateLogger();
+                ?.CreateLogger() ?? GetLogger();
     }
 }
