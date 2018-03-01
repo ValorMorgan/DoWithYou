@@ -10,15 +10,11 @@ namespace DoWithYou.Shared.Factories
         private const string JSON_EXTENSION = "json";
         private const string SETTING_FILE_NAME = "appsettings";
         #endregion
-
-        #region PROPERTIES
-        private IConfigurationBuilder Builder => new ConfigurationBuilder()
+        
+        public IConfigurationBuilder GetBuilder() => new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile($"{SETTING_FILE_NAME}.{JSON_EXTENSION}", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
-        #endregion
-
-        public IConfigurationBuilder GetBuilder() => Builder;
 
         public IConfigurationBuilder GetBuilder(string basePath) => !string.IsNullOrWhiteSpace(basePath) ?
             GetBuilder().SetBasePath(basePath) :

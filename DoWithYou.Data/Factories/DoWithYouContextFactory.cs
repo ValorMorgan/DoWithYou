@@ -20,15 +20,23 @@ namespace DoWithYou.Data.Factories
             {
                 using (var container = GetContainerBuilder().Build())
                 using (var scope = container.BeginLifetimeScope())
-                {
-                    AppConfig appConfig = scope.Resolve<AppConfig>();
+                    return GetDbContext(scope);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Failed to create a {nameof(DoWithYouContext)}", ex);
+            }
+        }
 
-                    DbContextOptionsBuilder<DoWithYouContext> dbOptionsBuilder = GetDbContextOptionsBuilder(appConfig);
-                    if (dbOptionsBuilder == default(DbContextOptionsBuilder<DoWithYouContext>))
-                        throw new ApplicationException($"Failed to setup the {nameof(DoWithYouContext)} Options Builder.");
+        public DoWithYouContext CreateDbContext(string[] args, string connectionString)
+        {
+            try
+            {
+                DbContextOptionsBuilder<DoWithYouContext> dbOptionsBuilder = GetDbContextOptionsBuilder(connectionString);
+                if (dbOptionsBuilder == default(DbContextOptionsBuilder<DoWithYouContext>))
+                    throw new ApplicationException($"Failed to setup the {nameof(DoWithYouContext)} Options Builder.");
 
-                    return new DoWithYouContext(dbOptionsBuilder.Options);
-                }
+                return new DoWithYouContext(dbOptionsBuilder.Options);
             }
             catch (Exception ex)
             {
@@ -37,6 +45,7 @@ namespace DoWithYou.Data.Factories
         }
 
         #region PRIVATE
+        // NOTE: Should only be useful for the Migrations entry point.
         private static ContainerBuilder GetContainerBuilder()
         {
             var configurationBuilderFactory = new ConfigurationBuilderFactory();
@@ -48,11 +57,22 @@ namespace DoWithYou.Data.Factories
             return builder;
         }
 
-        private static DbContextOptionsBuilder<DoWithYouContext> GetDbContextOptionsBuilder(AppConfig appConfig)
+        private static DoWithYouContext GetDbContext(ILifetimeScope scope)
         {
+            AppConfig appConfig = scope.Resolve<AppConfig>();
+
             string connectionString = appConfig.ConnectionStrings
                 .Single(c => c?.Name == nameof(DoWithYou)).Connection;
 
+            DbContextOptionsBuilder<DoWithYouContext> dbOptionsBuilder = GetDbContextOptionsBuilder(connectionString);
+            if (dbOptionsBuilder == default(DbContextOptionsBuilder<DoWithYouContext>))
+                throw new ApplicationException($"Failed to setup the {nameof(DoWithYouContext)} Options Builder.");
+
+            return new DoWithYouContext(dbOptionsBuilder.Options);
+        }
+
+        private static DbContextOptionsBuilder<DoWithYouContext> GetDbContextOptionsBuilder(string connectionString)
+        {
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new NullReferenceException($"Failed to retrieve a valid connection string from the provided {nameof(AppConfig)}.");
 

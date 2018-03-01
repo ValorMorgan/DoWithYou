@@ -10,21 +10,23 @@ using DoWithYou.Model.Base;
 using DoWithYou.Model.Mappers;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace DoWithYou.Service.Utilities
 {
-    public class ContainerBuilderLayerFactory : IContainerBuilderLayerFactory
+    public static class ContainerBuilderExtensions
     {
-        public void RegisterBuilderLayerTypes(ref ContainerBuilder builder)
+        public static ContainerBuilder RegisterLayerTypes(this ContainerBuilder builder, IConfiguration config = null)
         {
             RegisterServiceLayerTypes(ref builder);
             RegisterModelLayerTypes(ref builder);
-            RegisterDataLayerTypes(ref builder);
+            RegisterDataLayerTypes(ref builder, config);
+            return builder;
         }
 
         #region PRIVATE
-        private static void RegisterDataLayerTypes(ref ContainerBuilder builder)
+        private static void RegisterDataLayerTypes(ref ContainerBuilder builder, IConfiguration config)
         {
             RegisterTypes(ref builder);
             RegisterInstances(ref builder);
@@ -38,10 +40,9 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Instances to {Class}", nameof(ContainerBuilder));
 
-                // NOTE: Data Contexts are single instance to reduce EF creation processing.
                 var doWithYouContextFactory = new DoWithYouContextFactory();
-                build.RegisterInstance<IDoWithYouContext>(doWithYouContextFactory.CreateDbContext(null))
-                    .SingleInstance();
+                string connectionString = config.GetValue<string>("ConnectionStrings:0:Connection");
+                build.RegisterInstance<IDoWithYouContext>(doWithYouContextFactory.CreateDbContext(null, connectionString)).InstancePerLifetimeScope();
             }
         }
 

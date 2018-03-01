@@ -18,4 +18,9 @@
     <ProjectReference Include="..\DoWithYou.Service\DoWithYou.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.Shared.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

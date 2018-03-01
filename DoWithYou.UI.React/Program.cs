@@ -1,3 +1,4 @@
+using System;
 using DoWithYou.Shared.Core;
 
 namespace DoWithYou.UI.React
@@ -6,8 +7,15 @@ namespace DoWithYou.UI.React
     {
         public static int Main(string[] args)
         {
-            using (var host = new WebHost(args, typeof(Startup)))
-                return host.Run();
+            try
+            {
+                using (var host = new WebHost(args, typeof(Startup)))
+                    return host.Run();
+            }
+            catch
+            {
+                return 1;
+            }
         }
     }
 }

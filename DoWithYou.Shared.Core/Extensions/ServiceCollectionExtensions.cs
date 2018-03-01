@@ -21,8 +21,7 @@ namespace DoWithYou.Shared.Core.Extensions
             var builder = builderFactory.GetBuilder(configuration);
 
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Registering layer types to {Class}", nameof(ContainerBuilder));
-            IContainerBuilderLayerFactory builderRegistry = new ContainerBuilderLayerFactory();
-            builderRegistry.RegisterBuilderLayerTypes(ref builder);
+            builder.RegisterLayerTypes(configuration);
 
             Log.Logger.LogEventVerbose(LoggerEvents.STARTUP, "Registering UI Instances to {Class}", nameof(ContainerBuilder));
             builder.RegisterInstance(configuration);
