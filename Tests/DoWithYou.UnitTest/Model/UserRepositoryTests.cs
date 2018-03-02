@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Model;
 using DoWithYou.Model.Base;
@@ -15,11 +14,11 @@ namespace DoWithYou.UnitTest.Model
     {
         private static readonly User[] TEST_CASES = {new User(), default, null};
 
-        private IDoWithYouContext MockedContext
+        private DbContext MockedContext
         {
             get
             {
-                var sub = Substitute.For<IDoWithYouContext>();
+                var sub = Substitute.For<DbContext>();
 
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
                 //sub.When(x => x.Set<User>().Returns(MockedDbSet)).DoNotCallBase();

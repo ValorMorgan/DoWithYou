@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Factories;
+using DoWithYou.Data.Mappers;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
@@ -10,6 +11,7 @@ using DoWithYou.Model.Base;
 using DoWithYou.Model.Mappers;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -40,9 +42,10 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Instances to {Class}", nameof(ContainerBuilder));
 
-                var doWithYouContextFactory = new DoWithYouContextFactory();
-                string connectionString = config.GetValue<string>("ConnectionStrings:0:Connection");
-                build.RegisterInstance<IDoWithYouContext>(doWithYouContextFactory.CreateDbContext(null, connectionString)).InstancePerLifetimeScope();
+                // NOTE: Context are retrieved through the "Mapper"
+                // Issues with <out T> type on the factory and with "RegisterInstance" when we want the context to live per request / scope
+
+                build.RegisterGeneric(typeof(EntityDatabaseMapper<>)).As(typeof(IEntityDatabaseMapper<>)).SingleInstance();
             }
         }
 
@@ -55,10 +58,11 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Model Layer Types to {Class}", nameof(ContainerBuilder));
 
+                build.RegisterType<UserModelMapper>().As<IModelMapper<IUserModel, IUser, IUserProfile>>().SingleInstance();
+
                 build.RegisterGeneric(typeof(EntityRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
                 build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
                 build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
-                build.RegisterType<UserModelMapper>().As<IModelMapper<IUserModel, IUser, IUserProfile>>().SingleInstance();
                 build.RegisterType<UserModelRepository>().As<IModelRepository<IUserModel, IUser, IUserProfile>>().InstancePerLifetimeScope();
             }
 

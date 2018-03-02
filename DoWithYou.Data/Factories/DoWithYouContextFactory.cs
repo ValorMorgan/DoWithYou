@@ -28,10 +28,14 @@ namespace DoWithYou.Data.Factories
             }
         }
 
-        public DoWithYouContext CreateDbContext(string[] args, string connectionString)
+        public DoWithYouContext CreateDbContext(string[] args, AppConfig config)
         {
             try
             {
+                string connectionString = config.ConnectionStrings
+                    .Single(c => c?.Name == "DoWithYou")
+                    ?.Connection ?? throw new NullReferenceException($"Failed to extract DoWithYou connection string from {nameof(AppConfig)}.");
+
                 DbContextOptionsBuilder<DoWithYouContext> dbOptionsBuilder = GetDbContextOptionsBuilder(connectionString);
                 if (dbOptionsBuilder == default(DbContextOptionsBuilder<DoWithYouContext>))
                     throw new ApplicationException($"Failed to setup the {nameof(DoWithYouContext)} Options Builder.");

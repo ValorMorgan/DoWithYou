@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +14,12 @@ namespace DoWithYou.Model.Base
         where T : BaseEntity
     {
         #region VARIABLES
-        private readonly IDoWithYouContext _context;
+        private readonly DbContext _context;
         private DbSet<T> _entities;
         #endregion
 
         #region CONSTRUCTORS
-        protected EntityRepository(IDoWithYouContext context)
+        protected EntityRepository(DbContext context)
         {
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(EntityRepository<T>));
 
@@ -29,7 +27,7 @@ namespace DoWithYou.Model.Base
             _entities = _context.Set<T>();
         }
 
-        internal EntityRepository(IDoWithYouContext context, DbSet<T> entiities)
+        internal EntityRepository(DbContext context, DbSet<T> entiities)
         {
             Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(EntityRepository<T>));
 

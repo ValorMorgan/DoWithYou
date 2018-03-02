@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Mappers;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Model.Base;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +16,10 @@ namespace DoWithYou.Model
     public class UserRepository : EntityRepository<User>, IRepository<IUser>
     {
         #region CONSTRUCTORS
-        public UserRepository(IDoWithYouContext context)
-            : base(context) { }
+        public UserRepository(IEntityDatabaseMapper<IUser> mapper)
+            : base(mapper?.MapEntityToContext()) { }
 
-        internal UserRepository(IDoWithYouContext context, DbSet<User> entities)
+        internal UserRepository(DbContext context, DbSet<User> entities)
             : base(context, entities) { }
         #endregion
 

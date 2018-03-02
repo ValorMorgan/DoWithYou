@@ -1,7 +1,6 @@
 ﻿using System;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Maps;
-using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using Serilog;
 
 namespace DoWithYou.Data.Contexts
 {
-    public class DoWithYouContext : DbContext, IDoWithYouContext
+    public class DoWithYouContext : DbContext
     {
         #region CONSTRUCTORS
         public DoWithYouContext(DbContextOptions<DoWithYouContext> options)

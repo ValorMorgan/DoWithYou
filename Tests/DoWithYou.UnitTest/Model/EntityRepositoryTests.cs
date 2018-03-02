@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Entities.DoWithYou.Base;
 using DoWithYou.Interface.Data;
 using DoWithYou.Model.Base;
@@ -15,22 +14,19 @@ namespace DoWithYou.UnitTest.Model
     {
         private static readonly BaseEntity[] TEST_CASES = {new BaseEntity(), default, null};
 
-        private class BaseEntityRepository : EntityRepository<BaseEntity>, IRepository<BaseEntity>
+        private class BaseEntityRepository : EntityRepository<BaseEntity>
         {
             #region CONSTRUCTORS
-            public BaseEntityRepository(IDoWithYouContext context)
-                : base(context) { }
-
-            public BaseEntityRepository(IDoWithYouContext context, DbSet<BaseEntity> entiities)
+            public BaseEntityRepository(DbContext context, DbSet<BaseEntity> entiities)
                 : base(context, entiities) { }
             #endregion
         }
 
-        private IDoWithYouContext MockedContext
+        private DbContext MockedContext
         {
             get
             {
-                var sub = Substitute.For<IDoWithYouContext>();
+                var sub = Substitute.For<DbContext>();
 
                 sub.When(x => x.SaveChanges()).DoNotCallBase();
                 //sub.When(x => x.Set<BaseEntity>().Returns(MockedDbSet)).DoNotCallBase();
