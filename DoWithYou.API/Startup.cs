@@ -1,6 +1,7 @@
 ﻿using System;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Core;
+using DoWithYou.Shared.Core.Middleware;
 using DoWithYou.Shared.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,8 @@ namespace DoWithYou.API
 
         public new void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<BadResponseMiddleware>();
+
             base.Configure(app);
 
             base.ConfigureMvc(ref app);

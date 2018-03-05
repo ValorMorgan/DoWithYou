@@ -59,7 +59,7 @@ namespace DoWithYou.Model.Models
             set => UserProfile.LastName = value?.Trim();
         }
 
-        public string MiddleInitial => MiddleName == null ?
+        public string MiddleInitial => string.IsNullOrWhiteSpace(MiddleName) ?
             string.Empty :
             $"{MiddleName[0]}.";
 
@@ -100,9 +100,9 @@ namespace DoWithYou.Model.Models
             set => User.Password = value?.Trim();
         }
 
-        internal long UserID => User.UserID;
+        internal long UserID => User?.UserID ?? default;
 
-        internal long UserProfileID => UserProfile.UserProfileID;
+        internal long UserProfileID => UserProfile?.UserProfileID ?? default;
 
         private IUser User => _user ?? (_user = new User());
 
@@ -127,6 +127,6 @@ namespace DoWithYou.Model.Models
 
         // Average Hash of included Entities
         public override int GetHashCode() => 
-            (User.GetHashCode() + UserProfile.GetHashCode()) / 2;
+            (User?.GetHashCode() ?? 0 + UserProfile?.GetHashCode() ?? 0) / 2;
     }
 }

@@ -46,14 +46,20 @@ namespace DoWithYou.Model
         public IUserModel Get(Func<IQueryable<IUser>, IUser> request)
         {
             var entity1 = _userRepository.Get(request);
-            var entity2 = _userProfileRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity1.UserID));
+            var entity2 = entity1 != null ?
+                _userProfileRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity1.UserID)) :
+                default;
+
             return Get(entity1, entity2);
         }
 
         public IUserModel Get(Func<IQueryable<IUserProfile>, IUserProfile> request)
         {
             var entity2 = _userProfileRepository.Get(request);
-            var entity1 = _userRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity2.UserID));
+            var entity1 = entity2 != null ?
+                _userRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity2.UserID)) :
+                default;
+
             return Get(entity1, entity2);
         }
 
