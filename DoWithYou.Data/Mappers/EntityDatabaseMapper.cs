@@ -4,8 +4,10 @@ using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Factories;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Repositories.Settings;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace DoWithYou.Data.Mappers
 {
@@ -19,6 +21,7 @@ namespace DoWithYou.Data.Mappers
         #region CONSTRUCTORS
         public EntityDatabaseMapper(AppConfig config)
         {
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, $"{nameof(EntityDatabaseMapper<T>)}<{typeof(T).Name}>");
             _config = config;
         }
         #endregion

@@ -47,6 +47,23 @@ namespace DoWithYou.Shared.Core
         }
         #endregion
 
+        public static IEnumerable<KeyValuePair<string, string>> GetInMemorySettings() =>
+            new Dictionary<string, string>
+            {
+                {"ConnectionStrings:0:Name", "DoWithYou"},
+                {"ConnectionStrings:0:Connection", "Server=(localdb)\\v11.0;Initial Catalog=DoWithYouDB;Integrated Security=true;"},
+                {"Logging:LogLevel:Default", "Warning"},
+                {"Serilog:MinimumLevel:Default", "Verbose"},
+                {"Serilog:MinimumLevel:Override:Microsoft", "Warning"},
+                {"Serilog:MinimumLevel:Override:System", "Warning"},
+                {"Serilog:Enrich:0", "FromLogContext"},
+                {"Serilog:WriteTo:0", "Console"},
+                {"Serilog:WriteTo:1", "Debug"},
+                {"Serilog:WriteTo:2:Name", "RollingFile"},
+                {"Serilog:WriteTo:2:Args:pathFormat", ".\\Logs\\{Date}.log"},
+                {"Serilog:WriteTo:2:Args:outputTemplate", "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}"}
+            };
+
         public int Run()
         {
             int returnCode = 0;
@@ -79,23 +96,6 @@ namespace DoWithYou.Shared.Core
         }
 
         #region PRIVATE
-        private static IEnumerable<KeyValuePair<string, string>> GetInMemorySettings() =>
-            new Dictionary<string, string>
-            {
-                {"ConnectionStrings:0:Name", "DoWithYou"},
-                {"ConnectionStrings:0:Connection", "Server=(localdb)\\v11.0;Initial Catalog=DoWithYouDB;Integrated Security=true;"},
-                {"Logging:LogLevel:Default", "Warning"},
-                {"Serilog:MinimumLevel:Default", "Verbose"},
-                {"Serilog:MinimumLevel:Override:Microsoft", "Warning"},
-                {"Serilog:MinimumLevel:Override:System", "Warning"},
-                {"Serilog:Enrich:0", "FromLogContext"},
-                {"Serilog:WriteTo:0", "Console"},
-                {"Serilog:WriteTo:1", "Debug"},
-                {"Serilog:WriteTo:2:Name", "RollingFile"},
-                {"Serilog:WriteTo:2:Args:pathFormat", ".\\Logs\\{Date}.log"},
-                {"Serilog:WriteTo:2:Args:outputTemplate", "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}"}
-            };
-
         private static bool TryCloseAndFlushLogger()
         {
             if (Log.Logger == null)
