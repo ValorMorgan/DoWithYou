@@ -33,8 +33,9 @@ namespace DoWithYou.Data.Mappers
                 case Type _ when type == typeof(IUserProfile):
                     return GetDoWithYouContext();
 
+                // TODO: Add database discovery somehow (or default database choice)?
                 default:
-                    throw new NotImplementedException("Entity is not mapped to a context yet.");
+                    throw new NotImplementedException($"Entity \"{typeof(T).Name}\" is not mapped to a context yet.");
             }
         }
 
@@ -47,7 +48,8 @@ namespace DoWithYou.Data.Mappers
         private DbContext GetDoWithYouContext()
         {
             var factory = new DbContextOptionsFactory<DoWithYouContext>();
-            return new DoWithYouContext(factory.GetOptions(GetConnectionString(ConnectionStringNames.DO_WITH_YOU)));
+            string connectionString = GetConnectionString(ConnectionStringNames.DO_WITH_YOU);
+            return new DoWithYouContext(factory.GetOptions(connectionString));
         }
         #endregion
     }

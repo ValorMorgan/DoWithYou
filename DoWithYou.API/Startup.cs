@@ -1,40 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Core;
+using DoWithYou.Shared.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace DoWithYou.API
 {
-    public class Startup
+    public class Startup : DoWithYouStartupBase, IStartup
     {
-        public Startup(IConfiguration configuration)
+        #region CONSTRUCTORS
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+            : base(configuration, env)
         {
-            Configuration = configuration;
+            Log.Logger.LogEventVerbose(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(Startup));
+        }
+        #endregion
+
+        public new void Configure(IApplicationBuilder app)
+        {
+            base.Configure(app);
+
+            base.ConfigureMvc(ref app);
+
+            ConfigureForEnvironment(ref app);
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public new IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddControllersAsServices();
+
+            return base.ConfigureServices(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        #region PRIVATE
+        private void ConfigureForEnvironment(ref IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
+            Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Environment: {Environment}", HostingEnvironment.EnvironmentName);
+            
+            if (HostingEnvironment.IsDevelopment())
+                SetupAppForDevelopment(ref app);
+            else if (HostingEnvironment.IsProduction())
+                SetupAppForProduction(ref app);
         }
+
+        private void SetupAppForDevelopment(ref IApplicationBuilder app)
+        {
+            SetExceptionHandler(ref app);
+        }
+
+        private void SetupAppForProduction(ref IApplicationBuilder app)
+        {
+            SetExceptionHandler(ref app, "/Home/Error");
+        }
+        #endregion
     }
 }

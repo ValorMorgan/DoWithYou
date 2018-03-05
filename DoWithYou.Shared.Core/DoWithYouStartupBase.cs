@@ -53,6 +53,9 @@ namespace DoWithYou.Shared.Core
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
+        protected void ConfigureMvc(ref IApplicationBuilder app) =>
+            app.UseMvc();
+
         protected void ConfigureMvc(ref IApplicationBuilder app, Action<IRouteBuilder> routeBuilder) =>
             app.UseMvc(routeBuilder);
 

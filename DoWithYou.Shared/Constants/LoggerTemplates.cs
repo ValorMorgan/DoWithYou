@@ -49,7 +49,7 @@
 
         public const string MIGRATE_UP = "Migrating Up on {Migration}";
 
-        public const string REGISTER_EVENT = "Registering {Class} to event \"{Event}\"";
+        public const string REGISTER_EVENT = "Registering {Class} to event {Event}";
 
         public const string REQUEST_DELETE = "Requested to Delete {Entity}[{EntityId}]";
 

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DoWithYou.Service\DoWithYou.Service.csproj" />
+    <ProjectReference Include="..\DoWithYou.Shared.Core\DoWithYou.Shared.Core.csproj" />
   </ItemGroup>
 
 </Project>
