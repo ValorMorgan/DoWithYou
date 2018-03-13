@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using DoWithYou.API.Controllers.Base;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Interface.Service;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DoWithYou.API.Controllers
 {
     [Route("/api/[controller]")]
-    public class UsersController : Controller
+    public class UsersController : BaseController<IUserModel, IUser>
     {
         #region VARIABLES
         private readonly IModelHandler<IUserModel, IUser, IUserProfile> _handler;
@@ -21,25 +21,22 @@ namespace DoWithYou.API.Controllers
         }
         #endregion
 
-        [HttpDelete("{id}")]
-        public void Delete(int id) { }
+        [HttpDelete]
+        public IActionResult Delete([FromBody] IUserModel value) =>
+            ExecuteAction(_handler.Delete, value);
 
-        [HttpGet]
-        public IEnumerable<IUserModel> Get()
-        {
-            return _handler.GetMany<IUser>(users => users?.Where(u => u != null));
-        }
+        // TODO: Id should be retrieved from session / token, not a parameter
+        [HttpGet("{id}")]
+        public IActionResult Get(long id) =>
+            ExecuteFunction(_handler.Get, users => users?.FirstOrDefault(u => u.UserID == id));
 
-        [HttpGet("{userId}")]
-        public IUserModel Get(long userId)
-        {
-            return _handler.Get<IUser>(users => users.FirstOrDefault(u => u.UserID == userId));
-        }
+        // TODO: Check we don't collide with existing data (unless we want duplicates?)
+        [HttpPut]
+        public IActionResult Insert([FromBody] IUserModel value) =>
+            ExecuteAction(_handler.Insert, value);
 
         [HttpPost]
-        public void Post([FromBody] string value) { }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value) { }
+        public IActionResult Update([FromBody] IUserModel value) =>
+            ExecuteAction(_handler.Update, value);
     }
 }

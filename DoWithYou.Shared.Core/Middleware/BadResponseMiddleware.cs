@@ -121,15 +121,21 @@ namespace DoWithYou.Shared.Core.Middleware
     {
         #region PROPERTIES
         public int Code { get; set; }
-        public string Message { get; set; }
+
         public AdditionalError[] Errors { get; set; }
+
+        public string Message { get; set; }
         #endregion
     }
 
     class AdditionalError
     {
+        #region PROPERTIES
         public string Domain { get; set; }
+
         public string Message { get; set; }
+
         public string Reason { get; set; }
+        #endregion
     }
 }
