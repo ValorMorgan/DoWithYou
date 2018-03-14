@@ -32,8 +32,18 @@ namespace DoWithYou.Model
         public IEnumerable<IUserProfile> GetMany(Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>> operation) =>
             base.GetMany(e => operation(e).Cast<UserProfile>());
 
-        public void Insert(IUserProfile entity) =>
+        public void Insert(IUserProfile entity)
+        {
+            // Check collision with existing data
+            if (entity != null && entity.UserProfileID != default)
+            {
+                var checkEntity = Get(e => e.FirstOrDefault(i => i.UserProfileID == entity.UserProfileID));
+                if (checkEntity != null)
+                    Update(entity);
+            }
+
             base.Insert(entity as UserProfile);
+        }
 
         public void Update(IUserProfile entity) =>
             base.Update(entity as UserProfile);

@@ -12,49 +12,54 @@ using NUnit.Framework;
 namespace DoWithYou.IntegrationTest
 {
     [TestFixture]
-    public class ApiGetTests
+    public class ApiGetTests : IDisposable
     {
-        private TestServer _server;
-        private  HttpClient _client;
+        #region VARIABLES
+        private readonly TestServer _server;
+        private readonly HttpClient _client;
+        #endregion
 
-        private TestServer Server
-        {
-            get 
-            {
-                if (_server == null)
-                    InitializeServerAndClient(); 
-                return _server;
-            }
-        }
-
-        private HttpClient Client 
-        {
-            get
-            {
-                if (_client == null)
-                    InitializeServerAndClient();
-                return _client;
-            }
-        }
-
+        #region CONSTRUCTORS
         public ApiGetTests()
         {
-            InitializeServerAndClient();
-        }
-
-        private void InitializeServerAndClient()
-        {
-            _server = new TestServer(new WebHostBuilder()
-                .ConfigureAppConfiguration(config => config.AddInMemoryCollection(WebHost.GetInMemorySettings()))
-                .UseStartup<Startup>());
+            _server = GetServer();
             _client = _server.CreateClient();
         }
+        #endregion
 
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(999)]
+        public async Task Get_Users_Returns_Success_And_Data(int id) =>
+            WriteResponseToConsole(
+                await GetEnsuredSuccessResponseString("/api/users", id)
+            );
+
+        public void Dispose()
+        {
+            try
+            {
+                _client?.Dispose();
+                _server?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        #region PRIVATE
+        private TestServer GetServer() =>
+            new TestServer(
+                DoWithYou.Shared.Core.WebHost.GetWebHostBuilder(null, typeof(DoWithYou.API.Startup))
+            );
+    
         private async Task<string> GetEnsuredSuccessResponseString(string endpoint, params object[] args)
         {
             var response = args?.Any() ?? false ?
-                await Client.GetAsync($"{endpoint}/{string.Join("/", args)}") :
-                await Client.GetAsync(endpoint);
+                await _client.GetAsync($"{endpoint}/{string.Join("/", args)}") :
+                await _client.GetAsync(endpoint);
                 
             response.EnsureSuccessStatusCode();
 
@@ -66,13 +71,6 @@ namespace DoWithYou.IntegrationTest
 
         private void WriteResponseToConsole(string responseString) =>
             Console.WriteLine($"\nResult:\n{responseString}");
-
-        [Test]
-        public async Task Get_Users_Returns_Success_And_Data()
-        {
-            string responseString = await GetEnsuredSuccessResponseString("/api/users", 1);
-
-            WriteResponseToConsole(responseString);
-        }
+        #endregion
     }
 }

@@ -7,13 +7,17 @@ namespace DoWithYou.API.Controllers.Base
 {
     public class BaseController<TModel, TEntity> : Controller
     {
-        protected IActionResult ExecuteAction(Action<TModel> action, TModel value)
+        protected IActionResult ExecuteAction(Action<TModel> action, TModel value, bool noContentResult = false)
         {
             if (value == null)
                 return BadRequest();
+            if (action == null)
+                throw new ArgumentNullException(nameof(action), "Action cannot be null.");
 
             action(value);
 
+            if (noContentResult)
+                return NoContent();
             return Ok();
         }
 

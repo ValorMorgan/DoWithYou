@@ -123,6 +123,7 @@ namespace DoWithYou.Model
         public void Insert(IUserModel model)
         {
             (IUser, IUserProfile) entities = _mapper.MapModelToEntity(model);
+
             _userRepository.Insert(entities.Item1);
             _userProfileRepository.Insert(entities.Item2);
         }

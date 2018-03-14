@@ -44,29 +44,22 @@ namespace DoWithYou.Model.Models
             set => UserProfile.FirstName = value?.Trim();
         }
 
-        public string FullAddress =>
-            $"{$"{Address1} {Address2}".Trim()}, {City}, {State}, {ZipCode}";
-
-        public string FullName =>
-            $"{$"{FirstName} {MiddleName}".Trim()} {LastName}";
-
-        public string FullNameProper =>
-            $"{LastName}, {$"{FirstName} {MiddleInitial}".Trim()}";
-
         public string LastName
         {
             get => UserProfile.LastName?.Trim() ?? string.Empty;
             set => UserProfile.LastName = value?.Trim();
         }
 
-        public string MiddleInitial => string.IsNullOrWhiteSpace(MiddleName) ?
-            string.Empty :
-            $"{MiddleName[0]}.";
-
         public string MiddleName
         {
             get => UserProfile.MiddleName?.Trim() ?? string.Empty;
             set => UserProfile.MiddleName = value?.Trim();
+        }
+
+        public string Password
+        {
+            get => User.Password?.Trim() ?? string.Empty;
+            set => User.Password = value?.Trim();
         }
 
         [Phone]
@@ -93,16 +86,18 @@ namespace DoWithYou.Model.Models
             get => UserProfile.ZipCode?.Trim() ?? string.Empty;
             set => UserProfile.ZipCode = value?.Trim();
         }
-
-        internal string Password
+        
+        public long? UserID
         {
-            get => User.Password?.Trim() ?? string.Empty;
-            set => User.Password = value?.Trim();
+            get => User?.UserID;
+            set => User.UserID = value ?? default;
         }
 
-        internal long UserID => User?.UserID ?? default;
-
-        internal long UserProfileID => UserProfile?.UserProfileID ?? default;
+        public long? UserProfileID
+        {
+            get => UserProfile?.UserProfileID;
+            set => UserProfile.UserProfileID = value ?? default;
+        }
 
         private IUser User => _user ?? (_user = new User());
 

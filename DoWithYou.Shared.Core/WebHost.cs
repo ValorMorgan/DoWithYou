@@ -19,18 +19,7 @@ namespace DoWithYou.Shared.Core
         {
             try
             {
-                // TODO: Cleanup Configuration setup to get InMemory first
-                _host = Microsoft.AspNetCore.WebHost.CreateDefaultBuilder(args)
-                    .ConfigureAppConfiguration((context, config) =>
-                    {
-                        config.AddInMemoryCollection(GetInMemorySettings());
-                        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                        config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
-                        config.AddEnvironmentVariables();
-                    })
-                    .UseStartup(startupType)
-                    .UseSerilog()
-                    ?.Build();
+                _host = GetWebHostBuilder(args, startupType)?.Build();
 
                 if (_host == default(IWebHost))
                     throw new NullReferenceException($"{nameof(IWebHost)} built as a default{nameof(IWebHost)}.");
@@ -47,11 +36,23 @@ namespace DoWithYou.Shared.Core
         }
         #endregion
 
+        // TODO: Don't rely on CreateDefaultBuilder (optimize)
+        public static IWebHostBuilder GetWebHostBuilder(string[] args, Type startupType) =>
+            Microsoft.AspNetCore.WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.AddInMemoryCollection(GetInMemorySettings());
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
+                    config.AddEnvironmentVariables();
+                })
+                .UseStartup(startupType)
+                .UseSerilog();
+
+        // Universal default settings (overridable in .config files)
         public static IEnumerable<KeyValuePair<string, string>> GetInMemorySettings() =>
             new Dictionary<string, string>
             {
-                {"ConnectionStrings:0:Name", "DoWithYou"},
-                {"ConnectionStrings:0:Connection", "Server=(localdb)\\v11.0;Initial Catalog=DoWithYouDB;Integrated Security=true;"},
                 {"Logging:LogLevel:Default", "Warning"},
                 {"Serilog:MinimumLevel:Default", "Verbose"},
                 {"Serilog:MinimumLevel:Override:Microsoft", "Warning"},

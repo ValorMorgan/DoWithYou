@@ -12,6 +12,7 @@ namespace DoWithYou.API.Controllers
     {
         #region VARIABLES
         private readonly IModelHandler<IUserModel, IUser, IUserProfile> _handler;
+        private const string GET_USER = "GetUser";
         #endregion
 
         #region CONSTRUCTORS
@@ -21,22 +22,32 @@ namespace DoWithYou.API.Controllers
         }
         #endregion
 
+        [HttpPut]
+        public IActionResult Create([FromBody] IUserModel value)
+        {
+            ExecuteAction(_handler.Insert, value);
+            return CreatedAtRoute(GET_USER, new {id = value.UserID}, value);
+        }
+
         [HttpDelete]
         public IActionResult Delete([FromBody] IUserModel value) =>
-            ExecuteAction(_handler.Delete, value);
+            ExecuteAction(_handler.Delete, value, noContentResult: true);
 
-        // TODO: Id should be retrieved from session / token, not a parameter
-        [HttpGet("{id}")]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id) =>
+            Delete(GetModel(id));
+
+        [HttpGet("{id}", Name=GET_USER)]
         public IActionResult Get(long id) =>
             ExecuteFunction(_handler.Get, users => users?.FirstOrDefault(u => u.UserID == id));
-
-        // TODO: Check we don't collide with existing data (unless we want duplicates?)
+        
         [HttpPut]
-        public IActionResult Insert([FromBody] IUserModel value) =>
-            ExecuteAction(_handler.Insert, value);
-
-        [HttpPost]
         public IActionResult Update([FromBody] IUserModel value) =>
-            ExecuteAction(_handler.Update, value);
+            ExecuteAction(_handler.Update, value, noContentResult: true);
+
+        #region PRIVATE
+        private IUserModel GetModel(long id) =>
+            _handler.Get<IUser>(users => users.FirstOrDefault(u => u.UserID == id));
+        #endregion
     }
 }

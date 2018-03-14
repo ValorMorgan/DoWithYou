@@ -14,21 +14,19 @@ namespace DoWithYou.Interface.Model
 
         string FirstName { get; set; }
 
-        string FullAddress { get; }
-
-        string FullName { get; }
-
-        string FullNameProper { get; }
-
         string LastName { get; set; }
 
-        string MiddleInitial { get; }
-
         string MiddleName { get; set; }
+
+        string Password { get; set; }
 
         string Phone { get; set; }
 
         string State { get; set; }
+
+        long? UserID { get; set; }
+
+        long? UserProfileID { get; set; }
 
         string Username { get; set; }
 

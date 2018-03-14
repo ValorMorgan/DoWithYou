@@ -44,7 +44,7 @@ namespace DoWithYou.Model.Mappers
             {
                 Email = model.Email,
                 Password = model.Password,
-                UserID = model.UserID,
+                UserID = model.UserID ?? default,
                 Username = model.Username
             };
 
@@ -60,8 +60,8 @@ namespace DoWithYou.Model.Mappers
                 MiddleName = model.MiddleName,
                 Phone = model.Phone,
                 State = model.State,
-                UserID = model.UserID,
-                UserProfileID = model.UserProfileID,
+                UserID = model.UserID ?? default,
+                UserProfileID = model.UserProfileID ?? default,
                 ZipCode = model.ZipCode
             };
         #endregion
