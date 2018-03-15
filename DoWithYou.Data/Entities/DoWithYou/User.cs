@@ -2,11 +2,13 @@
 using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DoWithYou.Data.Entities.DoWithYou
 {
     public class User : BaseEntity, IUser
     {
+        [BsonId]
         public long UserID { get; set; }
 
         public string Email { get; set; }
