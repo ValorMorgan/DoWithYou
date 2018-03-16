@@ -1,4 +1,5 @@
 ﻿using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.NoSQL.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Models;
@@ -37,8 +38,39 @@ namespace DoWithYou.Model.Mappers
             return (user, profile);
         }
 
+        public IUserModel MapDocumentToModel(IUserDocument document) =>
+            new UserModel(document);
+
+        public IUserDocument MapModelToDocument(IUserModel model) =>
+            GetNewDocument(model as UserModel);
+        
         #region PRIVATE
-        private IUser GetNewUser(UserModel model) => model == null ?
+        private static IUserDocument GetNewDocument(UserModel model) => model == null ?
+            new UserDocument() :
+            new UserDocument
+            {
+                ID = model.UserID ?? default,
+                Address = new Address
+                {
+                    City = model.City,
+                    Line1 = model.Address1,
+                    Line2 = model.Address2,
+                    State = model.State,
+                    ZipCode = model.ZipCode
+                },
+                Email = model.Email,
+                Name = new Name
+                {
+                    First = model.FirstName,
+                    Last = model.LastName,
+                    Middle = model.MiddleName
+                },
+                Password = model.Password,
+                Phone = model.Phone,
+                Username = model.Username
+            };
+
+        private static IUser GetNewUser(UserModel model) => model == null ?
             new User() :
             new User
             {
@@ -48,7 +80,7 @@ namespace DoWithYou.Model.Mappers
                 Username = model.Username
             };
 
-        private IUserProfile GetNewUserProfile(UserModel model) => model == null ?
+        private static IUserProfile GetNewUserProfile(UserModel model) => model == null ?
             new UserProfile() :
             new UserProfile
             {

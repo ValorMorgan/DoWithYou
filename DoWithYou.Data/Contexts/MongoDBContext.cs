@@ -1,7 +1,10 @@
 using System;
 using System.Security.Authentication;
 using DoWithYou.Interface.Model;
+using DoWithYou.Shared.Constants;
+using DoWithYou.Shared.Extensions;
 using MongoDB.Driver;
+using Serilog;
 
 namespace DoWithYou.Data.Contexts
 {
@@ -14,6 +17,8 @@ namespace DoWithYou.Data.Contexts
         #region CONSTRUCTORS
         public MongoDbContext(string connectinoString, string database, bool isSsl = false)
         {
+            Log.Logger.LogEventDebug(LoggerEvents.CONSTRUCTOR, LoggerTemplates.CONSTRUCTOR, nameof(MongoDbContext));
+
             try
             {
                 var settings = GetSettings(connectinoString, isSsl);

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.NoSQL.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 
@@ -9,6 +10,7 @@ namespace DoWithYou.Model.Models
     {
         #region VARIABLES
         private IUser _user;
+        private IUserDocument _userDocument;
         private IUserProfile _userProfile;
         #endregion
 
@@ -75,22 +77,16 @@ namespace DoWithYou.Model.Models
             set => UserProfile.State = value?.Trim();
         }
 
-        public string Username
-        {
-            get => User.Username?.Trim() ?? string.Empty;
-            set => User.Username = value?.Trim();
-        }
-
-        public string ZipCode
-        {
-            get => UserProfile.ZipCode?.Trim() ?? string.Empty;
-            set => UserProfile.ZipCode = value?.Trim();
-        }
-        
         public long? UserID
         {
             get => User?.UserID;
             set => User.UserID = value ?? default;
+        }
+
+        public string Username
+        {
+            get => User.Username?.Trim() ?? string.Empty;
+            set => User.Username = value?.Trim();
         }
 
         public long? UserProfileID
@@ -99,12 +95,25 @@ namespace DoWithYou.Model.Models
             set => UserProfile.UserProfileID = value ?? default;
         }
 
+        public string ZipCode
+        {
+            get => UserDocument.Address?.ZipCode?.Trim() ?? string.Empty;
+            set => UserDocument.Address.ZipCode = value?.Trim();
+        }
+
         private IUser User => _user ?? (_user = new User());
+
+        private IUserDocument UserDocument => _userDocument ?? (_userDocument = new UserDocument());
 
         private IUserProfile UserProfile => _userProfile ?? (_userProfile = new UserProfile());
         #endregion
 
         #region CONSTRUCTORS
+        public UserModel(IUserDocument document)
+        {
+            _userDocument = document;
+        }
+
         public UserModel(IUser user, IUserProfile profile)
         {
             _user = user ?? new User();
@@ -121,7 +130,19 @@ namespace DoWithYou.Model.Models
         }
 
         // Average Hash of included Entities
-        public override int GetHashCode() => 
+        public override int GetHashCode() =>
             (User?.GetHashCode() ?? 0 + UserProfile?.GetHashCode() ?? 0) / 2;
+
+        private void SyncEntities()
+        {
+            if (UserDocument != null)
+            {
+
+            }
+            if (User != null && UserProfile != null)
+            {
+
+            }
+        }
     }
 }

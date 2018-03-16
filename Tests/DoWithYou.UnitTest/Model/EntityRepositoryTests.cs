@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Entities.DoWithYou.Base;
+using DoWithYou.Data.Repositories.Entities.Base;
 using DoWithYou.Interface.Data;
-using DoWithYou.Model.Base;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;

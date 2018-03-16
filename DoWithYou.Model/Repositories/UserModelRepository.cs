@@ -5,7 +5,7 @@ using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 
-namespace DoWithYou.Model
+namespace DoWithYou.Model.Repositories.Models
 {
     public class UserModelRepository : IModelRepository<IUserModel, IUser, IUserProfile>
     {
@@ -32,35 +32,41 @@ namespace DoWithYou.Model
         }
 
         public IUserModel Get((IUser, IUserProfile) entity) =>
-            _mapper.MapEntityToModel(entity);
+            Get(entity.Item1, entity.Item2);
 
         public IUserModel Get(IUser entity1, IUserProfile entity2) =>
-            Get((entity1, entity2));
+            entity1 != null ?
+                Get<IUser>(e => e.FirstOrDefault(i => i.UserID == entity1.UserID)) :
+            entity2 != null ?
+                Get<IUserProfile>(e => e.FirstOrDefault(i => i.UserID == entity2.UserID)) :
+                _mapper.MapEntityToModel(null, null);
 
         public IUserModel Get<T>(Func<IQueryable<T>, T> request)
             where T : IBaseEntity =>
             typeof(T) == typeof(IUser) ?
                 Get(request as Func<IQueryable<IUser>, IUser>) :
-                Get(request as Func<IQueryable<IUserProfile>, IUserProfile>);
+            typeof(T) == typeof(IUserProfile) ?
+                Get(request as Func<IQueryable<IUserProfile>, IUserProfile>) :
+                null;
 
         public IUserModel Get(Func<IQueryable<IUser>, IUser> request)
         {
             var entity1 = _userRepository.Get(request);
             var entity2 = entity1 != null ?
-                _userProfileRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity1.UserID)) :
+                _userProfileRepository.Get(e => e.FirstOrDefault(i => i.UserID == entity1.UserID)) :
                 default;
 
-            return Get(entity1, entity2);
+            return _mapper.MapEntityToModel(entity1, entity2);
         }
 
         public IUserModel Get(Func<IQueryable<IUserProfile>, IUserProfile> request)
         {
             var entity2 = _userProfileRepository.Get(request);
             var entity1 = entity2 != null ?
-                _userRepository.Get(entities => entities.FirstOrDefault(e => e.UserID == entity2.UserID)) :
+                _userRepository.Get(e => e.FirstOrDefault(i => i.UserID == entity2.UserID)) :
                 default;
 
-            return Get(entity1, entity2);
+            return _mapper.MapEntityToModel(entity1, entity2);
         }
 
         public IEnumerable<IUserModel> GetMany(IEnumerable<(IUser, IUserProfile)> entities) =>
@@ -73,14 +79,14 @@ namespace DoWithYou.Model
                 .OrderBy(e => e.UserID)
                 .ToList();
 
-            // Get filter (entitie1 ID's)
+            // Get filter (entities1 ID's)
             var ids = entities1List
                 .Select(e => e.UserID);
 
             // Enumerate + apply filter
             var entities2List = entities2
-                .OrderBy(e => e.UserID)
                 .Where(e => ids.Contains(e.UserID))
+                .OrderBy(e => e.UserProfileID)
                 .ToList();
 
             // Check same amount (1:1 mapping)
@@ -98,14 +104,16 @@ namespace DoWithYou.Model
             where T : IBaseEntity =>
             typeof(T) == typeof(IUser) ?
                 GetMany(request as Func<IQueryable<IUser>, IEnumerable<IUser>>) :
-                GetMany(request as Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>);
+            typeof(T) == typeof(IUserProfile) ?
+                GetMany(request as Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>) :
+                null;
 
         public IEnumerable<IUserModel> GetMany(Func<IQueryable<IUser>, IEnumerable<IUser>> request)
         {
             var entities1 = _userRepository.GetMany(request).ToList();
             var ids = entities1.Select(i => i.UserID);
 
-            var entities2 = _userProfileRepository.GetMany(entities => entities.Where(e => ids.Contains(e.UserID)));
+            var entities2 = _userProfileRepository.GetMany(e => e.Where(i => ids.Contains(i.UserID)));
 
             return GetMany(entities1, entities2);
         }
@@ -115,7 +123,7 @@ namespace DoWithYou.Model
             var entities2 = _userProfileRepository.GetMany(request).ToList();
             var ids = entities2.Select(i => i.UserID);
 
-            var entities1 = _userRepository.GetMany(entities => entities.Where(e => ids.Contains(e.UserID)));
+            var entities1 = _userRepository.GetMany(e => e.Where(i => ids.Contains(i.UserID)));
 
             return GetMany(entities1, entities2);
         }

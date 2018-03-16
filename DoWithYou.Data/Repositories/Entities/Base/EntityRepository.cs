@@ -8,7 +8,7 @@ using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace DoWithYou.Model.Base
+namespace DoWithYou.Data.Repositories.Entities.Base
 {
     public abstract class EntityRepository<T> : IRepository<T>
         where T : BaseEntity

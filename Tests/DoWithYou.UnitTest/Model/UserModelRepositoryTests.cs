@@ -7,6 +7,7 @@ using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model;
 using DoWithYou.Model.Models;
+using DoWithYou.Model.Repositories.Models;
 using NSubstitute;
 using NUnit.Framework;
 

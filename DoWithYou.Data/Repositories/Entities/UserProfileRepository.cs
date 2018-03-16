@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Entities.DoWithYou;
 using DoWithYou.Data.Mappers;
+using DoWithYou.Data.Repositories.Entities.Base;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
-using DoWithYou.Model.Base;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace DoWithYou.Model
+namespace DoWithYou.Data.Repositories.Entities
 {
     public class UserProfileRepository : EntityRepository<UserProfile>, IRepository<IUserProfile>
     {
