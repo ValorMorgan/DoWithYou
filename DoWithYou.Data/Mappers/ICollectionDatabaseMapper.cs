@@ -1,10 +1,10 @@
 ﻿using DoWithYou.Data.Contexts;
-using DoWithYou.Interface.Model;
+using DoWithYou.Interface.Entity;
 
 namespace DoWithYou.Data.Mappers
 {
     public interface ICollectionDatabaseMapper<T>
-        where T : IModel
+        where T : IBaseDocument
     {
         MongoDbContext MapCollectionToContext();
     }

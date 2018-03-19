@@ -9,7 +9,7 @@ namespace DoWithYou.Service
 {
     public class ModelHandler<TModel, T1> : IModelHandler<TModel, T1>
         where TModel : IModel<T1>
-        where T1 : IBaseEntity
+        where T1 : IBaseDocument
     {
         #region VARIABLES
         private IModelRepository<TModel, T1> _repository;
@@ -25,14 +25,14 @@ namespace DoWithYou.Service
         public void Delete(TModel model) =>
             _repository.Delete(model);
 
-        public TModel Get(T1 entity) =>
-            _repository.Get(entity);
+        public TModel Get(T1 document) =>
+            _repository.Get(document);
 
         public TModel Get(Func<IQueryable<T1>, T1> request) =>
             _repository.Get(request);
 
-        public IEnumerable<TModel> GetMany(IEnumerable<T1> entities) =>
-            _repository.GetMany(entities)?.ToList() ?? new List<TModel>();
+        public IEnumerable<TModel> GetMany(IEnumerable<T1> documents) =>
+            _repository.GetMany(documents)?.ToList() ?? new List<TModel>();
 
         public IEnumerable<TModel> GetMany(Func<IQueryable<T1>, IEnumerable<T1>> request) =>
             _repository.GetMany(request)?.ToList() ?? new List<TModel>();

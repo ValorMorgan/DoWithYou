@@ -7,15 +7,15 @@ namespace DoWithYou.Interface.Model
 {
     public interface IModelRepository<TModel, T1> : IDisposable
         where TModel : IModel<T1>
-        where T1 : IBaseEntity
+        where T1 : IBaseDocument
     {
         void Delete(TModel model);
 
-        TModel Get(T1 entity);
+        TModel Get(T1 document);
 
         TModel Get(Func<IQueryable<T1>, T1> request);
 
-        IEnumerable<TModel> GetMany(IEnumerable<T1> entities);
+        IEnumerable<TModel> GetMany(IEnumerable<T1> documents);
 
         IEnumerable<TModel> GetMany(Func<IQueryable<T1>, IEnumerable<T1>> request);
 

@@ -1,4 +1,6 @@
-﻿using DoWithYou.Data.Entities.DoWithYou;
+﻿using System;
+using DoWithYou.Data.Entities.NoSQL.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Mappers;
@@ -10,39 +12,53 @@ namespace DoWithYou.UnitTest.Model
     [TestFixture]
     public class UserModelMapperTests
     {
-        private readonly IModelMapper<IUserModel, IUser, IUserProfile> _mapper = new UserModelMapper();
-
-        private static readonly IUser _testUser = new User()
+        private readonly IModelMapper<IUserModel, IUser, IUserProfile> _sqlMapper = new UserModelMapper();
+        private readonly IModelMapper<IUserModel, IUserDocument> _noSqlMapper = new UserModelMapper();
+        
+        [Test]
+        public void MapDocumentToModel_Returns_IUserModel_When_Given_Valid_Document()
         {
-            UserID = 1,
-            Username = "testUser",
-            Password = "test",
-            Email = "test@test.com"
-        };
+            var model = _noSqlMapper.MapDocumentToModel(TestEntities.UserDocument);
+            
+            Assert.That(model, Is.Not.Null.And.InstanceOf<IUserModel>());
 
-        private static readonly IUserProfile _testUserProfile = new UserProfile()
+            // We can't get UserProfileID from the document (document will never store extra ID's).
+            model.UserProfileID = TestEntities.UserModel.UserProfileID;
+            model.CreationDate = TestEntities.UserModel.CreationDate;
+            model.ModifiedDate = TestEntities.UserModel.ModifiedDate;
+
+            Assert.AreEqual(TestEntities.UserModel, model,
+                $"{nameof(model)}: {model.GetHashCode()} != {nameof(TestEntities.UserModel)}: {TestEntities.UserModel.GetHashCode()}");
+        }
+
+        [Test]
+        public void MapDocumentToModel_Returns_IUserModel_When_Given_Null_Document()
         {
-            UserProfileID = 1,
-            UserID = 1,
-            FirstName = "Test First",
-            MiddleName = "Test Middle",
-            LastName = "Test Last",
-            Address1 = "9999 Test St.",
-            Address2 = "Apt. T1",
-            City = "Test City",
-            State = "TE",
-            ZipCode = "99999",
-            Phone = "999-999-9999"
-        };
+            var model = _noSqlMapper.MapDocumentToModel(null);
+
+            Assert.That(model, Is.Not.Null.And.InstanceOf<IUserModel>());
+
+            var blankModel = new UserModel
+            {
+                CreationDate = model.CreationDate,
+                ModifiedDate = model.ModifiedDate
+            };
+
+            Assert.AreEqual(blankModel, model,
+                $"{nameof(model)}: {model.GetHashCode()} != {nameof(blankModel)}: {blankModel.GetHashCode()}");
+        }
 
         [Test]
         public void MapEntityToModel_Returns_IUserModel_When_Given_Valid_Entities()
         {
-            IUserModel modelFromTuple = _mapper.MapEntityToModel((_testUser, _testUserProfile));
-            IUserModel modelFromParameters = _mapper.MapEntityToModel(_testUser, _testUserProfile);
+            var modelFromTuple = _sqlMapper.MapEntityToModel((TestEntities.User, TestEntities.UserProfile));
+            var modelFromParameters = _sqlMapper.MapEntityToModel(TestEntities.User, TestEntities.UserProfile);
 
             Assert.That(modelFromTuple, Is.Not.Null.And.InstanceOf<IUserModel>());
             Assert.That(modelFromParameters, Is.Not.Null.And.InstanceOf<IUserModel>());
+
+            modelFromTuple.CreationDate = modelFromTuple.CreationDate;
+            modelFromTuple.ModifiedDate = modelFromTuple.ModifiedDate;
 
             Assert.AreEqual(modelFromTuple, modelFromParameters,
                 $"{nameof(modelFromTuple)}: {modelFromTuple.GetHashCode()} != {nameof(modelFromParameters)}: {modelFromParameters.GetHashCode()}");
@@ -51,47 +67,91 @@ namespace DoWithYou.UnitTest.Model
         [Test]
         public void MapEntityToModel_Returns_IUserModel_When_Given_Null_Entities()
         {
-            IUserModel modelFromTuple = _mapper.MapEntityToModel((null, null));
-            IUserModel modelFromParameters = _mapper.MapEntityToModel(null, null);
+            var modelFromTuple = _sqlMapper.MapEntityToModel((null, null));
+            var modelFromParameters = _sqlMapper.MapEntityToModel(null, null);
 
             Assert.That(modelFromTuple, Is.Not.Null.And.InstanceOf<IUserModel>());
             Assert.That(modelFromParameters, Is.Not.Null.And.InstanceOf<IUserModel>());
+
+            modelFromTuple.CreationDate = modelFromTuple.CreationDate;
+            modelFromTuple.ModifiedDate = modelFromTuple.ModifiedDate;
 
             Assert.AreEqual(modelFromTuple, modelFromParameters,
                 $"{nameof(modelFromTuple)}: {modelFromTuple.GetHashCode()} != {nameof(modelFromParameters)}: {modelFromParameters.GetHashCode()}");
         }
 
         [Test]
-        public void MapModelToEntity_Returns_Tuple_Of_Entities_When_Given_Valid_Model()
+        public void MapDocumentToModel_Returns_Document_When_Given_Valid_Model()
         {
-            var entities = _mapper.MapModelToEntity(new UserModel(_testUser, _testUserProfile));
+            var document = _noSqlMapper.MapModelToDocument(TestEntities.UserModel);
 
-            Assert.That(entities.Item1, Is.Not.Null.And.InstanceOf<IUser>());
-            Assert.That(entities.Item2, Is.Not.Null.And.InstanceOf<IUserProfile>());
+            Assert.That(document, Is.Not.Null.And.InstanceOf<IUserDocument>());
 
-            Assert.AreEqual(entities.Item1, _testUser,
-                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(_testUser)}: {_testUser.GetHashCode()}");
+            document.CreationDate = TestEntities.UserDocument.CreationDate;
+            document.ModifiedDate = TestEntities.UserDocument.ModifiedDate;
 
-            Assert.AreEqual(entities.Item2, _testUserProfile,
-                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(_testUserProfile)}: {_testUserProfile.GetHashCode()}");
+            Assert.AreEqual(TestEntities.UserDocument, document,
+                $"{nameof(document)}: {document.GetHashCode()} != {nameof(TestEntities.UserDocument)}: {TestEntities.UserDocument.GetHashCode()}");
         }
 
         [Test]
-        public void MapModelToEntity_Returns_Tuple_Of_Entities_When_Given_A_Null_Model()
+        public void MapDocumentToModel_Returns_Document_When_Given_Null_Model()
         {
-            var entities = _mapper.MapModelToEntity(null);
+            var document = _noSqlMapper.MapModelToDocument(null);
+
+            Assert.That(document, Is.Not.Null.And.InstanceOf<IUserDocument>());
+            
+            var blankDocument = new UserDocument
+            {
+                CreationDate = document.CreationDate,
+                ModifiedDate = document.ModifiedDate
+            };
+
+            Assert.AreEqual(blankDocument, document,
+                $"{nameof(document)}: {document.GetHashCode()} != {nameof(blankDocument)}: {blankDocument.GetHashCode()}");
+        }
+
+        [Test]
+        public void MapModelToEntity_Returns_Tuple_Of_Entities_When_Given_Valid_Model()
+        {
+            var entities = _sqlMapper.MapModelToEntity(TestEntities.UserModel);
+
+            Assert.That(entities.Item1, Is.Not.Null.And.InstanceOf<IUser>());
+            Assert.That(entities.Item2, Is.Not.Null.And.InstanceOf<IUserProfile>());
+            
+            entities.Item1.CreationDate = TestEntities.User.CreationDate;
+            entities.Item1.ModifiedDate = TestEntities.User.ModifiedDate;
+            entities.Item2.CreationDate = TestEntities.UserProfile.CreationDate;
+            entities.Item2.ModifiedDate = TestEntities.UserProfile.ModifiedDate;
+
+            Assert.AreEqual(TestEntities.User, entities.Item1,
+                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(TestEntities.User)}: {TestEntities.User.GetHashCode()}");
+
+            Assert.AreEqual(TestEntities.UserProfile, entities.Item2,
+                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(TestEntities.UserProfile)}: {TestEntities.UserProfile.GetHashCode()}");
+        }
+
+        [Test]
+        public void MapModelToEntity_Returns_Tuple_Of_Entities_When_Given_Null_Model()
+        {
+            var entities = _sqlMapper.MapModelToEntity(null);
 
             Assert.That(entities.Item1, Is.Not.Null.And.InstanceOf<IUser>());
             Assert.That(entities.Item2, Is.Not.Null.And.InstanceOf<IUserProfile>());
 
-            User newUser = new User();
-            UserProfile newUserProfile = new UserProfile();
+            User blankUser = new User();
+            UserProfile blankUserProfile = new UserProfile();
+            
+            entities.Item1.CreationDate = blankUser.CreationDate;
+            entities.Item1.ModifiedDate = blankUser.ModifiedDate;
+            entities.Item2.CreationDate = blankUserProfile.CreationDate;
+            entities.Item2.ModifiedDate = blankUserProfile.ModifiedDate;
 
-            Assert.AreEqual(entities.Item1, newUser,
-                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(newUser)}: {newUser.GetHashCode()}");
+            Assert.AreEqual(blankUser, entities.Item1,
+                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(blankUser)}: {blankUser.GetHashCode()}");
 
-            Assert.AreEqual(entities.Item2, newUserProfile,
-                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(newUserProfile)}: {newUserProfile.GetHashCode()}");
+            Assert.AreEqual(blankUserProfile, entities.Item2,
+                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(blankUserProfile)}: {blankUserProfile.GetHashCode()}");
         }
     }
 }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Contexts;
-using DoWithYou.Interface.Model;
+using DoWithYou.Data.Entities.Base;
+using DoWithYou.Interface.Data;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using MongoDB.Driver;
@@ -10,8 +11,8 @@ using Serilog;
 
 namespace DoWithYou.Data.Repositories.Collections.Base
 {
-    public class CollectionRepository<T>
-        where T : IModel
+    public class CollectionRepository<T> : IRepository<T>
+        where T : BaseEntity
     {
         #region VARIABLES
         private IMongoCollection<T> _collection;
@@ -42,11 +43,14 @@ namespace DoWithYou.Data.Repositories.Collections.Base
         public T Get(Func<IQueryable<T>, T> query) =>
             throw new NotImplementedException();
 
-        public IEnumerable<T> GetMany(Func<IQueryable<IUserModel>, IEnumerable<IUserModel>> query) =>
+        public IEnumerable<T> GetMany(Func<IQueryable<T>, IEnumerable<T>> query) =>
             throw new NotImplementedException();
 
         public void Insert(T document) =>
             throw new NotImplementedException();
+
+        public void SaveChanges() =>
+            throw new InvalidOperationException($"NoSQL should not use an explicit {nameof(SaveChanges)}() operation.");
 
         public void Update(T document) =>
             throw new NotImplementedException();

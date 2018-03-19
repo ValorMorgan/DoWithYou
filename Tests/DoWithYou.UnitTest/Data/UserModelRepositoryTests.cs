@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
-using DoWithYou.Model;
 using DoWithYou.Model.Models;
-using DoWithYou.Model.Repositories.Models;
+using DoWithYou.Model.Repositories.SQL;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace DoWithYou.UnitTest.Model
+namespace DoWithYou.UnitTest.Data
 {
     [TestFixture]
     public class UserModelRepositoryTests
     {
         private static readonly UserModel[] TEST_CASES =
         {
-            new UserModel(new User(), new UserProfile()),
-            new UserModel(null, null),
+            (UserModel)TestEntities.UserModel,
             default,
             null
         };
@@ -74,7 +72,7 @@ namespace DoWithYou.UnitTest.Model
 
                 var newUser = new User();
                 var newProfile = new UserProfile();
-                var newModel = new UserModel(newUser, newProfile);
+                var newModel = new UserModel();
 
                 sub.MapEntityToModel(Arg.Any<(IUser, IUserProfile)>()).Returns(newModel);
                 sub.MapEntityToModel(Arg.Any<IUser>(), Arg.Any<IUserProfile>()).Returns(newModel);

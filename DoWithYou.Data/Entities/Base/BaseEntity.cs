@@ -3,17 +3,21 @@ using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 
-namespace DoWithYou.Data.Entities.DoWithYou.Base
+namespace DoWithYou.Data.Entities.Base
 {
-    public class BaseEntity : IBaseEntity
+    public class BaseEntity : IBaseEntity, IBaseDocument
     {
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public DateTime? ModifiedDate { get; set; }
 
+        public override string ToString() =>
+$@"{nameof(CreationDate)}: {CreationDate},
+    {nameof(ModifiedDate)}: {ModifiedDate}";
+
         public override bool Equals(object obj)
         {
-            if (!(obj is IBaseEntity))
+            if (!(obj is IBaseEntity) || !(obj is IBaseDocument))
                 return false;
 
             return GetHashCode() == ((BaseEntity)obj).GetHashCode();

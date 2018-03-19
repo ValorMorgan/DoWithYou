@@ -1,9 +1,10 @@
-﻿using DoWithYou.Data.Entities.DoWithYou.Base;
+﻿using System;
+using DoWithYou.Data.Entities.Base;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 
-namespace DoWithYou.Data.Entities.DoWithYou
+namespace DoWithYou.Data.Entities.SQL.DoWithYou
 {
     public class UserProfile : BaseEntity, IUserProfile
     {
@@ -30,6 +31,22 @@ namespace DoWithYou.Data.Entities.DoWithYou
         public string ZipCode { get; set; }
 
         public virtual User User { get; set; }
+
+        public override string ToString() =>
+$@"{{
+    {nameof(UserProfileID)}: {UserProfileID},
+    {nameof(UserID)}: {UserID},
+    {nameof(FirstName)}: {FirstName},
+    {nameof(MiddleName)}: {MiddleName},
+    {nameof(LastName)}: {LastName},
+    {nameof(Phone)}: {Phone},
+    {nameof(Address1)}: {Address1},
+    {nameof(Address2)}: {Address2},
+    {nameof(City)}: {City},
+    {nameof(State)}: {State},
+    {nameof(ZipCode)}: {ZipCode},
+    {base.ToString()}
+}}";
 
         public override bool Equals(object obj)
         {

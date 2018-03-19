@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Models;
@@ -32,7 +32,7 @@ namespace DoWithYou.UnitTest.Service
 
                 var newUser = new User();
                 var newProfile = new UserProfile();
-                var newModel = new UserModel(newUser, newProfile);
+                var newModel = new UserModel();
                 var newModelList = new List<IUserModel> { newModel };
 
                 sub.Get(Arg.Any<(IUser, IUserProfile)>()).Returns(newModel);
@@ -71,25 +71,25 @@ namespace DoWithYou.UnitTest.Service
         [Test]
         public void Delete_Throws_Nothing()
         {
-            Assert.That(() => Handler.Delete(new UserModel(null, null)), Throws.Nothing);
+            Assert.That(() => Handler.Delete(new UserModel()), Throws.Nothing);
         }
 
         [Test]
         public void Insert_Throws_Nothing()
         {
-            Assert.That(() => Handler.Insert(new UserModel(null, null)), Throws.Nothing);
+            Assert.That(() => Handler.Insert(new UserModel()), Throws.Nothing);
         }
 
         [Test]
         public void Update_Throws_Nothing()
         {
-            Assert.That(() => Handler.Update(new UserModel(null, null)), Throws.Nothing);
+            Assert.That(() => Handler.Update(new UserModel()), Throws.Nothing);
         }
 
         [Test]
         public void Update_When_Provided_Query_Throws_Nothing()
         {
-            Assert.That(() => Handler.Update(new UserModel(null, null)), Throws.Nothing);
+            Assert.That(() => Handler.Update(new UserModel()), Throws.Nothing);
         }
 
         [Test]

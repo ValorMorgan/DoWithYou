@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou.Base;
+using DoWithYou.Data.Entities.Base;
 using DoWithYou.Interface.Data;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;

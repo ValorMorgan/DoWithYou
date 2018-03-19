@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DoWithYou.Data.Contexts;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
@@ -10,7 +11,7 @@ using Serilog;
 namespace DoWithYou.Data.Mappers
 {
     public class CollectionDatabaseMapper<T> : ICollectionDatabaseMapper<T>
-        where T : IModel
+        where T : IBaseDocument
     {
         #region VARIABLES
         private readonly AppConfig _config;

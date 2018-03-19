@@ -5,7 +5,7 @@ using DoWithYou.Interface.Data;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 
-namespace DoWithYou.Model.Repositories.Models
+namespace DoWithYou.Model.Repositories.SQL
 {
     public class UserModelRepository : IModelRepository<IUserModel, IUser, IUserProfile>
     {
@@ -35,19 +35,15 @@ namespace DoWithYou.Model.Repositories.Models
             Get(entity.Item1, entity.Item2);
 
         public IUserModel Get(IUser entity1, IUserProfile entity2) =>
-            entity1 != null ?
-                Get<IUser>(e => e.FirstOrDefault(i => i.UserID == entity1.UserID)) :
-            entity2 != null ?
-                Get<IUserProfile>(e => e.FirstOrDefault(i => i.UserID == entity2.UserID)) :
-                _mapper.MapEntityToModel(null, null);
+            entity1 != null ? Get<IUser>(e => e.FirstOrDefault(i => i.UserID == entity1.UserID)) :
+            entity2 != null ? Get<IUserProfile>(e => e.FirstOrDefault(i => i.UserID == entity2.UserID)) :
+            _mapper.MapEntityToModel(null, null);
 
         public IUserModel Get<T>(Func<IQueryable<T>, T> request)
             where T : IBaseEntity =>
-            typeof(T) == typeof(IUser) ?
-                Get(request as Func<IQueryable<IUser>, IUser>) :
-            typeof(T) == typeof(IUserProfile) ?
-                Get(request as Func<IQueryable<IUserProfile>, IUserProfile>) :
-                null;
+            typeof(T) == typeof(IUser) ? Get(request as Func<IQueryable<IUser>, IUser>) :
+            typeof(T) == typeof(IUserProfile) ? Get(request as Func<IQueryable<IUserProfile>, IUserProfile>) :
+            null;
 
         public IUserModel Get(Func<IQueryable<IUser>, IUser> request)
         {
@@ -79,7 +75,7 @@ namespace DoWithYou.Model.Repositories.Models
                 .OrderBy(e => e.UserID)
                 .ToList();
 
-            // Get filter (entities1 ID's)
+            // Get filter (entities1 UserID's)
             var ids = entities1List
                 .Select(e => e.UserID);
 
@@ -102,11 +98,9 @@ namespace DoWithYou.Model.Repositories.Models
 
         public IEnumerable<IUserModel> GetMany<T>(Func<IQueryable<T>, IEnumerable<T>> request)
             where T : IBaseEntity =>
-            typeof(T) == typeof(IUser) ?
-                GetMany(request as Func<IQueryable<IUser>, IEnumerable<IUser>>) :
-            typeof(T) == typeof(IUserProfile) ?
-                GetMany(request as Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>) :
-                null;
+            typeof(T) == typeof(IUser) ? GetMany(request as Func<IQueryable<IUser>, IEnumerable<IUser>>) :
+            typeof(T) == typeof(IUserProfile) ? GetMany(request as Func<IQueryable<IUserProfile>, IEnumerable<IUserProfile>>) :
+            null;
 
         public IEnumerable<IUserModel> GetMany(Func<IQueryable<IUser>, IEnumerable<IUser>> request)
         {

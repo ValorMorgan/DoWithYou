@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using DoWithYou.Data.Mappers;
+using DoWithYou.Data.Repositories.Collections;
+using DoWithYou.Data.Repositories.Collections.Base;
 using DoWithYou.Data.Repositories.Entities;
 using DoWithYou.Data.Repositories.Entities.Base;
 using DoWithYou.Interface.Data;
@@ -7,7 +9,6 @@ using DoWithYou.Interface.Entity;
 using DoWithYou.Interface.Model;
 using DoWithYou.Interface.Service;
 using DoWithYou.Model.Mappers;
-using DoWithYou.Model.Repositories.Models;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -34,19 +35,22 @@ namespace DoWithYou.Service.Utilities
             void RegisterTypes(ref ContainerBuilder build)
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Types to {Class}", nameof(ContainerBuilder));
-            }
-
-            void RegisterInstances(ref ContainerBuilder build)
-            {
-                Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Instances to {Class}", nameof(ContainerBuilder));
 
                 // NOTE: Context are retrieved through the "Mapper"
                 // Issues with <out T> type on the factory and with "RegisterInstance" when we want the context to live per request / scope
 
                 build.RegisterGeneric(typeof(EntityRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+                build.RegisterGeneric(typeof(CollectionRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
                 build.RegisterType<UserRepository>().As<IRepository<IUser>>().InstancePerLifetimeScope();
+                build.RegisterType<UserCollectionRepository>().As<IRepository<IUserDocument>>().InstancePerLifetimeScope();
                 build.RegisterType<UserProfileRepository>().As<IRepository<IUserProfile>>().InstancePerLifetimeScope();
                 build.RegisterGeneric(typeof(EntityDatabaseMapper<>)).As(typeof(IEntityDatabaseMapper<>)).SingleInstance();
+                build.RegisterGeneric(typeof(CollectionDatabaseMapper<>)).As(typeof(ICollectionDatabaseMapper<>)).SingleInstance();
+            }
+
+            void RegisterInstances(ref ContainerBuilder build)
+            {
+                Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Data Layer Instances to {Class}", nameof(ContainerBuilder));
             }
         }
 
@@ -59,8 +63,12 @@ namespace DoWithYou.Service.Utilities
             {
                 Log.Logger.LogEventDebug(LoggerEvents.STARTUP, "Registering Model Layer Types to {Class}", nameof(ContainerBuilder));
 
-                build.RegisterType<UserModelMapper>().As<IModelMapper<IUserModel, IUser, IUserProfile>>().SingleInstance();
-                build.RegisterType<UserModelRepository>().As<IModelRepository<IUserModel, IUser, IUserProfile>>().InstancePerLifetimeScope();
+                build.RegisterType<UserModelMapper>()
+                    .As<IModelMapper<IUserModel, IUserDocument>>()
+                    .As<IModelMapper<IUserModel, IUser, IUserProfile>>()
+                    .SingleInstance();
+                build.RegisterType<Model.Repositories.SQL.UserModelRepository>().As<IModelRepository<IUserModel, IUser, IUserProfile>>().InstancePerLifetimeScope();
+                build.RegisterType<Model.Repositories.NoSQL.UserModelRepository>().As<IModelRepository<IUserModel, IUserDocument>>().InstancePerLifetimeScope();
             }
 
             void RegisterInstances(ref ContainerBuilder build)

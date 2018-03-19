@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Data.Mappers;
 using DoWithYou.Data.Repositories.Entities.Base;
 using DoWithYou.Interface.Data;

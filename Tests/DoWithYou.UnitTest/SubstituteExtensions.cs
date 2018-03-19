@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou.Base;
+using DoWithYou.Data.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Shared;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;

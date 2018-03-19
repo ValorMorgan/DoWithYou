@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using DoWithYou.Data.Entities.DoWithYou;
+using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Data.Repositories.Entities;
 using DoWithYou.Data.Repositories.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace DoWithYou.UnitTest.Model
+namespace DoWithYou.UnitTest.Data
 {
     [TestFixture]
     public class UserRepositoryTests

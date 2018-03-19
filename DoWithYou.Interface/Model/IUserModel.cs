@@ -1,35 +1,28 @@
-﻿using DoWithYou.Interface.Entity;
+﻿using System;
+using DoWithYou.Interface.Entity;
 
 namespace DoWithYou.Interface.Model
 {
-    public interface IUserModel : IModel<IUser, IUserProfile>
+    public interface IUserModel : IModel<IUserDocument>, IModel<IUser, IUserProfile>
     {
-        string Address1 { get; set; }
+        IAddress Address { get; set; }
 
-        string Address2 { get; set; }
-
-        string City { get; set; }
+        DateTime? CreationDate { get; set; }
 
         string Email { get; set; }
-
-        string FirstName { get; set; }
-
-        string LastName { get; set; }
-
-        string MiddleName { get; set; }
-
-        string Password { get; set; }
-
-        string Phone { get; set; }
-
-        string State { get; set; }
 
         long? UserID { get; set; }
 
         long? UserProfileID { get; set; }
 
-        string Username { get; set; }
+        DateTime? ModifiedDate { get; set; }
 
-        string ZipCode { get; set; }
+        IName Name { get; set; }
+
+        string Password { get; set; }
+
+        string Phone { get; set; }
+
+        string Username { get; set; }
     }
 }

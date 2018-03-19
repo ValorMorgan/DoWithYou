@@ -1,14 +1,12 @@
-﻿using DoWithYou.Data.Entities.DoWithYou.Base;
+﻿using DoWithYou.Data.Entities.Base;
 using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace DoWithYou.Data.Entities.DoWithYou
+namespace DoWithYou.Data.Entities.SQL.DoWithYou
 {
     public class User : BaseEntity, IUser
     {
-        [BsonId]
         public long UserID { get; set; }
 
         public string Email { get; set; }
@@ -18,6 +16,15 @@ namespace DoWithYou.Data.Entities.DoWithYou
         public string Password { get; set; }
 
         public virtual UserProfile UserProfile { get; set; }
+
+        public override string ToString() =>
+$@"{{
+    {nameof(UserID)}: {UserID},
+    {nameof(Email)}: {Email},
+    {nameof(Username)}: {Username},
+    {nameof(Password)}: {Password},
+    {base.ToString()}
+}}";
 
         public override bool Equals(object obj)
         {

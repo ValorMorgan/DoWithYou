@@ -2,11 +2,7 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DoWithYou.API;
-using DoWithYou.Shared.Core;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace DoWithYou.IntegrationTest

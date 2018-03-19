@@ -7,7 +7,7 @@ namespace DoWithYou.Interface.Model
     }
 
     public interface IModel<T1> : IModel
-        where T1 : IBaseEntity
+        where T1 : IBaseDocument
     {
     }
 

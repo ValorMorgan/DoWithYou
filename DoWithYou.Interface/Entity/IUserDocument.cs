@@ -1,6 +1,6 @@
-﻿namespace DoWithYou.Data.Entities.NoSQL.DoWithYou
+﻿namespace DoWithYou.Interface.Entity
 {
-    public interface IUserDocument
+    public interface IUserDocument : IBaseDocument
     {
         IAddress Address { get; set; }
 
@@ -15,9 +15,6 @@
         string Phone { get; set; }
 
         string Username { get; set; }
-
-        bool Equals(object obj);
-        int GetHashCode();
     }
 
     public interface IAddress

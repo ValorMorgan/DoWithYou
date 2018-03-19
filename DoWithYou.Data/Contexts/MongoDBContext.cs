@@ -1,6 +1,6 @@
 using System;
 using System.Security.Authentication;
-using DoWithYou.Interface.Model;
+using DoWithYou.Interface.Entity;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using MongoDB.Driver;
@@ -32,11 +32,11 @@ namespace DoWithYou.Data.Contexts
         #endregion
 
         public void CreateCollection<TCollection>()
-            where TCollection : IModel =>
+            where TCollection : IBaseDocument =>
             Database?.CreateCollection(typeof(TCollection).Name);
 
         public IMongoCollection<TDocument> GetCollection<TDocument>()
-            where TDocument : IModel =>
+            where TDocument : IBaseDocument =>
             Database?.GetCollection<TDocument>(typeof(TDocument).Name);
 
         #region PRIVATE

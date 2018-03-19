@@ -4,11 +4,11 @@ namespace DoWithYou.Interface.Model
 {
     public interface IModelMapper<TModel, T1>
         where TModel : IModel<T1>
-        where T1 : IBaseEntity
+        where T1 : IBaseDocument
     {
-        TModel MapEntityToModel(T1 entity);
+        TModel MapDocumentToModel(T1 document);
 
-        T1 MapModelToEntity(TModel model);
+        T1 MapModelToDocument(TModel model);
     }
 
     public interface IModelMapper<TModel, T1, T2>
