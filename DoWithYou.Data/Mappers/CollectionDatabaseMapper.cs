@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DoWithYou.Data.Contexts;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 using DoWithYou.Interface.Model;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;

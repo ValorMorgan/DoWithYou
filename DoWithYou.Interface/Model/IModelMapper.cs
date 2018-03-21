@@ -1,4 +1,5 @@
-﻿using DoWithYou.Interface.Entity;
+﻿using DoWithYou.Interface.Entity.NoSQL;
+using DoWithYou.Interface.Entity.SQL;
 
 namespace DoWithYou.Interface.Model
 {

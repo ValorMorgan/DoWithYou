@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 using DoWithYou.Interface.Model;
 
 namespace DoWithYou.Model.Repositories.NoSQL

@@ -1,7 +1,8 @@
 ﻿using System;
 using DoWithYou.Data.Entities.NoSQL.DoWithYou;
 using DoWithYou.Data.Entities.SQL.DoWithYou;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Models;
 
@@ -9,8 +10,36 @@ namespace DoWithYou.UnitTest
 {
     static class TestEntities
     {
-        #region PROPERTIES
-        public static IUser User { get; } = new User
+        #region MODEL
+        public static IUserModel UserModel { get; } = new UserModel
+        {
+            Address = new Address
+            {
+                Line1 = SQL_UserProfile.Address1,
+                Line2 = SQL_UserProfile.Address2,
+                City = SQL_UserProfile.City,
+                State = SQL_UserProfile.State,
+                ZipCode = SQL_UserProfile.ZipCode
+            },
+            Email = SQL_User.Email,
+            UserID = SQL_User.UserID,
+            UserProfileID = SQL_UserProfile.UserProfileID,
+            Name = new Name
+            {
+                First = SQL_UserProfile.FirstName,
+                Middle = SQL_UserProfile.MiddleName,
+                Last = SQL_UserProfile.LastName
+            },
+            Password = SQL_User.Password,
+            Phone = SQL_UserProfile.Phone,
+            Username = SQL_User.Username,
+            CreationDate = SQL_User.CreationDate,
+            ModifiedDate = SQL_User.ModifiedDate
+        };
+        #endregion
+
+        #region SQL
+        public static IUser SQL_User { get; } = new User
         {
             UserID = 1,
             Username = "testUser",
@@ -20,10 +49,10 @@ namespace DoWithYou.UnitTest
             ModifiedDate = null
         };
 
-        public static IUserProfile UserProfile { get; } = new UserProfile
+        public static IUserProfile SQL_UserProfile { get; } = new UserProfile
         {
             UserProfileID = 1,
-            UserID = User.UserID,
+            UserID = SQL_User.UserID,
             FirstName = "Test First",
             MiddleName = "Test Middle",
             LastName = "Test Last",
@@ -33,44 +62,31 @@ namespace DoWithYou.UnitTest
             State = "TE",
             ZipCode = "99999",
             Phone = "999-999-9999",
-            CreationDate = User.CreationDate,
-            ModifiedDate = User.ModifiedDate
+            CreationDate = SQL_User.CreationDate,
+            ModifiedDate = SQL_User.ModifiedDate
+        };
+        #endregion
+
+        #region NoSQL
+        public static IAddress NoSQL_Address { get; } = UserModel.Address;
+
+        public static IName NoSQL_Name { get; } = UserModel.Name;
+
+        public static IToDo NoSQL_ToDo { get; } = new DoWithYou.Data.Entities.NoSQL.DoWithYou.ToDo()
+        {
+            Name = "Test ToDo",
+            Complete = false
         };
 
-        public static IUserModel UserModel { get; } = new UserModel
+        public static IUserDocument NoSQL_UserDocument { get; } = new UserDocument
         {
-            Address = new Address
-            {
-                Line1 = UserProfile.Address1,
-                Line2 = UserProfile.Address2,
-                City = UserProfile.City,
-                State = UserProfile.State,
-                ZipCode = UserProfile.ZipCode
-            },
-            Email = User.Email,
-            UserID = User.UserID,
-            UserProfileID = UserProfile.UserProfileID,
-            Name = new Name
-            {
-                First = UserProfile.FirstName,
-                Middle = UserProfile.MiddleName,
-                Last = UserProfile.LastName
-            },
-            Password = User.Password,
-            Phone = UserProfile.Phone,
-            Username = User.Username,
-            CreationDate = User.CreationDate,
-            ModifiedDate = User.ModifiedDate
-        };
-
-        public static IUserDocument UserDocument { get; } = new UserDocument
-        {
-            Address = UserModel.Address,
+            Address = NoSQL_Address,
             Email = UserModel.Email,
             ID = UserModel.UserID ?? default,
-            Name = UserModel.Name,
+            Name = NoSQL_Name,
             Password = UserModel.Password,
             Phone = UserModel.Phone,
+            ToDos = new [] { NoSQL_ToDo },
             Username = UserModel.Username,
             CreationDate = UserModel.CreationDate ?? DateTime.Today,
             ModifiedDate = UserModel.ModifiedDate

@@ -2,7 +2,7 @@
 using System.Linq;
 using DoWithYou.Data.Contexts;
 using DoWithYou.Data.Factories;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using DoWithYou.Shared.Repositories.Settings;

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DoWithYou.Interface.Entity
+namespace DoWithYou.Interface.Entity.SQL
 {
-    public interface IBaseDocument
+    public interface IBaseEntity
     {
         DateTime CreationDate { get; set; }
 

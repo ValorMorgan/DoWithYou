@@ -1,5 +1,6 @@
 ﻿using System;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
+using DoWithYou.Interface.Entity.SQL;
 
 namespace DoWithYou.Interface.Model
 {
@@ -11,10 +12,6 @@ namespace DoWithYou.Interface.Model
 
         string Email { get; set; }
 
-        long? UserID { get; set; }
-
-        long? UserProfileID { get; set; }
-
         DateTime? ModifiedDate { get; set; }
 
         IName Name { get; set; }
@@ -23,6 +20,10 @@ namespace DoWithYou.Interface.Model
 
         string Phone { get; set; }
 
+        long? UserID { get; set; }
+
         string Username { get; set; }
+
+        long? UserProfileID { get; set; }
     }
 }

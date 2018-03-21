@@ -1,5 +1,5 @@
 ﻿using DoWithYou.Data.Entities.Base;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 
@@ -9,11 +9,15 @@ namespace DoWithYou.Data.Entities.SQL.DoWithYou
     {
         public long UserID { get; set; }
 
+        public long ToDoListID { get; set; }
+
         public string Email { get; set; }
 
         public string Username { get; set; }
 
         public string Password { get; set; }
+
+        public virtual ToDoList ToDoList { get; set; }
 
         public virtual UserProfile UserProfile { get; set; }
 
@@ -30,9 +34,10 @@ namespace DoWithYou.Data.Entities.SQL.DoWithYou
 
         public override int GetHashCode()
         {
-            int hashCode = -1166176521;
+            int hashCode = nameof(User).GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + base.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + UserID.GetHashCode();
+            hashCode = hashCode * HashConstants.MULTIPLIER + ToDoListID.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Email);
             hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Username);
             hashCode = hashCode * HashConstants.MULTIPLIER + StringConverter.ToHash(Password);

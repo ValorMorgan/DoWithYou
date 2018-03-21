@@ -1,4 +1,4 @@
-﻿namespace DoWithYou.Interface.Entity
+﻿namespace DoWithYou.Interface.Entity.NoSQL
 {
     public interface IUserDocument : IBaseDocument
     {
@@ -13,6 +13,8 @@
         string Password { get; set; }
 
         string Phone { get; set; }
+
+        IToDo[] ToDos { get; set; }
 
         string Username { get; set; }
     }
@@ -37,5 +39,12 @@
         string Last { get; set; }
 
         string Middle { get; set; }
+    }
+
+    public interface IToDo
+    {
+        string Name { get; set; }
+
+        bool Complete { get; set; }
     }
 }

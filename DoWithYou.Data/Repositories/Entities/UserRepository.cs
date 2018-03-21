@@ -5,7 +5,7 @@ using DoWithYou.Data.Entities.SQL.DoWithYou;
 using DoWithYou.Data.Mappers;
 using DoWithYou.Data.Repositories.Entities.Base;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;

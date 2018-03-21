@@ -1,5 +1,5 @@
 ﻿using DoWithYou.Data.Contexts;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 
 namespace DoWithYou.Data.Mappers
 {

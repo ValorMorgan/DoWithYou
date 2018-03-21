@@ -1,6 +1,6 @@
 using System;
 using System.Security.Authentication;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using MongoDB.Driver;

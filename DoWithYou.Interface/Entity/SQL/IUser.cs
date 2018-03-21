@@ -1,4 +1,4 @@
-﻿namespace DoWithYou.Interface.Entity
+﻿namespace DoWithYou.Interface.Entity.SQL
 {
     public interface IUser : IBaseEntity
     {

@@ -1,6 +1,5 @@
-﻿using System;
-using DoWithYou.Data.Entities.Base;
-using DoWithYou.Interface.Entity;
+﻿using DoWithYou.Data.Entities.Base;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
 
@@ -45,7 +44,7 @@ namespace DoWithYou.Data.Entities.SQL.DoWithYou
 
         public override int GetHashCode()
         {
-            int hashCode = 61574393;
+            int hashCode = nameof(UserProfile).GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + base.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + UserProfileID.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + UserID.GetHashCode();

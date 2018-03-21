@@ -1,5 +1,6 @@
 ﻿using System;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 
@@ -24,7 +25,7 @@ namespace DoWithYou.Data.Entities.Base
 
         public override int GetHashCode()
         {
-            int hashCode = 1212440406;
+            int hashCode = nameof(BaseEntity).GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + CreationDate.TruncateToSecond().GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + (ModifiedDate?.TruncateToSecond().GetHashCode() ?? 0);
             return hashCode;

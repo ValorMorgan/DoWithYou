@@ -1,7 +1,8 @@
 ﻿using System;
 using DoWithYou.Data.Entities.NoSQL.DoWithYou;
 using DoWithYou.Data.Entities.SQL.DoWithYou;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Mappers;
 using DoWithYou.Model.Models;
@@ -18,7 +19,7 @@ namespace DoWithYou.UnitTest.Model
         [Test]
         public void MapDocumentToModel_Returns_IUserModel_When_Given_Valid_Document()
         {
-            var model = _noSqlMapper.MapDocumentToModel(TestEntities.UserDocument);
+            var model = _noSqlMapper.MapDocumentToModel(TestEntities.NoSQL_UserDocument);
             
             Assert.That(model, Is.Not.Null.And.InstanceOf<IUserModel>());
 
@@ -55,8 +56,8 @@ namespace DoWithYou.UnitTest.Model
         [Test]
         public void MapEntityToModel_Returns_IUserModel_When_Given_Valid_Entities()
         {
-            var modelFromTuple = _sqlMapper.MapEntityToModel((TestEntities.User, TestEntities.UserProfile));
-            var modelFromParameters = _sqlMapper.MapEntityToModel(TestEntities.User, TestEntities.UserProfile);
+            var modelFromTuple = _sqlMapper.MapEntityToModel((TestEntities.SQL_User, TestEntities.SQL_UserProfile));
+            var modelFromParameters = _sqlMapper.MapEntityToModel(TestEntities.SQL_User, TestEntities.SQL_UserProfile);
 
             Assert.That(modelFromTuple, Is.Not.Null.And.InstanceOf<IUserModel>());
             Assert.That(modelFromParameters, Is.Not.Null.And.InstanceOf<IUserModel>());
@@ -95,11 +96,11 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.That(document, Is.Not.Null.And.InstanceOf<IUserDocument>());
 
-            document.CreationDate = TestEntities.UserDocument.CreationDate;
-            document.ModifiedDate = TestEntities.UserDocument.ModifiedDate;
+            document.CreationDate = TestEntities.NoSQL_UserDocument.CreationDate;
+            document.ModifiedDate = TestEntities.NoSQL_UserDocument.ModifiedDate;
 
-            Assert.AreEqual(TestEntities.UserDocument, document,
-                $"{nameof(document)}: {document.GetHashCode()} != {nameof(TestEntities.UserDocument)}: {TestEntities.UserDocument.GetHashCode()}");
+            Assert.AreEqual(TestEntities.NoSQL_UserDocument, document,
+                $"{nameof(document)}: {document.GetHashCode()} != {nameof(TestEntities.NoSQL_UserDocument)}: {TestEntities.NoSQL_UserDocument.GetHashCode()}");
 
             Console.WriteLine(document);
         }
@@ -131,16 +132,16 @@ namespace DoWithYou.UnitTest.Model
             Assert.That(entities.Item1, Is.Not.Null.And.InstanceOf<IUser>());
             Assert.That(entities.Item2, Is.Not.Null.And.InstanceOf<IUserProfile>());
             
-            entities.Item1.CreationDate = TestEntities.User.CreationDate;
-            entities.Item1.ModifiedDate = TestEntities.User.ModifiedDate;
-            entities.Item2.CreationDate = TestEntities.UserProfile.CreationDate;
-            entities.Item2.ModifiedDate = TestEntities.UserProfile.ModifiedDate;
+            entities.Item1.CreationDate = TestEntities.SQL_User.CreationDate;
+            entities.Item1.ModifiedDate = TestEntities.SQL_User.ModifiedDate;
+            entities.Item2.CreationDate = TestEntities.SQL_UserProfile.CreationDate;
+            entities.Item2.ModifiedDate = TestEntities.SQL_UserProfile.ModifiedDate;
 
-            Assert.AreEqual(TestEntities.User, entities.Item1,
-                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(TestEntities.User)}: {TestEntities.User.GetHashCode()}");
+            Assert.AreEqual(TestEntities.SQL_User, entities.Item1,
+                $"{nameof(entities.Item1)}: {entities.Item1.GetHashCode()} != {nameof(TestEntities.SQL_User)}: {TestEntities.SQL_User.GetHashCode()}");
 
-            Assert.AreEqual(TestEntities.UserProfile, entities.Item2,
-                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(TestEntities.UserProfile)}: {TestEntities.UserProfile.GetHashCode()}");
+            Assert.AreEqual(TestEntities.SQL_UserProfile, entities.Item2,
+                $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(TestEntities.SQL_UserProfile)}: {TestEntities.SQL_UserProfile.GetHashCode()}");
 
             Console.WriteLine(entities.Item1);
             Console.WriteLine(entities.Item2);

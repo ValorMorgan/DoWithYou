@@ -5,7 +5,7 @@ using DoWithYou.Data.Entities.NoSQL.DoWithYou;
 using DoWithYou.Data.Mappers;
 using DoWithYou.Data.Repositories.Collections.Base;
 using DoWithYou.Interface.Data;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Extensions;
 using Serilog;

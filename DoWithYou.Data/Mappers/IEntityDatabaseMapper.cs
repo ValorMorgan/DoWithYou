@@ -1,4 +1,4 @@
-﻿using DoWithYou.Interface.Entity;
+﻿using DoWithYou.Interface.Entity.SQL;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoWithYou.Data.Mappers

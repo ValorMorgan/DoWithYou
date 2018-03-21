@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DoWithYou.Data.Entities.SQL.DoWithYou;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.SQL;
 using DoWithYou.Interface.Model;
 using DoWithYou.Model.Models;
 using DoWithYou.Service;

@@ -1,6 +1,6 @@
 ﻿using System;
 using DoWithYou.Data.Entities.NoSQL.DoWithYou;
-using DoWithYou.Interface.Entity;
+using DoWithYou.Interface.Entity.NoSQL;
 using DoWithYou.Interface.Model;
 using DoWithYou.Shared.Constants;
 using DoWithYou.Shared.Converters;
@@ -131,7 +131,7 @@ namespace DoWithYou.Model.Models
 
         public override int GetHashCode()
         {
-            int hashCode = -173635769;
+            int hashCode = nameof(UserModel).GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + UserID.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + UserProfileID.GetHashCode();
             hashCode = hashCode * HashConstants.MULTIPLIER + Name.GetHashCode();
