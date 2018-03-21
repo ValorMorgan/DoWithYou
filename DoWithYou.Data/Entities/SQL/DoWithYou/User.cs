@@ -18,13 +18,7 @@ namespace DoWithYou.Data.Entities.SQL.DoWithYou
         public virtual UserProfile UserProfile { get; set; }
 
         public override string ToString() =>
-$@"{{
-    {nameof(UserID)}: {UserID},
-    {nameof(Email)}: {Email},
-    {nameof(Username)}: {Username},
-    {nameof(Password)}: {Password},
-    {base.ToString()}
-}}";
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {

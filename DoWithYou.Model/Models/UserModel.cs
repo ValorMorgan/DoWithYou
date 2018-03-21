@@ -117,6 +117,9 @@ namespace DoWithYou.Model.Models
             set => _userProfileId = value;
         }
         #endregion
+        
+        public override string ToString() =>
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {

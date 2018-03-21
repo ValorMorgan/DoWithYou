@@ -29,6 +29,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(TestEntities.UserModel, model,
                 $"{nameof(model)}: {model.GetHashCode()} != {nameof(TestEntities.UserModel)}: {TestEntities.UserModel.GetHashCode()}");
+
+            Console.WriteLine(model);
         }
 
         [Test]
@@ -46,6 +48,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(blankModel, model,
                 $"{nameof(model)}: {model.GetHashCode()} != {nameof(blankModel)}: {blankModel.GetHashCode()}");
+
+            Console.WriteLine(model);
         }
 
         [Test]
@@ -62,6 +66,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(modelFromTuple, modelFromParameters,
                 $"{nameof(modelFromTuple)}: {modelFromTuple.GetHashCode()} != {nameof(modelFromParameters)}: {modelFromParameters.GetHashCode()}");
+
+            Console.WriteLine(modelFromTuple);
         }
 
         [Test]
@@ -78,6 +84,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(modelFromTuple, modelFromParameters,
                 $"{nameof(modelFromTuple)}: {modelFromTuple.GetHashCode()} != {nameof(modelFromParameters)}: {modelFromParameters.GetHashCode()}");
+
+            Console.WriteLine(modelFromTuple);
         }
 
         [Test]
@@ -92,6 +100,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(TestEntities.UserDocument, document,
                 $"{nameof(document)}: {document.GetHashCode()} != {nameof(TestEntities.UserDocument)}: {TestEntities.UserDocument.GetHashCode()}");
+
+            Console.WriteLine(document);
         }
 
         [Test]
@@ -109,6 +119,8 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(blankDocument, document,
                 $"{nameof(document)}: {document.GetHashCode()} != {nameof(blankDocument)}: {blankDocument.GetHashCode()}");
+
+            Console.WriteLine(document);
         }
 
         [Test]
@@ -129,6 +141,9 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(TestEntities.UserProfile, entities.Item2,
                 $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(TestEntities.UserProfile)}: {TestEntities.UserProfile.GetHashCode()}");
+
+            Console.WriteLine(entities.Item1);
+            Console.WriteLine(entities.Item2);
         }
 
         [Test]
@@ -152,6 +167,9 @@ namespace DoWithYou.UnitTest.Model
 
             Assert.AreEqual(blankUserProfile, entities.Item2,
                 $"{nameof(entities.Item2)}: {entities.Item2.GetHashCode()} != {nameof(blankUserProfile)}: {blankUserProfile.GetHashCode()}");
+
+            Console.WriteLine(entities.Item1);
+            Console.WriteLine(entities.Item2);
         }
     }
 }

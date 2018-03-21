@@ -33,20 +33,7 @@ namespace DoWithYou.Data.Entities.SQL.DoWithYou
         public virtual User User { get; set; }
 
         public override string ToString() =>
-$@"{{
-    {nameof(UserProfileID)}: {UserProfileID},
-    {nameof(UserID)}: {UserID},
-    {nameof(FirstName)}: {FirstName},
-    {nameof(MiddleName)}: {MiddleName},
-    {nameof(LastName)}: {LastName},
-    {nameof(Phone)}: {Phone},
-    {nameof(Address1)}: {Address1},
-    {nameof(Address2)}: {Address2},
-    {nameof(City)}: {City},
-    {nameof(State)}: {State},
-    {nameof(ZipCode)}: {ZipCode},
-    {base.ToString()}
-}}";
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {

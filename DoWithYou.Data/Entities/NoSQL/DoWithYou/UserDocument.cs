@@ -26,26 +26,7 @@ namespace DoWithYou.Data.Entities.NoSQL.DoWithYou
         #endregion
 
         public override string ToString() =>
-$@"{{
-    {nameof(ID)}: {ID},
-    {nameof(Username)}: {Username},
-    {nameof(Password)}: {Password},
-    {nameof(Email)}: {Email},
-    {nameof(Address)}: {{
-        {nameof(Address.Line1)}: {Address.Line1},
-        {nameof(Address.Line2)}: {Address.Line2},
-        {nameof(Address.City)}: {Address.City},
-        {nameof(Address.State)}: {Address.State},
-        {nameof(Address.ZipCode)}: {Address.ZipCode}
-    }},
-    {nameof(Name)}: {{
-        {nameof(Name.First)}: {Name.First},
-        {nameof(Name.Middle)}: {Name.Middle},
-        {nameof(Name.Last)}: {Name.Last}
-    }},
-    {nameof(Phone)}: {Phone},
-    {base.ToString()}
-}}";
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {
@@ -81,6 +62,9 @@ $@"{{
         public string ZipCode { get; set; }
         #endregion
 
+        public override string ToString() =>
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
+
         public override bool Equals(object obj)
         {
             if (!(obj is IAddress))
@@ -110,6 +94,9 @@ $@"{{
 
         public string Middle { get; set; }
         #endregion
+
+        public override string ToString() =>
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {

@@ -12,8 +12,7 @@ namespace DoWithYou.Data.Entities.Base
         public DateTime? ModifiedDate { get; set; }
 
         public override string ToString() =>
-$@"{nameof(CreationDate)}: {CreationDate},
-    {nameof(ModifiedDate)}: {ModifiedDate}";
+            Newtonsoft.Json.JsonConvert.SerializeObject(this);
 
         public override bool Equals(object obj)
         {
